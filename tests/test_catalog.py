@@ -134,6 +134,8 @@ class PreserveExistingTests(unittest.TestCase):
             self.assertEqual(video["publish_link"], "")
             self.assertEqual(video["platform"], "TikTok")
             self.assertIn("publish_copy", video)
+            self.assertNotIn("title", video)
+            self.assertNotIn("folder_title", video)
         summary = catalog["summary"]
         self.assertEqual(summary["total"], len(catalog["videos"]))
         self.assertEqual(summary["waiting_manual_publish"], 9)
@@ -191,9 +193,11 @@ class CatalogToolTests(unittest.TestCase):
             )
             self.assertEqual(video["drive_cover_download"], cover_url)
             self.assertEqual(video["subfolder_name"], "INTJ-r0003")
+            self.assertNotIn("title", video)
+            self.assertNotIn("folder_title", video)
             self.assertEqual(saved["videos"][0]["job_id"], PRESERVED[0]["job_id"])
 
-    def test_add_entry_keeps_explicit_folder_name_as_title_source(self):
+    def test_add_entry_stores_folder_display_name_not_technical_id(self):
         with tempfile.TemporaryDirectory() as tmp:
             catalog_path = Path(tmp) / "catalog.json"
             catalog_path.write_text((ROOT / "catalog.json").read_text(encoding="utf-8"), encoding="utf-8")
@@ -204,9 +208,11 @@ class CatalogToolTests(unittest.TestCase):
                     "--catalog",
                     str(catalog_path),
                     "--label",
-                    "ISFP宅",
-                    "--subfolder-name",
-                    "ISFP-home-r0009",
+                    "ISFP",
+                    "--folder-title",
+                    "毛毡风格01- ISFP",
+                    "--title",
+                    "潮玩方向1-ENTP",
                     "--video-url",
                     "https://drive.google.com/file/d/FOLDERNAME123/view",
                     "--revision",
@@ -218,9 +224,16 @@ class CatalogToolTests(unittest.TestCase):
             )
             saved = json.loads(catalog_path.read_text(encoding="utf-8"))
             video = saved["videos"][-1]
-            self.assertEqual(video["job_id"], json.loads(proc.stdout)["added"])
-            self.assertEqual(video["label"], "ISFP宅")
-            self.assertEqual(video["subfolder_name"], "ISFP-home-r0009")
+            added = json.loads(proc.stdout)
+            self.assertEqual(video["job_id"], added["added"])
+            self.assertEqual(video["label"], "ISFP")
+            self.assertEqual(video["title"], "潮玩方向1-ENTP")
+            self.assertEqual(video["folder_title"], "毛毡风格01- ISFP")
+            self.assertEqual(video["subfolder_name"], "ISFP-r0009")
+            self.assertEqual(added["title"], "潮玩方向1-ENTP")
+            self.assertEqual(added["folder_title"], "毛毡风格01- ISFP")
+            self.assertNotIn("title", saved["videos"][0])
+            self.assertNotIn("folder_title", saved["videos"][0])
             self.assertEqual(len(saved["videos"]), 10)
 
     def test_add_entry_rejects_duplicate_drive_file(self):

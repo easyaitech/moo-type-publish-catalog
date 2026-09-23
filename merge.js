@@ -123,25 +123,31 @@ export function stageLabel(stage, hasLink) {
   return stage || "未知";
 }
 
-/** Card heading is the Drive folder name. Fall back to the short label. */
+/**
+ * Card heading is the human folder name, not the technical subfolder_name.
+ * Prefer video.title, then folder_title, then the short label.
+ */
 export function cardTitle(video) {
-  const folder = String(video?.subfolder_name || "").trim();
+  const displayTitle = String(video?.title || "").trim();
+  const folderTitle = String(video?.folder_title || "").trim();
   const label = String(video?.label || "").trim();
-  return folder || label;
+  return displayTitle || folderTitle || label;
 }
 
 /**
- * Secondary line: short label, revision, and platform.
- * Skip a part when it is the same string as the heading so the folder name is not repeated.
+ * Secondary line: short label, revision, technical subfolder id, and platform.
+ * Skip any part that repeats the heading so the folder display name is not shown twice.
  */
 export function cardMeta(video) {
-  const title = cardTitle(video);
+  const heading = cardTitle(video);
   const label = String(video?.label || "").trim();
   const revision = String(video?.revision || "").trim();
+  const subfolder = String(video?.subfolder_name || "").trim();
   const platform = String(video?.platform || "").trim() || "TikTok";
   const parts = [];
-  if (label && label !== title) parts.push(label);
-  if (revision && revision !== title) parts.push(revision);
-  if (platform && platform !== title) parts.push(platform);
+  if (label && label !== heading) parts.push(label);
+  if (revision && revision !== heading) parts.push(revision);
+  if (subfolder && subfolder !== heading && subfolder !== label) parts.push(subfolder);
+  if (platform && platform !== heading) parts.push(platform);
   return parts.join(" · ");
 }

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Append one waiting publish item from download URLs and caption text.
 
-The board title is the Drive folder name (subfolder_name), not --label.
-The default folder name is LABEL-REVISION, for example INTJ-r0001.
-Pass --subfolder-name when the Drive folder uses a different name.
+The card title is the folder name a person uses, stored as folder_title
+(or title if that field is set). It is not subfolder_name, which stays a
+technical id such as ENFP-r0004.
 
 Example:
   python3 scripts/add_entry.py \\
-    --label "INTJ" \\
+    --label "ESFP" \\
+    --folder-title "软萌贴纸1-ESFP" \\
     --video-url "https://drive.google.com/file/d/FILE_ID/view" \\
     --cover-url "https://drive.google.com/file/d/COVER_ID/view" \\
     --copy-text "第一行标题
@@ -36,7 +37,7 @@ def main() -> None:
     parser.add_argument(
         "--label",
         required=True,
-        help="Short name in the card meta line, e.g. ENFP or ISFP宅. The card title is the folder name.",
+        help="Short name, e.g. ENFP. Used as the card title only when title and folder_title are empty.",
     )
     parser.add_argument("--video-url", required=True, help="https link to the mp4 (Drive view or direct)")
     parser.add_argument("--cover-url", default="", help="https link to the cover image")
@@ -44,9 +45,17 @@ def main() -> None:
     parser.add_argument("--copy-file", default="", help="UTF-8 text file used as the caption")
     parser.add_argument("--revision", default="r0001")
     parser.add_argument(
-        "--subfolder-name",
+        "--folder-title",
         default="",
-        help="Drive folder name, used as the card title. Default is LABEL-REVISION.",
+        help=(
+            "Folder display name shown as the card title, e.g. '软萌贴纸1-ESFP' or "
+            "'sleep-types-r0002'. Not the technical subfolder id (ENFP-r0004)."
+        ),
+    )
+    parser.add_argument(
+        "--title",
+        default="",
+        help="Optional card title. Overrides --folder-title when both are set.",
     )
     parser.add_argument("--job-id", default="", help="Optional. Default is job- plus a random id.")
     parser.add_argument("--folder-url", default="", help="Drive folder for this cut")
@@ -67,7 +76,8 @@ def main() -> None:
         cover_url=args.cover_url,
         publish_copy=publish_copy,
         revision=args.revision,
-        subfolder_name=args.subfolder_name,
+        folder_title=args.folder_title,
+        title=args.title,
         job_id=args.job_id,
         folder_url=args.folder_url,
         copy_drive_url=args.copy_drive_url,
@@ -87,6 +97,8 @@ def main() -> None:
             {
                 "added": video["job_id"],
                 "label": video["label"],
+                "title": video.get("title") or "",
+                "folder_title": video.get("folder_title") or "",
                 "drive_video_download": video["drive_video_download"],
                 "drive_cover_download": video["drive_cover_download"],
                 "summary": catalog["summary"],

@@ -21,6 +21,8 @@ STAT_KEYS = ("views", "likes", "comments", "shares", "saves")
 
 FIELD_ORDER = (
     "label",
+    "title",
+    "folder_title",
     "job_id",
     "revision",
     "stage",
@@ -131,6 +133,16 @@ def normalize_video(video: dict) -> dict:
         raise ValueError(f"invalid job_id: {job_id}")
     out = dict(video)
     out["label"] = label
+    display_title = str(video.get("title") or "").strip()
+    folder_title = str(video.get("folder_title") or "").strip()
+    if display_title:
+        out["title"] = display_title
+    else:
+        out.pop("title", None)
+    if folder_title:
+        out["folder_title"] = folder_title
+    else:
+        out.pop("folder_title", None)
     out["job_id"] = job_id
     out["revision"] = str(video.get("revision") or "r0001")
     out["stage"] = str(video.get("stage") or "WAITING_MANUAL_PUBLISH")
@@ -245,7 +257,8 @@ def build_video(
     cover_url: str = "",
     publish_copy: str = "",
     revision: str = "r0001",
-    subfolder_name: str = "",
+    folder_title: str = "",
+    title: str = "",
     job_id: str = "",
     folder_url: str = "",
     copy_drive_url: str = "",
@@ -270,28 +283,30 @@ def build_video(
     if not JOB_ID_RE.match(job_id):
         raise ValueError("job-id must look like job- followed by 8-64 letters or digits")
     revision = revision.strip() or "r0001"
-    folder_name = subfolder_name.strip() or f"{label}-{revision}"
-    return normalize_video(
-        {
-            "label": label,
-            "job_id": job_id,
-            "revision": revision,
-            "stage": "WAITING_MANUAL_PUBLISH",
-            "platform": platform or "TikTok",
-            "publish_link": "",
-            "published_at": "",
-            "publish_copy": publish_copy,
-            "stats": empty_stats(),
-            "drive_folder": folder_url,
-            "drive_video": video_url,
-            "drive_video_download": drive_download_url(video_url),
-            "drive_cover": cover_url,
-            "drive_cover_download": drive_download_url(cover_url) if cover_url else "",
-            "drive_publish_copy": copy_drive_url,
-            "subfolder_name": folder_name,
-            "local_release": "",
-        }
-    )
+    video_out = {
+        "label": label,
+        "job_id": job_id,
+        "revision": revision,
+        "stage": "WAITING_MANUAL_PUBLISH",
+        "platform": platform or "TikTok",
+        "publish_link": "",
+        "published_at": "",
+        "publish_copy": publish_copy,
+        "stats": empty_stats(),
+        "drive_folder": folder_url,
+        "drive_video": video_url,
+        "drive_video_download": drive_download_url(video_url),
+        "drive_cover": cover_url,
+        "drive_cover_download": drive_download_url(cover_url) if cover_url else "",
+        "drive_publish_copy": copy_drive_url,
+        "subfolder_name": f"{label}-{revision}",
+        "local_release": "",
+    }
+    if title.strip():
+        video_out["title"] = title.strip()
+    if folder_title.strip():
+        video_out["folder_title"] = folder_title.strip()
+    return normalize_video(video_out)
 
 
 def find_video(catalog: dict, job_id: str) -> dict:

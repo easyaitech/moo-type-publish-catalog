@@ -19,22 +19,50 @@ test("tiktok urls accepted, other https urls rejected", () => {
   assert.equal(isTikTokUrl("https://tiktok.com"), false);
 });
 
-test("card title is the drive folder name and meta skips that name", () => {
-  const enfp = { label: "ENFP", subfolder_name: "ENFP-r0004", revision: "r0004", platform: "TikTok" };
-  assert.equal(cardTitle(enfp), "ENFP-r0004");
-  assert.equal(cardMeta(enfp), "ENFP · r0004 · TikTok");
+test("card title prefers folder display name over the technical subfolder id", () => {
+  const unlabeled = {
+    label: "ENFP",
+    subfolder_name: "ENFP-r0004",
+    revision: "r0004",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(unlabeled), "ENFP");
+  assert.equal(cardMeta(unlabeled), "r0004 · ENFP-r0004 · TikTok");
 
-  const home = { label: "ISFP宅", subfolder_name: "ISFP-home-r0002", revision: "r0002", platform: "TikTok" };
-  assert.equal(cardTitle(home), "ISFP-home-r0002");
-  assert.equal(cardMeta(home), "ISFP宅 · r0002 · TikTok");
+  const folderTitle = {
+    label: "ESFP",
+    folder_title: "软萌贴纸1-ESFP",
+    subfolder_name: "ESFP-r0001",
+    revision: "r0001",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(folderTitle), "软萌贴纸1-ESFP");
+  assert.equal(cardMeta(folderTitle), "ESFP · r0001 · ESFP-r0001 · TikTok");
 
-  const fallback = { label: "INTJ", revision: "r0001", platform: "" };
-  assert.equal(cardTitle(fallback), "INTJ");
-  assert.equal(cardMeta(fallback), "r0001 · TikTok");
+  const titled = {
+    label: "INFP",
+    title: "潮玩方向2-INFP",
+    folder_title: "毛毡风格2-ENFJ",
+    subfolder_name: "INFP-r0002",
+    revision: "r0002",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(titled), "潮玩方向2-INFP");
+  assert.equal(cardMeta(titled), "INFP · r0002 · INFP-r0002 · TikTok");
 
-  const same = { label: "ENFP-r0004", subfolder_name: "ENFP-r0004", revision: "r0004", platform: "TikTok" };
-  assert.equal(cardTitle(same), "ENFP-r0004");
-  assert.equal(cardMeta(same), "r0004 · TikTok");
+  const sameAsSubfolder = {
+    label: "sleep-types",
+    folder_title: "sleep-types-r0002",
+    subfolder_name: "sleep-types-r0002",
+    revision: "r0002",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(sameAsSubfolder), "sleep-types-r0002");
+  assert.equal(cardMeta(sameAsSubfolder), "sleep-types · r0002 · TikTok");
+
+  const blankDisplay = { label: "INTJ", title: "  ", folder_title: "", revision: "r0001", platform: "" };
+  assert.equal(cardTitle(blankDisplay), "INTJ");
+  assert.equal(cardMeta(blankDisplay), "r0001 · TikTok");
 });
 
 test("newer overlay flips waiting item to published and keeps older catalog stats", () => {
