@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -31,13 +32,13 @@ PRESERVED = [
     {
         "title": "sleep-types-r0002",
         "label": "sleep-types",
-        "job_id": "drive-10Olj6lP",
+        "job_id": "job-10Olj6lPLOHT92OJXC95Uup5EIingkhCc",
         "drive_video": "https://drive.google.com/file/d/1V5oTyvRH-SvZ7n8ZOr3FOCu_ntbh6nNV/view?usp=drivesdk",
     },
     {
         "title": "毛毡风格01- ISFP",
         "label": "ISFP",
-        "job_id": "drive-1gqgaL8L",
+        "job_id": "job-1gqgaL8LA7CrEDPMfb8gSxWpaNFmzepD6",
         "drive_video": "https://drive.google.com/file/d/1oyf7Jo7vngDqIgf1BN2TG6JsVwR1ujf0/view?usp=drivesdk",
     },
 ]
@@ -50,10 +51,14 @@ class PreserveExistingTests(unittest.TestCase):
         self.assertEqual(len(videos), 6)
         self.assertEqual([video["title"] for video in videos], DRIVE_TITLES)
         self.assertEqual(catalog["batch_folder_id"], "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2")
+        job_id_re = re.compile(r"^job-[a-zA-Z0-9]{8,64}$")
         for video, title in zip(videos, DRIVE_TITLES):
             self.assertEqual(video["title"], title)
             self.assertEqual(video["folder_title"], title)
             self.assertNotEqual(video["title"], video["label"])
+            folder_id = "".join(ch for ch in video["drive_folder_id"] if ch.isalnum())
+            self.assertEqual(video["job_id"], f"job-{folder_id}")
+            self.assertRegex(video["job_id"], job_id_re)
             self.assertEqual(video["stage"], "WAITING_MANUAL_PUBLISH")
             self.assertEqual(video["publish_link"], "")
             self.assertEqual(video["platform"], "TikTok")

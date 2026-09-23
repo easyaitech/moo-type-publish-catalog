@@ -95,7 +95,7 @@ python3 scripts/rebuild_catalog.py
 }
 ```
 
-`stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。新加的条目仍用 `job-` 加 8 到 64 位字母或数字。当前这 6 条来自网盘，`job_id` 是 `drive-` 加文件夹 id 的前 8 位。Worker 仍只接受 `job-` 开头的 id，所以这 6 条还不能在页面上把发布链接写进 KV。
+`stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。`job_id` 必须是 `job-` 加 8 到 64 位字母或数字，Worker 用它当键。当前 6 条用的是 `job-` 加网盘文件夹 id；文件夹 id 里的下划线不放进 `job_id`，否则 Worker 会拒绝。
 
 卡片 `<h2>` 按 `title` → `folder_title` → `label` 取值。加人时把用户用的文件夹显示名写进 `folder_title`（或 `title`）。标题下面一行在和标题不同时才放短标签和修订号，并带上平台。
 
