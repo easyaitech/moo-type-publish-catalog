@@ -1,0 +1,6 @@
+# Copy to .dev.vars for `wrangler dev`. Do not commit .dev.vars.
+# Production values are set with `npx wrangler secret put`, not in this file.
+# Use different random strings, at least 12 characters:
+#   openssl rand -hex 16
+FRIEND_TOKEN=local-friend-token
+ADMIN_TOKEN=local-admin-token-xx

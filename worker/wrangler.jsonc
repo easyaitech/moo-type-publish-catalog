@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "moo-type-publish",
+  "main": "src/index.js",
+  // Newest date this workerd build accepts (wrangler 4.136). A later date fails to boot.
+  "compatibility_date": "2026-08-06",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  // Create with: npx wrangler kv namespace create MOO_STATE
+  // Then replace the placeholder id below and commit it (the id is not secret).
+  "kv_namespaces": [
+    {
+      "binding": "MOO_STATE",
+      "id": "00000000000000000000000000000000"
+    }
+  ]
+}

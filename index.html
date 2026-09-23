@@ -6,173 +6,67 @@
 <title>MOO TYPE 发布与数据看板</title>
 <style>
 :root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #1a1a1a; background: #f4f1ec; }
-body { max-width: 1200px; margin: 0 auto; padding: 24px 16px 72px; }
+body { max-width: 920px; margin: 0 auto; padding: 24px 16px 72px; }
 h1 { font-size: 1.55rem; margin: 0 0 6px; }
+h2 { font-size: 1.05rem; margin: 0; }
 .sub { color: #555; margin: 0 0 18px; line-height: 1.5; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 18px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 14px; }
 .card { background: #fff; border-radius: 12px; padding: 14px 14px 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
 .card .k { font-size: 12px; color: #666; }
 .card .v { font-size: 1.35rem; font-weight: 700; margin-top: 4px; }
-.note { background: #fff8e8; border: 1px solid #f0d9a0; border-radius: 12px; padding: 12px 14px; margin-bottom: 18px; font-size: 14px; line-height: 1.5; }
-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid #eee; vertical-align: top; font-size: 13px; }
-th { background: #efeae3; font-size: 12px; color: #444; white-space: nowrap; }
-tr:last-child td { border-bottom: 0; }
-.num { font-variant-numeric: tabular-nums; text-align: right; }
-th.num { text-align: right; }
-.muted { color: #777; font-size: 12px; }
-.badge { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #eee; color: #333; }
+.note { background: #fff8e8; border: 1px solid #f0d9a0; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; font-size: 14px; line-height: 1.55; }
+.note a { color: #9a4316; }
+.api-status { margin-top: 8px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+.chip { border: 0; background: #fff; border-radius: 999px; padding: 7px 12px; cursor: pointer; font: inherit; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.chip.on { background: #ff7a3d; color: #fff; }
+.token { display: flex; align-items: center; gap: 6px; margin-left: auto; font-size: 13px; color: #444; }
+.token input { border: 1px solid #ddd; border-radius: 8px; padding: 7px 8px; font: inherit; min-width: 180px; background: #fff; }
+.item { background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.item-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.muted { color: #777; font-size: 12px; line-height: 1.45; }
+.badge { display: inline-block; font-size: 12px; padding: 3px 8px; border-radius: 999px; background: #eee; white-space: nowrap; }
 .badge.wait { background: #fff1d6; color: #8a5a00; }
 .badge.ok { background: #e6f6ea; color: #1b7a3a; }
-.links { display: flex; flex-wrap: wrap; gap: 6px; }
-.links a, td a { display: inline-block; padding: 5px 8px; border-radius: 8px; background: #eee; color: #111; text-decoration: none; font-size: 12px; }
-.links a:hover, td a:hover { background: #ff7a3d; color: #fff; }
-footer { margin-top: 18px; color: #777; font-size: 12px; }
+.metrics { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 12px 0 4px; }
+.metric { background: #f7f4ef; border-radius: 10px; padding: 8px; }
+.mk { font-size: 11px; color: #666; }
+.mv { font-variant-numeric: tabular-nums; font-weight: 700; margin-top: 2px; }
+.stat-time { margin-bottom: 10px; }
+.copy-block { margin: 8px 0 10px; }
+.copy-label { font-size: 12px; color: #666; margin-bottom: 6px; }
+.copy-text { white-space: pre-wrap; background: #f7f4ef; border-radius: 10px; padding: 10px; margin: 0 0 8px; font: inherit; font-size: 14px; line-height: 1.5; max-height: 220px; overflow: auto; }
+.links, .publish-form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.btn { display: inline-block; padding: 6px 10px; border-radius: 8px; background: #eee; color: #111; text-decoration: none; font-size: 12px; border: 0; cursor: pointer; font: inherit; }
+.btn.primary { background: #ffe4d6; color: #8a3410; }
+.btn:hover { background: #ff7a3d; color: #fff; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.publish { margin-top: 12px; padding-top: 10px; border-top: 1px solid #f0ebe4; }
+.publish-form input[type="url"] { flex: 1 1 220px; border: 1px solid #ddd; border-radius: 8px; padding: 8px; font: inherit; }
+.form-msg { flex-basis: 100%; font-size: 13px; min-height: 1.2em; }
+.form-msg.ok { color: #1b7a3a; }
+.form-msg.bad { color: #9a3410; }
+.published-link { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
+.post-link { word-break: break-all; }
+.empty { background: #fff; border-radius: 12px; padding: 16px; }
+footer { margin-top: 18px; color: #777; font-size: 12px; line-height: 1.5; }
+@media (max-width: 640px) {
+  .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .token { margin-left: 0; width: 100%; }
+  .token input { flex: 1; min-width: 0; }
+}
 </style>
 </head>
 <body>
 <h1>MOO TYPE 发布与数据看板</h1>
-<p class="sub">成片包 · 发布状态 · 播放/互动数据（回填后更新） · 更新时间 2026-09-08T04:54:29Z UTC</p>
-<div class="cards">
-  <div class="card"><div class="k">成片总数</div><div class="v">9</div></div>
-  <div class="card"><div class="k">待手动发布</div><div class="v">9</div></div>
-  <div class="card"><div class="k">已填发布链接</div><div class="v">0</div></div>
-  <div class="card"><div class="k">总播放</div><div class="v">—</div></div>
-  <div class="card"><div class="k">总点赞</div><div class="v">—</div></div>
-  <div class="card"><div class="k">总评论</div><div class="v">—</div></div>
-</div>
-<div class="note">
-  批次文件夹：<a href="https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2" target="_blank" rel="noopener">https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2</a><br/>
-  把 TikTok（或其他平台）发布链接发我，我会回填「发布链接」和数据列。当前「—」表示尚未回填，不是抓取失败。
-</div>
-<table>
-  <thead>
-    <tr>
-      <th>标签 / 版本</th>
-      <th>状态</th>
-      <th>发布链接</th>
-      <th class="num">播放</th>
-      <th class="num">点赞</th>
-      <th class="num">评论</th>
-      <th class="num">分享</th>
-      <th class="num">收藏</th>
-      <th>数据更新</th>
-      <th>网盘</th>
-    </tr>
-  </thead>
-  <tbody>
-
-<tr>
-  <td><strong>ENFP</strong><br/><span class="muted">r0004</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/1kOr5bpK7Nn8OjerqP7kgwFc9w01_9SeB" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/1U8nwtikuV_D3Q2i77VdEpdChsWSN2Ftq/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/file/d/1DzXtR77oFOsf7l0ezymzA-BQzPcaJCGk/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/18LSI4sCD9OA7aXBMzaltaf4Lklu7VyzT/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>sleep-types</strong><br/><span class="muted">r0002</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/10Olj6lPLOHT92OJXC95Uup5EIingkhCc" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/1V5oTyvRH-SvZ7n8ZOr3FOCu_ntbh6nNV/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=1V5oTyvRH-SvZ7n8ZOr3FOCu_ntbh6nNV&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/1kglJ8ylZCkJc6JS_L71po0ekVCMO-qS2/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1MZt3JqGZmSSdQYuSt8c4fJxzaBr7Y9pk/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>ENFJ</strong><br/><span class="muted">r0002</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/1dLfeUjIKXZ28t3x-n5INvZ1PxxA4iLof" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/1qw_nWx9txAO-ZQYjTHil-b6lslOKV9DZ/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=1qw_nWx9txAO-ZQYjTHil-b6lslOKV9DZ&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/1Oe56D8afjWHJEmi_rY8oyVc6OSxr5Jb3/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1V9c_id5O5g8tANZUNoBhhhwRc9J5p-yW/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>INFJ</strong><br/><span class="muted">r0001</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/1dZrwoxXts2iSbq9D5pbdeFvCMiYGmrkg" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/1TFcJvFJMaCH4wEkEPc4wTsosPNq4HRhL/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=1TFcJvFJMaCH4wEkEPc4wTsosPNq4HRhL&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/1EpyuQm6pCGCH2zbkboAegMrCKB8NuznG/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1RtFowLZVBcpGPSxX2MdRXhSVqraEvcDv/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>ISFP宅</strong><br/><span class="muted">r0002</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/1KT5yw-kfoMNRtLgLDBvxBvZso29zIBWr" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/101dLOUizrWP5GbutBddZBP3DrQVAvDBr/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=101dLOUizrWP5GbutBddZBP3DrQVAvDBr&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/1baa5BPzvd6yaw-xpGs4u_cFRGbjpfBGx/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1ox3VsF1sXriOAvqGhosz8B4OveCAzcJd/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>ISFP摆烂</strong><br/><span class="muted">r0002</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/1EmdivXkmglnIJdSa4M-gHP2D0d0hw_cf" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/1t3XOk1ZInaN7TcXDOc6ZMcEmUErH9y6z/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=1t3XOk1ZInaN7TcXDOc6ZMcEmUErH9y6z&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/197-QXRyYvNu-bwM5thnMDKwkupV1rnvr/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1E0Hsw6lIdZ3U-Gkru2xYRPz01MGcRgMx/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>ENFP-warm</strong><br/><span class="muted">r0002</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/1_jbFOLA2lqTpmltFCR0OqkOM1-tyf8w7" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/1W42c2qmJHnjwWE-9_srTn7lO4b7x_mIv/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=1W42c2qmJHnjwWE-9_srTn7lO4b7x_mIv&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/1JDgRe242HcaHENetgl2LtBsYNSmoKGfp/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1EGXtzDovCapfd20zti0uYt8Aytz-HR2c/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>INTP-solo</strong><br/><span class="muted">r0002</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/17eUEToPxjHhzPi1Ol0sGeK7YZ_FvOUCq" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/1mEzyFaHijSNpRGUx25HNfZE2nLDgS-Xi/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=1mEzyFaHijSNpRGUx25HNfZE2nLDgS-Xi&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/17V4mJ1FSDV9EjbuYyMimjnb8PJOUaJay/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1vVD2tYGUrSh16qyUpKFSnuPIHGomplWz/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-<tr>
-  <td><strong>ENFP-romance</strong><br/><span class="muted">r0002</span></td>
-  <td><span class="badge wait">待手动发布</span><div class="muted" style="margin-top:6px">TikTok</div></td>
-  <td><span class="muted">待回填</span><div class="muted"></div></td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="num">—</td>
-  <td class="muted">—</td>
-  <td class="links"><a href="https://drive.google.com/drive/folders/1IbYJMXPbHF2pwdcHCDncCXJeHQallpXm" target="_blank" rel="noopener">文件夹</a><a href="https://drive.google.com/file/d/12bRx9JA5uoX65uYBzwE5in0D8dFMFWhE/view?usp=drivesdk" target="_blank" rel="noopener">视频</a><a href="https://drive.google.com/uc?id=12bRx9JA5uoX65uYBzwE5in0D8dFMFWhE&amp;export=download" target="_blank" rel="noopener">下载</a><a href="https://drive.google.com/file/d/1nfeW3owqOboJDORgb4o7lwvl9mYILqvA/view?usp=drivesdk" target="_blank" rel="noopener">封面</a><a href="https://drive.google.com/file/d/1e62MpIdVt8s7ve4iBIonRy8V1rmKSdWy/view?usp=drivesdk" target="_blank" rel="noopener">文案</a></td>
-</tr>
-  </tbody>
-</table>
-<footer>数据源：catalog.json · 不自动登录平台抓数 · 发布链接与播放/点赞等数据由用户回填后更新；Bot 不登录 TikTok 自动抓取。</footer>
-<script type="application/json" id="catalog-data">{&quot;updated_at&quot;: &quot;2026-09-08T04:54:29Z&quot;, &quot;title&quot;: &quot;MOO TYPE 发布与数据看板&quot;, &quot;shared_drive_id&quot;: &quot;0APEwIGFXzdMWUk9PVA&quot;, &quot;shared_drive_url&quot;: &quot;https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA&quot;, &quot;batch_folder_name&quot;: &quot;待手动发布&quot;, &quot;batch_folder_id&quot;: &quot;1gttIluYMAMknEcc6O9xicqrh4oYyrcF2&quot;, &quot;batch_folder_url&quot;: &quot;https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2&quot;, &quot;summary&quot;: {&quot;total&quot;: 9, &quot;waiting_manual_publish&quot;: 9, &quot;published_with_link&quot;: 0, &quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null}, &quot;videos&quot;: [{&quot;label&quot;: &quot;ENFP&quot;, &quot;job_id&quot;: &quot;job-fb280b25dd784502b4e4d6ec790fc9a9&quot;, &quot;revision&quot;: &quot;r0004&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/1kOr5bpK7Nn8OjerqP7kgwFc9w01_9SeB&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/1U8nwtikuV_D3Q2i77VdEpdChsWSN2Ftq/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/1DzXtR77oFOsf7l0ezymzA-BQzPcaJCGk/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/18LSI4sCD9OA7aXBMzaltaf4Lklu7VyzT/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;ENFP-r0004&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-fb280b25dd784502b4e4d6ec790fc9a9/r0004/release&quot;}, {&quot;label&quot;: &quot;sleep-types&quot;, &quot;job_id&quot;: &quot;job-02a0798db16a41159107387f7f1c32c1&quot;, &quot;revision&quot;: &quot;r0002&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/10Olj6lPLOHT92OJXC95Uup5EIingkhCc&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/1V5oTyvRH-SvZ7n8ZOr3FOCu_ntbh6nNV/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=1V5oTyvRH-SvZ7n8ZOr3FOCu_ntbh6nNV&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/1kglJ8ylZCkJc6JS_L71po0ekVCMO-qS2/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1MZt3JqGZmSSdQYuSt8c4fJxzaBr7Y9pk/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;sleep-types-r0002&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-02a0798db16a41159107387f7f1c32c1/r0002/release&quot;}, {&quot;label&quot;: &quot;ENFJ&quot;, &quot;job_id&quot;: &quot;job-0775e29ddecd4fc88eb26a0610ecc893&quot;, &quot;revision&quot;: &quot;r0002&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/1dLfeUjIKXZ28t3x-n5INvZ1PxxA4iLof&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/1qw_nWx9txAO-ZQYjTHil-b6lslOKV9DZ/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=1qw_nWx9txAO-ZQYjTHil-b6lslOKV9DZ&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/1Oe56D8afjWHJEmi_rY8oyVc6OSxr5Jb3/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1V9c_id5O5g8tANZUNoBhhhwRc9J5p-yW/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;ENFJ-r0002&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-0775e29ddecd4fc88eb26a0610ecc893/r0002/release&quot;}, {&quot;label&quot;: &quot;INFJ&quot;, &quot;job_id&quot;: &quot;job-c7d143ac19d14f589242d0f50d054465&quot;, &quot;revision&quot;: &quot;r0001&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/1dZrwoxXts2iSbq9D5pbdeFvCMiYGmrkg&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/1TFcJvFJMaCH4wEkEPc4wTsosPNq4HRhL/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=1TFcJvFJMaCH4wEkEPc4wTsosPNq4HRhL&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/1EpyuQm6pCGCH2zbkboAegMrCKB8NuznG/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1RtFowLZVBcpGPSxX2MdRXhSVqraEvcDv/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;INFJ-r0001&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-c7d143ac19d14f589242d0f50d054465/r0001/release&quot;}, {&quot;label&quot;: &quot;ISFP宅&quot;, &quot;job_id&quot;: &quot;job-3f055f32d34b4745b6562258617dfab1&quot;, &quot;revision&quot;: &quot;r0002&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/1KT5yw-kfoMNRtLgLDBvxBvZso29zIBWr&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/101dLOUizrWP5GbutBddZBP3DrQVAvDBr/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=101dLOUizrWP5GbutBddZBP3DrQVAvDBr&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/1baa5BPzvd6yaw-xpGs4u_cFRGbjpfBGx/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1ox3VsF1sXriOAvqGhosz8B4OveCAzcJd/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;ISFP-home-r0002&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-3f055f32d34b4745b6562258617dfab1/r0002/release&quot;}, {&quot;label&quot;: &quot;ISFP摆烂&quot;, &quot;job_id&quot;: &quot;job-fc09d5b33c244ff686f91fd9276fea8b&quot;, &quot;revision&quot;: &quot;r0002&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/1EmdivXkmglnIJdSa4M-gHP2D0d0hw_cf&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/1t3XOk1ZInaN7TcXDOc6ZMcEmUErH9y6z/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=1t3XOk1ZInaN7TcXDOc6ZMcEmUErH9y6z&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/197-QXRyYvNu-bwM5thnMDKwkupV1rnvr/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1E0Hsw6lIdZ3U-Gkru2xYRPz01MGcRgMx/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;ISFP-bailan-r0002&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-fc09d5b33c244ff686f91fd9276fea8b/r0002/release&quot;}, {&quot;label&quot;: &quot;ENFP-warm&quot;, &quot;job_id&quot;: &quot;job-86d07ea01d1546fb8b3e5ed2949cb4a5&quot;, &quot;revision&quot;: &quot;r0002&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/1_jbFOLA2lqTpmltFCR0OqkOM1-tyf8w7&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/1W42c2qmJHnjwWE-9_srTn7lO4b7x_mIv/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=1W42c2qmJHnjwWE-9_srTn7lO4b7x_mIv&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/1JDgRe242HcaHENetgl2LtBsYNSmoKGfp/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1EGXtzDovCapfd20zti0uYt8Aytz-HR2c/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;ENFP-warm-r0002&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-86d07ea01d1546fb8b3e5ed2949cb4a5/r0002/release&quot;}, {&quot;label&quot;: &quot;INTP-solo&quot;, &quot;job_id&quot;: &quot;job-6952e0b3b5134c37abca7199e27b498b&quot;, &quot;revision&quot;: &quot;r0002&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/17eUEToPxjHhzPi1Ol0sGeK7YZ_FvOUCq&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/1mEzyFaHijSNpRGUx25HNfZE2nLDgS-Xi/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=1mEzyFaHijSNpRGUx25HNfZE2nLDgS-Xi&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/17V4mJ1FSDV9EjbuYyMimjnb8PJOUaJay/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1vVD2tYGUrSh16qyUpKFSnuPIHGomplWz/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;INTP-solo-r0002&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-6952e0b3b5134c37abca7199e27b498b/r0002/release&quot;}, {&quot;label&quot;: &quot;ENFP-romance&quot;, &quot;job_id&quot;: &quot;job-9dcdafb8c38c4f0b937677733f87fd37&quot;, &quot;revision&quot;: &quot;r0002&quot;, &quot;stage&quot;: &quot;WAITING_MANUAL_PUBLISH&quot;, &quot;platform&quot;: &quot;TikTok&quot;, &quot;publish_link&quot;: &quot;&quot;, &quot;published_at&quot;: &quot;&quot;, &quot;stats&quot;: {&quot;views&quot;: null, &quot;likes&quot;: null, &quot;comments&quot;: null, &quot;shares&quot;: null, &quot;saves&quot;: null, &quot;updated_at&quot;: &quot;&quot;, &quot;source&quot;: &quot;&quot;}, &quot;drive_folder&quot;: &quot;https://drive.google.com/drive/folders/1IbYJMXPbHF2pwdcHCDncCXJeHQallpXm&quot;, &quot;drive_video&quot;: &quot;https://drive.google.com/file/d/12bRx9JA5uoX65uYBzwE5in0D8dFMFWhE/view?usp=drivesdk&quot;, &quot;drive_video_download&quot;: &quot;https://drive.google.com/uc?id=12bRx9JA5uoX65uYBzwE5in0D8dFMFWhE&amp;export=download&quot;, &quot;drive_cover&quot;: &quot;https://drive.google.com/file/d/1nfeW3owqOboJDORgb4o7lwvl9mYILqvA/view?usp=drivesdk&quot;, &quot;drive_publish_copy&quot;: &quot;https://drive.google.com/file/d/1e62MpIdVt8s7ve4iBIonRy8V1rmKSdWy/view?usp=drivesdk&quot;, &quot;subfolder_name&quot;: &quot;ENFP-romance-r0002&quot;, &quot;local_release&quot;: &quot;/workspace/mbti-video/jobs-v2/job-9dcdafb8c38c4f0b937677733f87fd37/r0002/release&quot;}], &quot;notes_zh&quot;: &quot;发布链接与播放/点赞等数据由用户回填后更新；Bot 不登录 TikTok 自动抓取。&quot;}</script>
+<p class="sub" id="subtitle">成片包 · 待发布 / 已发布</p>
+<div class="cards" id="summary"></div>
+<div class="note" id="banner">正在加载成片…</div>
+<div class="toolbar" id="filters"></div>
+<div id="list"></div>
+<footer>成片留在网盘，不放在 GitHub 上。发布链接由朋友在页面提交；播放、点赞、评论、分享、收藏由助理回填。Bot 不登录 TikTok 自动抓取。</footer>
+<noscript>请启用 JavaScript。这个看板要从 catalog.json 读成片，并在页面上提交发布链接。</noscript>
+<script src="site-config.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
