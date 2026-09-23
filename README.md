@@ -22,7 +22,7 @@ John 把成片交给朋友手动发 TikTok，朋友在这个页面回填帖子�
 
 1. 打开上面的 Pages 地址。
 2. 用 **待发布 / 已发布** 看还没发的和已经发的。顶部数字是成片总数、待手动发布、已填链接，以及播放、点赞、评论合计。
-3. 每张卡片上：复制文案（没有内嵌文案时，点「文案文件」去网盘复制），点 **下载视频**、**下载封面**。
+3. 每张卡片的大标题是网盘文件夹名（例如 `ENFP-r0004`、`ISFP-home-r0002`）。下面一行是短标签（和标题不同时）、修订号和平台。复制文案（没有内嵌文案时，点「文案文件」去网盘复制），点 **下载视频**、**下载封面**。
 4. 自己发到 TikTok。
 5. 把帖子链接贴回这张卡片。链接需要是 `https://www.tiktok.com/...`、`https://vm.tiktok.com/...` 或 `https://vt.tiktok.com/...`。
 6. 在页面上方填一次 **回填口令**（John 单独发，不在这个仓库里）。口令会留在这台浏览器里。
@@ -45,7 +45,9 @@ python3 scripts/add_entry.py \
 
 文案也可以来自文件：`--copy-file ./caption.txt`（和 `--copy-text` 二选一）。
 
-可选：`--revision r0001`、`--folder-url`、`--copy-drive-url`、`--job-id`。不写 `--job-id` 时会生成 `job-` 加 32 位随机字符。
+卡片大标题是网盘文件夹名（`subfolder_name`），不是 `--label`。`--label` 是短标签，写在标题下面那一行。不传 `--subfolder-name` 时，文件夹名是 `标签-修订号`（例如 `INTJ-r0001`）。网盘文件夹另有名字时再写，例如 `--subfolder-name ISFP-home-r0002 --label "ISFP宅"`。
+
+可选：`--revision r0001`、`--subfolder-name`、`--folder-url`、`--copy-drive-url`、`--job-id`。不写 `--job-id` 时会生成 `job-` 加 32 位随机字符。
 
 Drive 的 `/file/d/<id>/` 会自动写成下载地址 `https://drive.google.com/uc?id=<id>&export=download`。已经是普通 https 的封面地址会原样当作下载地址。同一支视频文件不能加第二次。
 
@@ -92,6 +94,8 @@ python3 scripts/rebuild_catalog.py
 ```
 
 `stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。`job_id` 必须匹配 `job-` 加 8 到 64 位字母或数字，Worker 用它当键。
+
+卡片 `<h2>` 用 `subfolder_name`（网盘文件夹名）。没有文件夹名时才用 `label`。标题下面一行是短标签（和标题相同则省略）、修订号和平台，不再把文件夹名重复一遍。已有条目的 `label` 和网盘文件夹名不用改。
 
 ## 怎么更新播放数据
 

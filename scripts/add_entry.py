@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Append one waiting publish item from download URLs and caption text.
 
+The board title is the Drive folder name (subfolder_name), not --label.
+The default folder name is LABEL-REVISION, for example INTJ-r0001.
+Pass --subfolder-name when the Drive folder uses a different name.
+
 Example:
   python3 scripts/add_entry.py \\
     --label "INTJ" \\
@@ -29,12 +33,21 @@ from catalog_lib import (
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Add a catalog entry from URLs and publish copy.")
-    parser.add_argument("--label", required=True, help="Short name shown on the board, e.g. ENFP")
+    parser.add_argument(
+        "--label",
+        required=True,
+        help="Short name in the card meta line, e.g. ENFP or ISFP宅. The card title is the folder name.",
+    )
     parser.add_argument("--video-url", required=True, help="https link to the mp4 (Drive view or direct)")
     parser.add_argument("--cover-url", default="", help="https link to the cover image")
     parser.add_argument("--copy-text", default="", help="Publish caption. Shown inline on the page.")
     parser.add_argument("--copy-file", default="", help="UTF-8 text file used as the caption")
     parser.add_argument("--revision", default="r0001")
+    parser.add_argument(
+        "--subfolder-name",
+        default="",
+        help="Drive folder name, used as the card title. Default is LABEL-REVISION.",
+    )
     parser.add_argument("--job-id", default="", help="Optional. Default is job- plus a random id.")
     parser.add_argument("--folder-url", default="", help="Drive folder for this cut")
     parser.add_argument("--copy-drive-url", default="", help="Optional Drive file link for the caption")
@@ -54,6 +67,7 @@ def main() -> None:
         cover_url=args.cover_url,
         publish_copy=publish_copy,
         revision=args.revision,
+        subfolder_name=args.subfolder_name,
         job_id=args.job_id,
         folder_url=args.folder_url,
         copy_drive_url=args.copy_drive_url,

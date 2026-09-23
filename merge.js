@@ -122,3 +122,26 @@ export function stageLabel(stage, hasLink) {
   if (stage === "WAITING_MANUAL_PUBLISH") return "待手动发布";
   return stage || "未知";
 }
+
+/** Card heading is the Drive folder name. Fall back to the short label. */
+export function cardTitle(video) {
+  const folder = String(video?.subfolder_name || "").trim();
+  const label = String(video?.label || "").trim();
+  return folder || label;
+}
+
+/**
+ * Secondary line: short label, revision, and platform.
+ * Skip a part when it is the same string as the heading so the folder name is not repeated.
+ */
+export function cardMeta(video) {
+  const title = cardTitle(video);
+  const label = String(video?.label || "").trim();
+  const revision = String(video?.revision || "").trim();
+  const platform = String(video?.platform || "").trim() || "TikTok";
+  const parts = [];
+  if (label && label !== title) parts.push(label);
+  if (revision && revision !== title) parts.push(revision);
+  if (platform && platform !== title) parts.push(platform);
+  return parts.join(" · ");
+}

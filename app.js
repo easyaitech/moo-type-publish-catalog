@@ -1,4 +1,4 @@
-import { downloadUrl, isTikTokUrl, mergeVideo, safeHttpUrl, stageLabel, summarize } from "./merge.js";
+import { cardMeta, cardTitle, downloadUrl, isTikTokUrl, mergeVideo, safeHttpUrl, stageLabel, summarize } from "./merge.js";
 
 const TOKEN_KEY = "moo-friend-token";
 
@@ -271,8 +271,8 @@ function renderCard(video) {
   const card = el("article", "item");
   const head = el("div", "item-head");
   const title = el("div");
-  const name = el("h2", "", video.label);
-  const meta = el("div", "muted", `${video.revision || ""} · ${video.subfolder_name || ""} · ${video.platform || "TikTok"}`);
+  const name = el("h2", "", cardTitle(video));
+  const meta = el("div", "muted", cardMeta(video));
   title.append(name, meta);
   const published = Boolean(video.publish_link);
   const badge = el("span", published ? "badge ok" : "badge wait", stageLabel(video.stage, published));

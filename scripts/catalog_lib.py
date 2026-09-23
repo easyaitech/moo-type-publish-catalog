@@ -245,6 +245,7 @@ def build_video(
     cover_url: str = "",
     publish_copy: str = "",
     revision: str = "r0001",
+    subfolder_name: str = "",
     job_id: str = "",
     folder_url: str = "",
     copy_drive_url: str = "",
@@ -269,6 +270,7 @@ def build_video(
     if not JOB_ID_RE.match(job_id):
         raise ValueError("job-id must look like job- followed by 8-64 letters or digits")
     revision = revision.strip() or "r0001"
+    folder_name = subfolder_name.strip() or f"{label}-{revision}"
     return normalize_video(
         {
             "label": label,
@@ -286,7 +288,7 @@ def build_video(
             "drive_cover": cover_url,
             "drive_cover_download": drive_download_url(cover_url) if cover_url else "",
             "drive_publish_copy": copy_drive_url,
-            "subfolder_name": f"{label}-{revision}",
+            "subfolder_name": folder_name,
             "local_release": "",
         }
     )

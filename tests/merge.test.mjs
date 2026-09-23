@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { downloadUrl, isTikTokUrl, mergeVideo, summarize } from "../merge.js";
+import { cardMeta, cardTitle, downloadUrl, isTikTokUrl, mergeVideo, summarize } from "../merge.js";
 
 test("drive download link is derived when the catalog field is empty", () => {
   assert.equal(
@@ -17,6 +17,24 @@ test("tiktok urls accepted, other https urls rejected", () => {
   assert.equal(isTikTokUrl("https://evil.com/tiktok.com"), false);
   assert.equal(isTikTokUrl("http://www.tiktok.com/@moo/video/1"), false);
   assert.equal(isTikTokUrl("https://tiktok.com"), false);
+});
+
+test("card title is the drive folder name and meta skips that name", () => {
+  const enfp = { label: "ENFP", subfolder_name: "ENFP-r0004", revision: "r0004", platform: "TikTok" };
+  assert.equal(cardTitle(enfp), "ENFP-r0004");
+  assert.equal(cardMeta(enfp), "ENFP · r0004 · TikTok");
+
+  const home = { label: "ISFP宅", subfolder_name: "ISFP-home-r0002", revision: "r0002", platform: "TikTok" };
+  assert.equal(cardTitle(home), "ISFP-home-r0002");
+  assert.equal(cardMeta(home), "ISFP宅 · r0002 · TikTok");
+
+  const fallback = { label: "INTJ", revision: "r0001", platform: "" };
+  assert.equal(cardTitle(fallback), "INTJ");
+  assert.equal(cardMeta(fallback), "r0001 · TikTok");
+
+  const same = { label: "ENFP-r0004", subfolder_name: "ENFP-r0004", revision: "r0004", platform: "TikTok" };
+  assert.equal(cardTitle(same), "ENFP-r0004");
+  assert.equal(cardMeta(same), "r0004 · TikTok");
 });
 
 test("newer overlay flips waiting item to published and keeps older catalog stats", () => {

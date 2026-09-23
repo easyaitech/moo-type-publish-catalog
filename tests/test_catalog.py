@@ -190,7 +190,38 @@ class CatalogToolTests(unittest.TestCase):
                 "https://drive.google.com/uc?id=NEWVIDEO123&export=download",
             )
             self.assertEqual(video["drive_cover_download"], cover_url)
+            self.assertEqual(video["subfolder_name"], "INTJ-r0003")
             self.assertEqual(saved["videos"][0]["job_id"], PRESERVED[0]["job_id"])
+
+    def test_add_entry_keeps_explicit_folder_name_as_title_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog_path = Path(tmp) / "catalog.json"
+            catalog_path.write_text((ROOT / "catalog.json").read_text(encoding="utf-8"), encoding="utf-8")
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts" / "add_entry.py"),
+                    "--catalog",
+                    str(catalog_path),
+                    "--label",
+                    "ISFP宅",
+                    "--subfolder-name",
+                    "ISFP-home-r0009",
+                    "--video-url",
+                    "https://drive.google.com/file/d/FOLDERNAME123/view",
+                    "--revision",
+                    "r0009",
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            saved = json.loads(catalog_path.read_text(encoding="utf-8"))
+            video = saved["videos"][-1]
+            self.assertEqual(video["job_id"], json.loads(proc.stdout)["added"])
+            self.assertEqual(video["label"], "ISFP宅")
+            self.assertEqual(video["subfolder_name"], "ISFP-home-r0009")
+            self.assertEqual(len(saved["videos"]), 10)
 
     def test_add_entry_rejects_duplicate_drive_file(self):
         with tempfile.TemporaryDirectory() as tmp:
