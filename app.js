@@ -1,4 +1,4 @@
-import { cardMeta, cardTitle, downloadUrl, isTikTokUrl, mergeVideo, safeHttpUrl, stageLabel, summarize } from "./merge.js";
+import { cardMeta, downloadUrl, isTikTokUrl, mergeVideo, safeHttpUrl, stageLabel, summarize } from "./merge.js";
 
 const TOKEN_KEY = "moo-friend-token";
 
@@ -271,7 +271,8 @@ function renderCard(video) {
   const card = el("article", "item");
   const head = el("div", "item-head");
   const title = el("div");
-  const name = el("h2", "", cardTitle(video));
+  const displayTitle = video.title || video.folder_title || video.label || "";
+  const name = el("h2", "", displayTitle);
   const meta = el("div", "muted", cardMeta(video));
   title.append(name, meta);
   const published = Boolean(video.publish_link);

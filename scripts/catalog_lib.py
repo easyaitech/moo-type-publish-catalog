@@ -45,7 +45,7 @@ STATS_ORDER = STAT_KEYS + ("updated_at", "source")
 
 DRIVE_FILE_RE = re.compile(r"/file/d/([^/?#]+)")
 DRIVE_ID_RE = re.compile(r"[?&]id=([^&#]+)")
-JOB_ID_RE = re.compile(r"^job-[a-zA-Z0-9]{8,64}$")
+JOB_ID_RE = re.compile(r"^(?:job|drive)-[a-zA-Z0-9]{8,64}$")
 
 
 def utc_now() -> str:
@@ -144,7 +144,10 @@ def normalize_video(video: dict) -> dict:
     else:
         out.pop("folder_title", None)
     out["job_id"] = job_id
-    out["revision"] = str(video.get("revision") or "r0001")
+    if "revision" in video and video.get("revision") is not None:
+        out["revision"] = str(video.get("revision")).strip()
+    else:
+        out["revision"] = "r0001"
     out["stage"] = str(video.get("stage") or "WAITING_MANUAL_PUBLISH")
     out["platform"] = str(video.get("platform") or "TikTok")
     out["publish_link"] = str(video.get("publish_link") or "")
@@ -156,7 +159,10 @@ def normalize_video(video: dict) -> dict:
     out["drive_cover"] = str(video.get("drive_cover") or "")
     out["drive_publish_copy"] = str(video.get("drive_publish_copy") or "")
     out["subfolder_name"] = str(video.get("subfolder_name") or f"{label}-{out['revision']}")
-    out["local_release"] = str(video.get("local_release") or "")
+    if "local_release" in video:
+        out["local_release"] = str(video.get("local_release") or "")
+    else:
+        out.pop("local_release", None)
     explicit_video_dl = str(video.get("drive_video_download") or "")
     explicit_cover_dl = str(video.get("drive_cover_download") or "")
     out["drive_video_download"] = explicit_video_dl or drive_download_url(out["drive_video"])

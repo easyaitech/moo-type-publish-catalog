@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { cardMeta, cardTitle, downloadUrl, isTikTokUrl, mergeVideo, summarize } from "../merge.js";
 
@@ -60,9 +61,30 @@ test("card title prefers folder display name over the technical subfolder id", (
   assert.equal(cardTitle(sameAsSubfolder), "sleep-types-r0002");
   assert.equal(cardMeta(sameAsSubfolder), "sleep-types · r0002 · TikTok");
 
-  const blankDisplay = { label: "INTJ", title: "  ", folder_title: "", revision: "r0001", platform: "" };
+  const blankDisplay = { label: "INTJ", title: "", folder_title: "", revision: "r0001", platform: "" };
   assert.equal(cardTitle(blankDisplay), "INTJ");
   assert.equal(cardMeta(blankDisplay), "r0001 · TikTok");
+});
+
+test("catalog card headings are the six live drive folder names", () => {
+  const catalog = JSON.parse(readFileSync(new URL("../catalog.json", import.meta.url), "utf8"));
+  const expected = [
+    "sleep-types-r0002",
+    "毛毡风格01- ISFP",
+    "毛毡风格2-ENFJ",
+    "潮玩方向1-ENTP",
+    "潮玩方向2-INFP",
+    "软萌贴纸1-ESFP",
+  ];
+  assert.equal(catalog.videos.length, 6);
+  assert.deepEqual(
+    catalog.videos.map((video) => video.title || video.folder_title || video.label || ""),
+    expected,
+  );
+  for (const video of catalog.videos) {
+    assert.equal(cardTitle(video), video.title);
+    assert.notEqual(cardTitle(video), video.label);
+  }
 });
 
 test("newer overlay flips waiting item to published and keeps older catalog stats", () => {

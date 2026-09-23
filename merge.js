@@ -123,15 +123,9 @@ export function stageLabel(stage, hasLink) {
   return stage || "未知";
 }
 
-/**
- * Card heading is the human folder name, not the technical subfolder_name.
- * Prefer video.title, then folder_title, then the short label.
- */
+/** Card heading: Drive display name, then folder_title, then the short label. */
 export function cardTitle(video) {
-  const displayTitle = String(video?.title || "").trim();
-  const folderTitle = String(video?.folder_title || "").trim();
-  const label = String(video?.label || "").trim();
-  return displayTitle || folderTitle || label;
+  return video?.title || video?.folder_title || video?.label || "";
 }
 
 /**
