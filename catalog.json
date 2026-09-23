@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-23T06:46:43Z",
+  "updated_at": "2026-09-23T15:39:47Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 6,
-    "waiting_manual_publish": 6,
+    "total": 7,
+    "waiting_manual_publish": 7,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -221,6 +221,40 @@
         "publish-copy.md",
         "ESFP-cover-1080x1920.jpg",
         "ESFP-C-final-1080x1920.mp4"
+      ]
+    },
+    {
+      "title": "软萌贴纸2-INTP",
+      "label": "INTP",
+      "folder_title": "软萌贴纸2-INTP",
+      "job_id": "job-1Qy0G2aMW8yq7A8WCMXSyMUSjMEfRzr0w",
+      "revision": "",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1Qy0G2aMW8yq7A8WCMXSyMUSjMEfRzr0w",
+      "drive_video": "https://drive.google.com/file/d/1TqjDlZEezdxC3jGiBRmYobsXfPX2ySaI/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1TqjDlZEezdxC3jGiBRmYobsXfPX2ySaI&export=download",
+      "drive_cover": "https://drive.google.com/file/d/11u4eAzC-jcBNgRwf45vl_VkT0reUK8FK/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=11u4eAzC-jcBNgRwf45vl_VkT0reUK8FK&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1g1iTXn8GR3oI_fkJ19Xeg3o3L4OwYD0r6vf6FPgMEZo/view?usp=drivesdk",
+      "subfolder_name": "软萌贴纸2-INTP",
+      "drive_folder_id": "1Qy0G2aMW8yq7A8WCMXSyMUSjMEfRzr0w",
+      "files_in_folder": [
+        "TK发布文案",
+        "cover-1080x1920.png",
+        "INTP-C-th-v3-guess-opening-1080x1920.mp4"
       ]
     }
   ]
