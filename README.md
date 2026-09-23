@@ -22,7 +22,7 @@ John 把成片交给朋友手动发 TikTok，朋友在这个页面回填帖子�
 
 1. 打开上面的 Pages 地址。
 2. 用 **待发布 / 已发布** 看还没发的和已经发的。顶部数字是成片总数、待手动发布、已填链接，以及播放、点赞、评论合计。
-3. 每张卡片上：复制文案（没有内嵌文案时，点「文案文件」去网盘复制），点 **下载视频**、**下载封面**。
+3. 每张卡片的大标题是网盘文件夹显示名（`title`，否则 `folder_title`，否则短标签）。下面一行是短标签（和标题不同时）、修订号和平台。复制文案（没有内嵌文案时，点「文案文件」去网盘复制），点 **下载视频**、**下载封面**。
 4. 自己发到 TikTok。
 5. 把帖子链接贴回这张卡片。链接需要是 `https://www.tiktok.com/...`、`https://vm.tiktok.com/...` 或 `https://vt.tiktok.com/...`。
 6. 在页面上方填一次 **回填口令**（John 单独发，不在这个仓库里）。口令会留在这台浏览器里。
@@ -36,7 +36,8 @@ John 把成片交给朋友手动发 TikTok，朋友在这个页面回填帖子�
 
 ```bash
 python3 scripts/add_entry.py \
-  --label "INTJ" \
+  --label "ESFP" \
+  --folder-title "软萌贴纸1-ESFP" \
   --video-url "https://drive.google.com/file/d/VIDEO_FILE_ID/view" \
   --cover-url "https://drive.google.com/file/d/COVER_FILE_ID/view" \
   --copy-text "第一行标题
@@ -45,7 +46,9 @@ python3 scripts/add_entry.py \
 
 文案也可以来自文件：`--copy-file ./caption.txt`（和 `--copy-text` 二选一）。
 
-可选：`--revision r0001`、`--folder-url`、`--copy-drive-url`、`--job-id`。不写 `--job-id` 时会生成 `job-` 加 32 位随机字符。
+`--folder-title` 是用户用的文件夹显示名，会写成 `folder_title`，并作为卡片大标题。例如 `软萌贴纸1-ESFP`、`潮玩方向2-INFP`、`毛毡风格01- ISFP`、`sleep-types-r0002`。这不是技术子目录 `subfolder_name`（例如 `ENFP-r0004`）。`--label` 是短标签。可选 `--title` 会盖过 `folder_title`。两个都空着时，卡片标题退回 `label`。
+
+可选：`--revision r0001`、`--title`、`--folder-url`、`--copy-drive-url`、`--job-id`。不写 `--job-id` 时会生成 `job-` 加 32 位随机字符。`subfolder_name` 仍自动写成 `标签-修订号`，只作技术 id，不当卡片标题。
 
 Drive 的 `/file/d/<id>/` 会自动写成下载地址 `https://drive.google.com/uc?id=<id>&export=download`。已经是普通 https 的封面地址会原样当作下载地址。同一支视频文件不能加第二次。
 
@@ -57,13 +60,14 @@ Drive 的 `/file/d/<id>/` 会自动写成下载地址 `https://drive.google.com/
 python3 scripts/rebuild_catalog.py
 ```
 
-现有 9 条的文案文件在网盘上，需要登录，所以看板里 `publish_copy` 仍是空的，卡片会给出「文案文件」链接。原来的查看链接都还在。ENFP 以前没有下载地址，现在按文件 id 补了一条，原来的「打开视频 / 封面」链接没换。
+看板列出「待手动发布」里当前的 6 个文件夹。卡片标题是这些文件夹的显示名。文案还在网盘文件里，`publish_copy` 为空时卡片给出「文案文件」链接。
 
 ### catalog.json 里一条视频
 
 ```json
 {
-  "label": "INTJ",
+  "label": "ESFP",
+  "folder_title": "软萌贴纸1-ESFP",
   "job_id": "job-0123456789abcdef0123456789abcdef",
   "revision": "r0001",
   "stage": "WAITING_MANUAL_PUBLISH",
@@ -86,12 +90,14 @@ python3 scripts/rebuild_catalog.py
   "drive_cover": "https://drive.google.com/file/d/COVER_FILE_ID/view",
   "drive_cover_download": "https://drive.google.com/uc?id=COVER_FILE_ID&export=download",
   "drive_publish_copy": "",
-  "subfolder_name": "INTJ-r0001",
+  "subfolder_name": "ESFP-r0001",
   "local_release": ""
 }
 ```
 
-`stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。`job_id` 必须匹配 `job-` 加 8 到 64 位字母或数字，Worker 用它当键。
+`stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。`job_id` 必须是 `job-` 加 8 到 64 位字母或数字，Worker 用它当键。当前 6 条用的是 `job-` 加网盘文件夹 id；文件夹 id 里的下划线不放进 `job_id`，否则 Worker 会拒绝。
+
+卡片 `<h2>` 按 `title` → `folder_title` → `label` 取值。加人时把用户用的文件夹显示名写进 `folder_title`（或 `title`）。标题下面一行在和标题不同时才放短标签和修订号，并带上平台。
 
 ## 怎么更新播放数据
 

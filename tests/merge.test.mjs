@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
-import { downloadUrl, isTikTokUrl, mergeVideo, summarize } from "../merge.js";
+import { cardMeta, cardTitle, downloadUrl, isTikTokUrl, mergeVideo, summarize } from "../merge.js";
 
 test("drive download link is derived when the catalog field is empty", () => {
   assert.equal(
@@ -17,6 +18,73 @@ test("tiktok urls accepted, other https urls rejected", () => {
   assert.equal(isTikTokUrl("https://evil.com/tiktok.com"), false);
   assert.equal(isTikTokUrl("http://www.tiktok.com/@moo/video/1"), false);
   assert.equal(isTikTokUrl("https://tiktok.com"), false);
+});
+
+test("card title prefers folder display name over the technical subfolder id", () => {
+  const unlabeled = {
+    label: "ENFP",
+    subfolder_name: "ENFP-r0004",
+    revision: "r0004",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(unlabeled), "ENFP");
+  assert.equal(cardMeta(unlabeled), "r0004 · ENFP-r0004 · TikTok");
+
+  const folderTitle = {
+    label: "ESFP",
+    folder_title: "软萌贴纸1-ESFP",
+    subfolder_name: "ESFP-r0001",
+    revision: "r0001",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(folderTitle), "软萌贴纸1-ESFP");
+  assert.equal(cardMeta(folderTitle), "ESFP · r0001 · ESFP-r0001 · TikTok");
+
+  const titled = {
+    label: "INFP",
+    title: "潮玩方向2-INFP",
+    folder_title: "毛毡风格2-ENFJ",
+    subfolder_name: "INFP-r0002",
+    revision: "r0002",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(titled), "潮玩方向2-INFP");
+  assert.equal(cardMeta(titled), "INFP · r0002 · INFP-r0002 · TikTok");
+
+  const sameAsSubfolder = {
+    label: "sleep-types",
+    folder_title: "sleep-types-r0002",
+    subfolder_name: "sleep-types-r0002",
+    revision: "r0002",
+    platform: "TikTok",
+  };
+  assert.equal(cardTitle(sameAsSubfolder), "sleep-types-r0002");
+  assert.equal(cardMeta(sameAsSubfolder), "sleep-types · r0002 · TikTok");
+
+  const blankDisplay = { label: "INTJ", title: "", folder_title: "", revision: "r0001", platform: "" };
+  assert.equal(cardTitle(blankDisplay), "INTJ");
+  assert.equal(cardMeta(blankDisplay), "r0001 · TikTok");
+});
+
+test("catalog card headings are the six live drive folder names", () => {
+  const catalog = JSON.parse(readFileSync(new URL("../catalog.json", import.meta.url), "utf8"));
+  const expected = [
+    "sleep-types-r0002",
+    "毛毡风格01- ISFP",
+    "毛毡风格2-ENFJ",
+    "潮玩方向1-ENTP",
+    "潮玩方向2-INFP",
+    "软萌贴纸1-ESFP",
+  ];
+  assert.equal(catalog.videos.length, 6);
+  assert.deepEqual(
+    catalog.videos.map((video) => video.title || video.folder_title || video.label || ""),
+    expected,
+  );
+  for (const video of catalog.videos) {
+    assert.equal(cardTitle(video), video.title);
+    assert.notEqual(cardTitle(video), video.label);
+  }
 });
 
 test("newer overlay flips waiting item to published and keeps older catalog stats", () => {
