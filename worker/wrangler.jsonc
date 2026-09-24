@@ -9,6 +9,10 @@
     "enabled": true,
     "head_sampling_rate": 1
   },
+  // Public TikTok counts, UTC every 3 hours (00:00, 03:00, 06:00, ...).
+  "triggers": {
+    "crons": ["0 */3 * * *"]
+  },
   // Create with: npx wrangler kv namespace create MOO_STATE
   // Then replace the placeholder id below and commit it (the id is not secret).
   "kv_namespaces": [
