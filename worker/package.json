@@ -6,7 +6,7 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "types": "wrangler types",
-    "test": "node --test test/api.test.mjs"
+    "test": "node --test test/api.test.mjs test/parse.test.mjs"
   },
   "devDependencies": {
     "miniflare": "^4.20260730.0",

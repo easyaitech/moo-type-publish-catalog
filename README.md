@@ -11,7 +11,7 @@ John 把成片交给朋友手动发 TikTok，朋友在这个页面回填帖子�
 | 部分 | 放在哪 | 谁来写 |
 |---|---|---|
 | 标签、文案、网盘链接 | `catalog.json`，Pages 静态站 | 助理改 git |
-| 发布链接、播放/点赞/评论/分享/收藏 | Cloudflare Worker + KV | 朋友在页面提交链接；助理用脚本写数据 |
+| 发布链接、播放/点赞/评论/分享/收藏 | Cloudflare Worker + KV | 朋友在页面提交链接；Worker 每 3 小时从公开 TikTok 页抓数；助理也可以用脚本写 |
 | 成片文件 | Drive / 外部 URL | 不进 GitHub |
 
 页面先读 `catalog.json`，再向 Worker 要同一批 `job_id` 的回填。哪边的时间更新，就用哪边。Worker 没部署时，列表、文案和下载仍然可用，只是不能在页面上提交。
@@ -28,7 +28,7 @@ John 把成片交给朋友手动发 TikTok，朋友在这个页面回填帖子�
 6. 在页面上方填一次 **回填口令**（John 单独发，不在这个仓库里）。口令会留在这台浏览器里。
 7. 点 **我已发布，提交链接**。卡片变成已发布。不用改 git。
 
-「—」表示这项还没人填，不是抓取失败。这个站不会登录 TikTok。
+「—」表示这项还没有成功写入（手动或公开页抓取），不是页面坏了。私密或需要登录才能看的帖子不会自动出数。这个站不会登录 TikTok。
 
 如果黄条写着「回填服务还没接上」，说明 Worker 还没部署，或 `site-config.js` 里的地址还是空的。先把链接发给 John。
 
@@ -101,7 +101,11 @@ python3 scripts/rebuild_catalog.py
 
 ## 怎么更新播放数据
 
-数字不会自动抓。助理看到 TikTok 后台的数之后，写入目录：
+Worker 部署之后，每 3 小时（UTC 的 0 点、3 点、6 点……）会扫一遍 KV 里带 `publish_link` 的回填。它对公开 TikTok 页发一次普通网页请求（短链会跳到 `www.tiktok.com`），从页面里的公开计数写入播放、点赞、评论、分享、收藏，`stats.source` 记为 `tiktok-public`。没有链接的条目会跳过。
+
+某一项显示「—」，表示还没有一次成功的抓取或手动写入。私密帖、要登录才看得到的帖，公开页里没有这些数字，自动刷新不会改掉已经写下的数。
+
+助理仍可以手动改数。没写的那一项保持原样。`0` 可以写：
 
 ```bash
 python3 scripts/update_stats.py \
@@ -109,7 +113,7 @@ python3 scripts/update_stats.py \
   --views 1200 --likes 34 --comments 0 --shares 2 --saves 5
 ```
 
-没写的那一项保持原样。`0` 可以写。然后把 `catalog.json` 推进 git，Pages 更新后就能看到。
+然后把 `catalog.json` 推进 git，Pages 更新后就能看到。
 
 Worker 已经部署时，可以同时写到线上（页面不用等 Pages）：
 
@@ -118,6 +122,17 @@ export MOO_API_BASE="https://moo-type-publish.<account>.workers.dev"
 export MOO_ADMIN_TOKEN="部署时设置的管理员口令"
 python3 scripts/update_stats.py --job-id job-... --views 1200 --likes 34 --comments 0 --shares 2 --saves 5 --push
 ```
+
+要马上重抓公开页，而不是等下一次定时任务，用管理员口令调用（口令不要写进仓库）：
+
+```bash
+curl -sS -X POST "$MOO_API_BASE/v1/refresh-stats" \
+  -H "content-type: application/json" \
+  -H "x-moo-token: $MOO_ADMIN_TOKEN" \
+  -d '{"id":"job-0123456789abcdef0123456789abcdef"}'
+```
+
+不带 `id`（空 body）会刷新所有已填链接的条目。返回形如 `{ "ok": true, "refreshed": ["job-..."], "failed": [{ "id": "job-...", "error": "stats_missing" }] }`。`refreshed` 是这次写成功的 job id。`failed` 是没写上的 id 和简短原因。有失败时 `ok` 为 false，已经成功的仍在 `refreshed` 里。失败不会清掉旧数字。
 
 朋友提交的链接只在 KV 里。要收进 git 做备份：
 
@@ -148,10 +163,12 @@ npx wrangler secret put ADMIN_TOKEN
 npx wrangler deploy
 ```
 
+`wrangler.jsonc` 里的 cron 会一起部署：每 3 小时从公开 TikTok 页刷新播放数据。
+
 | 密钥 | 谁有 | 作用 |
 |---|---|---|
 | `FRIEND_TOKEN` | 朋友，页面上的「回填口令」 | `POST /v1/publish` |
-| `ADMIN_TOKEN` | 只有助理 | `POST /v1/stats` |
+| `ADMIN_TOKEN` | 只有助理 | `POST /v1/stats`、`POST /v1/refresh-stats` |
 | `CLOUDFLARE_API_TOKEN` | 部署的人，或 GitHub Actions secret | `wrangler deploy` |
 | `CLOUDFLARE_ACCOUNT_ID` | 同上，GitHub Actions secret | `wrangler deploy` |
 
@@ -182,4 +199,4 @@ node --test tests/merge.test.mjs
 cd worker && npm ci && npm test
 ```
 
-Worker 测试用 Miniflare：没口令不能写、非 TikTok 链接会拒绝、朋友口令不能改数据、管理员可以写播放数，并且关掉进程再打开后链接还在。
+Worker 测试用 Miniflare：没口令不能写、非 TikTok 链接会拒绝、朋友口令不能改数据、管理员可以写播放数，并且关掉进程再打开后链接还在。解析播放数用一份本地 HTML 片段，测试不会请求 TikTok。
