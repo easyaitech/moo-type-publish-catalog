@@ -66,7 +66,7 @@ test("card title prefers folder display name over the technical subfolder id", (
   assert.equal(cardMeta(blankDisplay), "r0001 · TikTok");
 });
 
-test("catalog card headings are the six live drive folder names", () => {
+test("catalog card headings are the seven live drive folder names", () => {
   const catalog = JSON.parse(readFileSync(new URL("../catalog.json", import.meta.url), "utf8"));
   const expected = [
     "sleep-types-r0002",
@@ -75,8 +75,9 @@ test("catalog card headings are the six live drive folder names", () => {
     "潮玩方向1-ENTP",
     "潮玩方向2-INFP",
     "软萌贴纸1-ESFP",
+    "软萌贴纸2-INTP",
   ];
-  assert.equal(catalog.videos.length, 6);
+  assert.equal(catalog.videos.length, 7);
   assert.deepEqual(
     catalog.videos.map((video) => video.title || video.folder_title || video.label || ""),
     expected,

@@ -60,7 +60,7 @@ Drive 的 `/file/d/<id>/` 会自动写成下载地址 `https://drive.google.com/
 python3 scripts/rebuild_catalog.py
 ```
 
-看板列出「待手动发布」里当前的 6 个文件夹。卡片标题是这些文件夹的显示名。文案还在网盘文件里，`publish_copy` 为空时卡片给出「文案文件」链接。
+看板列出「待手动发布」里当前的 7 个文件夹。卡片标题是这些文件夹的显示名。文案还在网盘文件里，`publish_copy` 为空时卡片给出「文案文件」链接。
 
 ### catalog.json 里一条视频
 
@@ -95,7 +95,7 @@ python3 scripts/rebuild_catalog.py
 }
 ```
 
-`stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。`job_id` 必须是 `job-` 加 8 到 64 位字母或数字，Worker 用它当键。当前 6 条用的是 `job-` 加网盘文件夹 id；文件夹 id 里的下划线不放进 `job_id`，否则 Worker 会拒绝。
+`stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。`job_id` 必须是 `job-` 加 8 到 64 位字母或数字，Worker 用它当键。当前 7 条用的是 `job-` 加网盘文件夹 id；文件夹 id 里的下划线不放进 `job_id`，否则 Worker 会拒绝。
 
 卡片 `<h2>` 按 `title` → `folder_title` → `label` 取值。加人时把用户用的文件夹显示名写进 `folder_title`（或 `title`）。标题下面一行在和标题不同时才放短标签和修订号，并带上平台。
 

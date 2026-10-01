@@ -26,6 +26,7 @@ DRIVE_TITLES = [
     "潮玩方向1-ENTP",
     "潮玩方向2-INFP",
     "软萌贴纸1-ESFP",
+    "软萌贴纸2-INTP",
 ]
 
 PRESERVED = [
@@ -45,10 +46,10 @@ PRESERVED = [
 
 
 class PreserveExistingTests(unittest.TestCase):
-    def test_six_live_drive_folders_use_display_titles(self):
+    def test_seven_live_drive_folders_use_display_titles(self):
         catalog = load_catalog(ROOT / "catalog.json")
         videos = catalog["videos"]
-        self.assertEqual(len(videos), 6)
+        self.assertEqual(len(videos), 7)
         self.assertEqual([video["title"] for video in videos], DRIVE_TITLES)
         self.assertEqual(catalog["batch_folder_id"], "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2")
         job_id_re = re.compile(r"^job-[a-zA-Z0-9]{8,64}$")
@@ -65,8 +66,8 @@ class PreserveExistingTests(unittest.TestCase):
             self.assertTrue(video["drive_folder"])
             self.assertTrue(video["drive_video"])
         summary = catalog["summary"]
-        self.assertEqual(summary["total"], 6)
-        self.assertEqual(summary["waiting_manual_publish"], 6)
+        self.assertEqual(summary["total"], 7)
+        self.assertEqual(summary["waiting_manual_publish"], 7)
         self.assertEqual(summary["published_with_link"], 0)
 
 
@@ -108,8 +109,8 @@ class CatalogToolTests(unittest.TestCase):
             )
             added = json.loads(proc.stdout)
             saved = json.loads(catalog_path.read_text(encoding="utf-8"))
-            self.assertEqual(saved["summary"]["total"], 7)
-            self.assertEqual(saved["summary"]["waiting_manual_publish"], 7)
+            self.assertEqual(saved["summary"]["total"], 8)
+            self.assertEqual(saved["summary"]["waiting_manual_publish"], 8)
             video = saved["videos"][-1]
             self.assertEqual(video["job_id"], added["added"])
             self.assertEqual(video["label"], "INTJ")
@@ -161,7 +162,7 @@ class CatalogToolTests(unittest.TestCase):
             self.assertEqual(added["title"], "潮玩方向1-ENTP")
             self.assertEqual(added["folder_title"], "毛毡风格01- ISFP")
             self.assertEqual(saved["videos"][0]["title"], DRIVE_TITLES[0])
-            self.assertEqual(len(saved["videos"]), 7)
+            self.assertEqual(len(saved["videos"]), 8)
 
     def test_add_entry_rejects_duplicate_drive_file(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -221,7 +222,7 @@ class CatalogToolTests(unittest.TestCase):
             self.assertEqual(video["stats"]["saves"], 5)
             self.assertEqual(video["stage"], "WAITING_MANUAL_PUBLISH")
             self.assertEqual(saved["summary"]["views"], 1200)
-            self.assertEqual(saved["summary"]["waiting_manual_publish"], 6)
+            self.assertEqual(saved["summary"]["waiting_manual_publish"], 7)
 
     def test_newer_overlay_wins_and_older_overlay_does_not(self):
         video = {
