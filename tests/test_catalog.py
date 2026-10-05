@@ -11,9 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from catalog_lib import (  # noqa: E402
+    assert_unique_video,
     drive_download_url,
     load_catalog,
     merge_overlay,
+    normalize_video,
+    parse_publish_copy_en,
     recompute,
     summarize,
 )
@@ -44,11 +47,16 @@ PRESERVED = [
 ]
 
 
+def catalog_size() -> int:
+    return len(load_catalog(ROOT / "catalog.json")["videos"])
+
+
 class PreserveExistingTests(unittest.TestCase):
     def test_six_live_drive_folders_use_display_titles(self):
         catalog = load_catalog(ROOT / "catalog.json")
-        videos = catalog["videos"]
-        self.assertEqual(len(videos), 6)
+        all_videos = catalog["videos"]
+        self.assertGreaterEqual(len(all_videos), 6)
+        videos = all_videos[:6]
         self.assertEqual([video["title"] for video in videos], DRIVE_TITLES)
         self.assertEqual(catalog["batch_folder_id"], "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2")
         job_id_re = re.compile(r"^job-[a-zA-Z0-9]{8,64}$")
@@ -65,9 +73,8 @@ class PreserveExistingTests(unittest.TestCase):
             self.assertTrue(video["drive_folder"])
             self.assertTrue(video["drive_video"])
         summary = catalog["summary"]
-        self.assertEqual(summary["total"], 6)
-        self.assertEqual(summary["waiting_manual_publish"], 6)
-        self.assertEqual(summary["published_with_link"], 0)
+        self.assertEqual(summary["total"], len(all_videos))
+        self.assertEqual(summary, summarize(all_videos))
 
 
 class CatalogToolTests(unittest.TestCase):
@@ -108,8 +115,12 @@ class CatalogToolTests(unittest.TestCase):
             )
             added = json.loads(proc.stdout)
             saved = json.loads(catalog_path.read_text(encoding="utf-8"))
-            self.assertEqual(saved["summary"]["total"], 7)
-            self.assertEqual(saved["summary"]["waiting_manual_publish"], 7)
+            self.assertEqual(saved["summary"]["total"], catalog_size() + 1)
+            self.assertEqual(
+                saved["summary"]["waiting_manual_publish"],
+                load_catalog(ROOT / "catalog.json")["summary"]["waiting_manual_publish"] + 1,
+            )
+            self.assertNotIn("instagram_en", saved["videos"][-1])
             video = saved["videos"][-1]
             self.assertEqual(video["job_id"], added["added"])
             self.assertEqual(video["label"], "INTJ")
@@ -161,7 +172,7 @@ class CatalogToolTests(unittest.TestCase):
             self.assertEqual(added["title"], "潮玩方向1-ENTP")
             self.assertEqual(added["folder_title"], "毛毡风格01- ISFP")
             self.assertEqual(saved["videos"][0]["title"], DRIVE_TITLES[0])
-            self.assertEqual(len(saved["videos"]), 7)
+            self.assertEqual(len(saved["videos"]), catalog_size() + 1)
 
     def test_add_entry_rejects_duplicate_drive_file(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -221,7 +232,10 @@ class CatalogToolTests(unittest.TestCase):
             self.assertEqual(video["stats"]["saves"], 5)
             self.assertEqual(video["stage"], "WAITING_MANUAL_PUBLISH")
             self.assertEqual(saved["summary"]["views"], 1200)
-            self.assertEqual(saved["summary"]["waiting_manual_publish"], 6)
+            self.assertEqual(
+                saved["summary"]["waiting_manual_publish"],
+                load_catalog(ROOT / "catalog.json")["summary"]["waiting_manual_publish"],
+            )
 
     def test_newer_overlay_wins_and_older_overlay_does_not(self):
         video = {
@@ -298,6 +312,130 @@ class CatalogToolTests(unittest.TestCase):
         again = recompute(original, now=original["updated_at"])
         self.assertEqual(original["videos"], again["videos"])
         self.assertEqual(original["summary"], again["summary"])
+
+
+EN_COPY_MD = """# Instagram publish copy (en) — r0002
+
+## Caption
+
+Line one
+
+Line two
+
+## Hashtags
+
+#ENFP #MBTI
+#feltart
+
+## Alt text
+
+ignored
+"""
+
+
+class InstagramEnTests(unittest.TestCase):
+    def _copy_catalog(self, tmp):
+        catalog_path = Path(tmp) / "catalog.json"
+        catalog_path.write_text((ROOT / "catalog.json").read_text(encoding="utf-8"), encoding="utf-8")
+        return catalog_path
+
+    def test_parse_publish_copy_en_sections(self):
+        caption, tags = parse_publish_copy_en(EN_COPY_MD)
+        self.assertEqual(caption, "Line one\n\nLine two")
+        self.assertEqual(tags, "#ENFP #MBTI #feltart")
+
+    def test_add_entry_with_instagram_en_block(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog_path = self._copy_catalog(tmp)
+            en_copy = Path(tmp) / "publish-copy-en.md"
+            en_copy.write_text(EN_COPY_MD, encoding="utf-8")
+            proc = subprocess.run(
+                [
+                    sys.executable, str(ROOT / "scripts" / "add_entry.py"),
+                    "--catalog", str(catalog_path),
+                    "--label", "ENFP",
+                    "--job-id", "job-TESTDUAL0001",
+                    "--video-url", "https://drive.google.com/file/d/THVIDEO001/view",
+                    "--cover-url", "https://drive.google.com/file/d/THCOVER001/view",
+                    "--copy-text", "ไทย",
+                    "--revision", "r0002",
+                    "--en-video-url", "https://drive.google.com/file/d/ENVIDEO001/view",
+                    "--en-cover-url", "https://drive.google.com/file/d/ENCOVER001/view",
+                    "--en-copy-file", str(en_copy),
+                    "--en-copy-drive-url", "https://drive.google.com/file/d/ENCOPY001/view",
+                ],
+                check=True, capture_output=True, text=True,
+            )
+            self.assertTrue(json.loads(proc.stdout)["instagram_en"])
+            saved = json.loads(catalog_path.read_text(encoding="utf-8"))
+            video = saved["videos"][-1]
+            en = video["instagram_en"]
+            self.assertEqual(en["platform"], "Instagram")
+            self.assertEqual(en["language"], "en")
+            self.assertEqual(en["revision"], "r0002")
+            self.assertEqual(en["caption"], "Line one\n\nLine two")
+            self.assertEqual(en["hashtags"], "#ENFP #MBTI #feltart")
+            self.assertEqual(en["drive_video_download"], "https://drive.google.com/uc?id=ENVIDEO001&export=download")
+            self.assertEqual(en["drive_cover_download"], "https://drive.google.com/uc?id=ENCOVER001&export=download")
+            self.assertEqual(video["drive_video_download"], "https://drive.google.com/uc?id=THVIDEO001&export=download")
+            self.assertEqual(recompute(saved, now=saved["updated_at"])["videos"], saved["videos"])
+
+    def test_dedupe_considers_both_variants(self):
+        catalog = {"videos": [normalize_video({
+            "label": "A", "job_id": "job-AAAAAAAA01",
+            "drive_video": "https://drive.google.com/file/d/TH1/view",
+            "instagram_en": {"drive_video": "https://drive.google.com/file/d/EN1/view"},
+        })]}
+        reuse_en_as_th = {"label": "B", "job_id": "job-BBBBBBBB01",
+                          "drive_video": "https://drive.google.com/file/d/EN1/view"}
+        with self.assertRaises(ValueError):
+            assert_unique_video(catalog, reuse_en_as_th)
+        reuse_th_as_en = {"label": "C", "job_id": "job-CCCCCCCC01",
+                          "drive_video": "https://drive.google.com/file/d/TH9/view",
+                          "instagram_en": {"drive_video": "https://drive.google.com/file/d/TH1/view"}}
+        with self.assertRaises(ValueError):
+            assert_unique_video(catalog, reuse_th_as_en)
+        same_file_twice = {"label": "D", "job_id": "job-DDDDDDDD01",
+                           "drive_video": "https://drive.google.com/file/d/X1/view",
+                           "instagram_en": {"drive_video": "https://drive.google.com/file/d/X1/view"}}
+        with self.assertRaises(ValueError):
+            assert_unique_video(catalog, same_file_twice)
+        assert_unique_video(catalog, {"label": "E", "job_id": "job-EEEEEEEE01",
+                                      "drive_video": "https://drive.google.com/file/d/NEW1/view"})
+
+    def test_set_instagram_en_backfills_existing_entry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog_path = self._copy_catalog(tmp)
+            target = PRESERVED[1]["job_id"]
+            subprocess.run(
+                [
+                    sys.executable, str(ROOT / "scripts" / "set_instagram_en.py"),
+                    "--catalog", str(catalog_path), "--job-id", target,
+                    "--en-video-url", "https://drive.google.com/file/d/BACKFILLEN1/view",
+                    "--en-caption", "Hello", "--en-hashtags", "#MBTI",
+                ],
+                check=True, capture_output=True, text=True,
+            )
+            saved = json.loads(catalog_path.read_text(encoding="utf-8"))
+            self.assertEqual(len(saved["videos"]), catalog_size())
+            video = next(v for v in saved["videos"] if v["job_id"] == target)
+            self.assertEqual(video["instagram_en"]["caption"], "Hello")
+            dup = subprocess.run(
+                [
+                    sys.executable, str(ROOT / "scripts" / "set_instagram_en.py"),
+                    "--catalog", str(catalog_path), "--job-id", PRESERVED[0]["job_id"],
+                    "--en-video-url", "https://drive.google.com/file/d/BACKFILLEN1/view",
+                ],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(dup.returncode, 2)
+            self.assertIn("already cataloged", dup.stderr)
+
+    def test_thai_only_entries_stay_valid(self):
+        catalog = load_catalog(ROOT / "catalog.json")
+        for video in catalog["videos"]:
+            normalized = normalize_video(video)
+            self.assertEqual("instagram_en" in normalized, bool(video.get("instagram_en")))
 
 
 if __name__ == "__main__":

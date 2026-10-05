@@ -145,3 +145,35 @@ export function cardMeta(video) {
   if (platform && platform !== heading) parts.push(platform);
   return parts.join(" · ");
 }
+
+/**
+ * Optional English Instagram cut that rides next to the Thai TikTok cut.
+ * Returns null for Thai-only entries so older catalogs keep rendering unchanged.
+ */
+export function instagramBlock(video) {
+  const block = video?.instagram_en;
+  if (!block || typeof block !== "object") return null;
+  const driveVideo = String(block.drive_video || "").trim();
+  if (!driveVideo) return null;
+  const driveCover = String(block.drive_cover || "").trim();
+  return {
+    platform: String(block.platform || "Instagram"),
+    language: String(block.language || "en"),
+    revision: String(block.revision || "").trim(),
+    caption: String(block.caption || ""),
+    hashtags: String(block.hashtags || "").trim(),
+    drive_video: driveVideo,
+    drive_video_download: downloadUrl(block.drive_video_download, driveVideo),
+    drive_cover: driveCover,
+    drive_cover_download: driveCover ? downloadUrl(block.drive_cover_download, driveCover) : "",
+    drive_publish_copy: String(block.drive_publish_copy || ""),
+  };
+}
+
+/** Text the "复制文案" button copies for the English Instagram cut: caption, blank line, hashtags. */
+export function instagramCopyText(block) {
+  if (!block) return "";
+  const caption = String(block.caption || "").trim();
+  const tags = String(block.hashtags || "").trim();
+  return [caption, tags].filter(Boolean).join("\n\n");
+}

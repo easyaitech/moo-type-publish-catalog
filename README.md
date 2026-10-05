@@ -52,6 +52,35 @@ python3 scripts/add_entry.py \
 
 Drive 的 `/file/d/<id>/` 会自动写成下载地址 `https://drive.google.com/uc?id=<id>&export=download`。已经是普通 https 的封面地址会原样当作下载地址。同一支视频文件不能加第二次。
 
+### 同一条加上 Instagram 英语版
+
+一条成片可以同时带泰语 TikTok 版和英语 Instagram 版。页面每张卡片分两块：**TikTok 泰语**（原来的文案、下载视频、下载封面）和 **Instagram 英语**（英文 caption + hashtags、复制文案 / 只复制标签、下载视频、下载封面）。没有英文版的卡片只显示泰语块，并注明「这条还没有英文版」。发布链接表单仍只收 TikTok 链接。
+
+新加一条时带上英文版：
+
+```bash
+python3 scripts/add_entry.py \
+  --label "INFP×ENFP" --folder-title "网盘文件夹显示名" --revision r0002 \
+  --video-url "https://drive.google.com/file/d/TH_VIDEO_ID/view" \
+  --cover-url "https://drive.google.com/file/d/TH_COVER_ID/view" \
+  --copy-file ./publish-copy-th.md \
+  --en-video-url "https://drive.google.com/file/d/EN_VIDEO_ID/view" \
+  --en-cover-url "https://drive.google.com/file/d/EN_COVER_ID/view" \
+  --en-copy-file ./publish-copy-en.md \
+  --en-copy-drive-url "https://drive.google.com/file/d/EN_COPY_ID/view"
+```
+
+`--en-copy-file` 读 `publish-copy-en.md` 里的 `## Caption` 和 `## Hashtags` 两段；也可以用 `--en-caption` / `--en-hashtags` 直接给。`--en-revision` 默认等于 `--revision`。
+
+给已有的一条补英文版（只在确实有已验收英文成片时）：
+
+```bash
+python3 scripts/set_instagram_en.py --job-id job-... \
+  --en-video-url ... --en-cover-url ... --en-copy-file ./publish-copy-en.md --en-revision r0007
+```
+
+去重同时看两个版本：任何一条的泰语或英语视频文件 id 都不能再出现在别的条目里，同一条的泰语和英语也不能是同一个文件。
+
 然后提交并推到 `main`（或合并 PR）。Pages 会更新列表。这一步只改 `catalog.json`，不上传 mp4。
 
 已有条目要补内嵌文案：改那条的 `publish_copy`，再跑：
@@ -91,9 +120,23 @@ python3 scripts/rebuild_catalog.py
   "drive_cover_download": "https://drive.google.com/uc?id=COVER_FILE_ID&export=download",
   "drive_publish_copy": "",
   "subfolder_name": "ESFP-r0001",
-  "local_release": ""
+  "local_release": "",
+  "instagram_en": {
+    "platform": "Instagram",
+    "language": "en",
+    "revision": "r0002",
+    "caption": "English caption",
+    "hashtags": "#ENFP #MBTI",
+    "drive_video": "https://drive.google.com/file/d/EN_VIDEO_ID/view",
+    "drive_video_download": "https://drive.google.com/uc?id=EN_VIDEO_ID&export=download",
+    "drive_cover": "https://drive.google.com/file/d/EN_COVER_ID/view",
+    "drive_cover_download": "https://drive.google.com/uc?id=EN_COVER_ID&export=download",
+    "drive_publish_copy": ""
+  }
 }
 ```
+
+`instagram_en` 可选；没有这一块的旧条目照常显示。
 
 `stage` 为 `WAITING_MANUAL_PUBLISH` 且 `publish_link` 为空 = 待发布。有发布链接时页面显示已发布。`job_id` 必须是 `job-` 加 8 到 64 位字母或数字，Worker 用它当键。当前 6 条用的是 `job-` 加网盘文件夹 id；文件夹 id 里的下划线不放进 `job_id`，否则 Worker 会拒绝。
 

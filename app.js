@@ -1,4 +1,14 @@
-import { cardMeta, downloadUrl, isTikTokUrl, mergeVideo, safeHttpUrl, stageLabel, summarize } from "./merge.js";
+import {
+  cardMeta,
+  downloadUrl,
+  instagramBlock,
+  instagramCopyText,
+  isTikTokUrl,
+  mergeVideo,
+  safeHttpUrl,
+  stageLabel,
+  summarize,
+} from "./merge.js";
 
 const TOKEN_KEY = "moo-friend-token";
 
@@ -125,7 +135,7 @@ function renderBanner() {
   const note = $("#banner");
   note.replaceChildren();
   const folder = safeHttpUrl(state.catalog?.batch_folder_url || "");
-  note.append("朋友：下载视频和封面，复制文案，手动发到 TikTok，再把帖子链接填回对应卡片。");
+  note.append("朋友：下载视频和封面，复制文案，手动发到 TikTok，再把帖子链接填回对应卡片。有「Instagram 英语」的卡片，英文版另外手动发 Instagram。");
   note.append(document.createElement("br"));
   if (folder) {
     note.append("批次文件夹：");
@@ -267,6 +277,79 @@ function errorText(status, payload) {
   return payload?.error ? `提交失败：${payload.error}` : "提交失败，请稍后再试。";
 }
 
+function copyButton(label, text) {
+  const button = el("button", "btn", label);
+  button.type = "button";
+  button.addEventListener("click", () => copyText(text, button));
+  return button;
+}
+
+function appendLinks(host, buttons) {
+  const links = el("div", "links");
+  for (const button of buttons) {
+    if (button) links.append(button);
+  }
+  if (links.childElementCount) host.append(links);
+}
+
+function variantSection(kind, heading, revision) {
+  const section = el("section", `variant variant-${kind}`);
+  const head = el("div", "variant-head");
+  head.append(el("span", `variant-tag ${kind}`, heading));
+  if (revision) head.append(el("span", "muted", revision));
+  section.append(head);
+  return section;
+}
+
+/** Thai TikTok cut: the original card body (copy + downloads), now labelled. */
+function renderTikTokSection(video) {
+  const section = variantSection("tiktok", "TikTok 泰语", video.revision);
+  const copyBlock = el("div", "copy-block");
+  copyBlock.append(el("div", "copy-label", "发布文案"));
+  if (video.publish_copy) {
+    const pre = el("pre", "copy-text");
+    pre.textContent = video.publish_copy;
+    copyBlock.append(pre, copyButton("复制文案", video.publish_copy));
+  } else {
+    copyBlock.append(el("p", "muted", "文案还没写进看板。打开网盘文案，复制后再发。"));
+  }
+  section.append(copyBlock);
+  appendLinks(section, [
+    linkButton(downloadUrl(video.drive_video_download, video.drive_video), "下载视频", true),
+    linkButton(downloadUrl(video.drive_cover_download, video.drive_cover), "下载封面", true),
+    linkButton(video.drive_video, "打开视频", false),
+    linkButton(video.drive_cover, "打开封面", false),
+    linkButton(video.drive_publish_copy, "文案文件", false),
+  ]);
+  return section;
+}
+
+/** English Instagram cut: caption + hashtags with the same copy / download controls. */
+function renderInstagramSection(block) {
+  const section = variantSection("instagram", "Instagram 英语", block.revision);
+  const copyBlock = el("div", "copy-block");
+  copyBlock.append(el("div", "copy-label", "英文文案（caption + hashtags）"));
+  const fullText = instagramCopyText(block);
+  if (fullText) {
+    const pre = el("pre", "copy-text");
+    pre.lang = "en";
+    pre.textContent = fullText;
+    copyBlock.append(pre, copyButton("复制文案", fullText));
+    if (block.hashtags) copyBlock.append(" ", copyButton("只复制标签", block.hashtags));
+  } else {
+    copyBlock.append(el("p", "muted", "英文文案还没写进看板。打开网盘文案，复制后再发。"));
+  }
+  section.append(copyBlock);
+  appendLinks(section, [
+    linkButton(block.drive_video_download, "下载视频", true),
+    linkButton(block.drive_cover_download, "下载封面", true),
+    linkButton(block.drive_video, "打开视频", false),
+    linkButton(block.drive_cover, "打开封面", false),
+    linkButton(block.drive_publish_copy, "文案文件", false),
+  ]);
+  return section;
+}
+
 function renderCard(video) {
   const card = el("article", "item");
   const head = el("div", "item-head");
@@ -295,33 +378,20 @@ function renderCard(video) {
   );
   card.append(metrics, updated);
 
-  const copyBlock = el("div", "copy-block");
-  copyBlock.append(el("div", "copy-label", "发布文案"));
-  if (video.publish_copy) {
-    const pre = el("pre", "copy-text");
-    pre.textContent = video.publish_copy;
-    const copyBtn = el("button", "btn", "复制文案");
-    copyBtn.type = "button";
-    copyBtn.addEventListener("click", () => copyText(video.publish_copy, copyBtn));
-    copyBlock.append(pre, copyBtn);
+  card.append(renderTikTokSection(video));
+  const instagram = instagramBlock(video);
+  if (instagram) {
+    card.append(renderInstagramSection(instagram));
   } else {
-    copyBlock.append(el("p", "muted", "文案还没写进看板。打开网盘文案，复制后再发。"));
+    card.append(el("div", "muted variant-none", "Instagram 英语：这条还没有英文版。"));
   }
-  card.append(copyBlock);
 
-  const links = el("div", "links");
-  const buttons = [
-    linkButton(downloadUrl(video.drive_video_download, video.drive_video), "下载视频", true),
-    linkButton(downloadUrl(video.drive_cover_download, video.drive_cover), "下载封面", true),
-    linkButton(video.drive_video, "打开视频", false),
-    linkButton(video.drive_cover, "打开封面", false),
-    linkButton(video.drive_folder, "文件夹", false),
-    linkButton(video.drive_publish_copy, "文案文件", false),
-  ];
-  for (const button of buttons) {
-    if (button) links.append(button);
+  const shared = el("div", "links");
+  const folderButton = linkButton(video.drive_folder, "文件夹", false);
+  if (folderButton) {
+    shared.append(folderButton);
+    card.append(shared);
   }
-  card.append(links);
 
   const publish = el("div", "publish");
   if (published) {
@@ -339,7 +409,7 @@ function renderCard(video) {
     renderPublishForm(video, details);
     publish.append(details);
   } else {
-    publish.append(el("div", "copy-label", "发布后把 TikTok 链接贴在这里"));
+    publish.append(el("div", "copy-label", "TikTok 泰语版发布后，把 TikTok 链接贴在这里"));
     renderPublishForm(video, publish);
   }
   card.append(publish);

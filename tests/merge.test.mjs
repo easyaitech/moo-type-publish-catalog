@@ -1,7 +1,16 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { cardMeta, cardTitle, downloadUrl, isTikTokUrl, mergeVideo, summarize } from "../merge.js";
+import {
+  cardMeta,
+  cardTitle,
+  downloadUrl,
+  instagramBlock,
+  instagramCopyText,
+  isTikTokUrl,
+  mergeVideo,
+  summarize,
+} from "../merge.js";
 
 test("drive download link is derived when the catalog field is empty", () => {
   assert.equal(
@@ -66,7 +75,7 @@ test("card title prefers folder display name over the technical subfolder id", (
   assert.equal(cardMeta(blankDisplay), "r0001 · TikTok");
 });
 
-test("catalog card headings are the six live drive folder names", () => {
+test("catalog card headings start with the six live drive folder names", () => {
   const catalog = JSON.parse(readFileSync(new URL("../catalog.json", import.meta.url), "utf8"));
   const expected = [
     "sleep-types-r0002",
@@ -76,12 +85,13 @@ test("catalog card headings are the six live drive folder names", () => {
     "潮玩方向2-INFP",
     "软萌贴纸1-ESFP",
   ];
-  assert.equal(catalog.videos.length, 6);
+  assert.ok(catalog.videos.length >= 6);
+  const firstSix = catalog.videos.slice(0, 6);
   assert.deepEqual(
-    catalog.videos.map((video) => video.title || video.folder_title || video.label || ""),
+    firstSix.map((video) => video.title || video.folder_title || video.label || ""),
     expected,
   );
-  for (const video of catalog.videos) {
+  for (const video of firstSix) {
     assert.equal(cardTitle(video), video.title);
     assert.notEqual(cardTitle(video), video.label);
   }
@@ -110,4 +120,29 @@ test("newer overlay flips waiting item to published and keeps older catalog stat
   assert.equal(summary.published_with_link, 1);
   assert.equal(summary.waiting_manual_publish, 1);
   assert.equal(summary.views, 10);
+});
+
+test("instagram_en block is optional and survives merge", () => {
+  const thaiOnly = { label: "ISFP", job_id: "job-1gqgaL8LA7CrEDPMfb8gSxWpaNFmzepD6", drive_video: "https://drive.google.com/file/d/TH/view" };
+  assert.equal(instagramBlock(thaiOnly), null);
+  assert.equal(instagramBlock({ ...thaiOnly, instagram_en: { caption: "no video" } }), null);
+
+  const dual = {
+    ...thaiOnly,
+    instagram_en: {
+      revision: "r0007",
+      caption: "Soft light, not harsh sun.",
+      hashtags: "#INFJ #MBTI",
+      drive_video: "https://drive.google.com/file/d/ENVID/view?usp=drivesdk",
+      drive_cover: "https://drive.google.com/file/d/ENCOV/view?usp=drivesdk",
+    },
+  };
+  const merged = mergeVideo(dual, { publish_link: "https://www.tiktok.com/@moo/video/1", published_at: "2026-10-01T00:00:00Z" });
+  const block = instagramBlock(merged);
+  assert.equal(block.platform, "Instagram");
+  assert.equal(block.revision, "r0007");
+  assert.equal(block.drive_video_download, "https://drive.google.com/uc?id=ENVID&export=download");
+  assert.equal(block.drive_cover_download, "https://drive.google.com/uc?id=ENCOV&export=download");
+  assert.equal(instagramCopyText(block), "Soft light, not harsh sun.\n\n#INFJ #MBTI");
+  assert.equal(instagramCopyText({ caption: "", hashtags: "#A" }), "#A");
 });

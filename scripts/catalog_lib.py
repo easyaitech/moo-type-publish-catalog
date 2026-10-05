@@ -39,6 +39,22 @@ FIELD_ORDER = (
     "drive_publish_copy",
     "subfolder_name",
     "local_release",
+    "instagram_en",
+)
+
+# Optional English Instagram cut that sits next to the Thai TikTok cut of the
+# same job. Entries without it stay valid (Thai-only).
+INSTAGRAM_EN_ORDER = (
+    "platform",
+    "language",
+    "revision",
+    "caption",
+    "hashtags",
+    "drive_video",
+    "drive_video_download",
+    "drive_cover",
+    "drive_cover_download",
+    "drive_publish_copy",
 )
 
 STATS_ORDER = STAT_KEYS + ("updated_at", "source")
@@ -169,7 +185,115 @@ def normalize_video(video: dict) -> dict:
     out["drive_cover_download"] = explicit_cover_dl or drive_download_url(out["drive_cover"])
     if out["publish_link"] and out["stage"] == "WAITING_MANUAL_PUBLISH":
         out["stage"] = "PUBLISHED"
+    instagram = normalize_instagram_en(video.get("instagram_en"))
+    if instagram:
+        out["instagram_en"] = instagram
+    else:
+        out.pop("instagram_en", None)
     return _order_dict(out, FIELD_ORDER)
+
+
+def _https_or_blank(value: object, field: str) -> str:
+    text = str(value or "").strip()
+    if text and not text.startswith("https://"):
+        raise ValueError(f"{field} must be an https URL")
+    return text
+
+
+def normalize_instagram_en(block: object) -> dict | None:
+    """Normalize the optional English Instagram block. Empty/missing -> None."""
+    if not block:
+        return None
+    if not isinstance(block, dict):
+        raise ValueError("instagram_en must be an object")
+    video_url = _https_or_blank(block.get("drive_video"), "instagram_en.drive_video")
+    if not video_url:
+        raise ValueError("instagram_en.drive_video is required")
+    cover_url = _https_or_blank(block.get("drive_cover"), "instagram_en.drive_cover")
+    out = dict(block)
+    out["platform"] = str(block.get("platform") or "Instagram")
+    out["language"] = str(block.get("language") or "en")
+    out["revision"] = str(block.get("revision") or "").strip()
+    out["caption"] = str(block.get("caption") or "")
+    out["hashtags"] = str(block.get("hashtags") or "").strip()
+    out["drive_video"] = video_url
+    out["drive_cover"] = cover_url
+    out["drive_publish_copy"] = _https_or_blank(
+        block.get("drive_publish_copy"), "instagram_en.drive_publish_copy"
+    )
+    out["drive_video_download"] = str(block.get("drive_video_download") or "") or drive_download_url(video_url)
+    out["drive_cover_download"] = str(block.get("drive_cover_download") or "") or (
+        drive_download_url(cover_url) if cover_url else ""
+    )
+    return _order_dict(out, INSTAGRAM_EN_ORDER)
+
+
+def build_instagram_en(
+    *,
+    video_url: str,
+    cover_url: str = "",
+    caption: str = "",
+    hashtags: str = "",
+    copy_drive_url: str = "",
+    revision: str = "",
+) -> dict:
+    block = normalize_instagram_en(
+        {
+            "platform": "Instagram",
+            "language": "en",
+            "revision": revision,
+            "caption": caption,
+            "hashtags": hashtags,
+            "drive_video": video_url,
+            "drive_cover": cover_url,
+            "drive_publish_copy": copy_drive_url,
+        }
+    )
+    assert block is not None
+    return block
+
+
+def _md_section(text: str, heading: str) -> str:
+    lines = text.splitlines()
+    out: list[str] = []
+    inside = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("## "):
+            if inside:
+                break
+            inside = stripped[3:].strip().lower() == heading.lower()
+            continue
+        if inside:
+            out.append(line)
+    return "\n".join(out).strip()
+
+
+def parse_publish_copy_en(text: str) -> tuple[str, str]:
+    """Split a pipeline publish-copy-en.md into (caption, hashtags).
+
+    Uses the '## Caption' and '## Hashtags' sections. A plain text file with no
+    sections is treated as the whole caption.
+    """
+    caption = _md_section(text, "Caption")
+    hashtags = _md_section(text, "Hashtags")
+    if not caption and not hashtags:
+        caption = text.strip()
+    return caption, " ".join(hashtags.split())
+
+
+def video_file_ids(video: dict) -> set[str]:
+    """Drive file ids of every cut in an entry (Thai TikTok + optional EN Instagram)."""
+    ids = set()
+    main_id = drive_file_id(video.get("drive_video") or "")
+    if main_id:
+        ids.add(main_id)
+    instagram = video.get("instagram_en")
+    if isinstance(instagram, dict):
+        en_id = drive_file_id(instagram.get("drive_video") or "")
+        if en_id:
+            ids.add(en_id)
+    return ids
 
 
 def summarize(videos: list[dict]) -> dict:
@@ -322,13 +446,35 @@ def find_video(catalog: dict, job_id: str) -> dict:
     raise KeyError(job_id)
 
 
-def assert_unique_video(catalog: dict, video: dict) -> None:
-    file_id = drive_file_id(video.get("drive_video") or "")
+def _assert_variants_distinct(video: dict) -> None:
+    main_id = drive_file_id(video.get("drive_video") or "")
+    instagram = video.get("instagram_en")
+    if main_id and isinstance(instagram, dict):
+        if drive_file_id(instagram.get("drive_video") or "") == main_id:
+            raise ValueError("instagram_en video is the same file as the TikTok video")
+
+
+def assert_unique_video(catalog: dict, video: dict, *, skip_job_id: str = "") -> None:
+    """Reject a duplicate job_id or any video file (TikTok or Instagram) already cataloged."""
+    _assert_variants_distinct(video)
+    file_ids = video_file_ids(video)
     for existing in catalog.get("videos") or []:
+        if skip_job_id and existing.get("job_id") == skip_job_id:
+            continue
         if existing.get("job_id") == video["job_id"]:
             raise ValueError(f"job_id already exists: {video['job_id']}")
-        existing_id = drive_file_id(existing.get("drive_video") or "")
-        if file_id and existing_id and file_id == existing_id:
+        clash = file_ids & video_file_ids(existing)
+        if clash:
             raise ValueError(
                 f"video file already cataloged as {existing.get('label')} ({existing.get('job_id')})"
             )
+
+
+def set_instagram_en(catalog: dict, job_id: str, block: dict) -> dict:
+    """Attach or replace the instagram_en block of an existing entry (dedupe-checked)."""
+    target = find_video(catalog, job_id)
+    candidate = dict(target)
+    candidate["instagram_en"] = normalize_instagram_en(block)
+    assert_unique_video(catalog, candidate, skip_job_id=job_id)
+    target["instagram_en"] = candidate["instagram_en"]
+    return target

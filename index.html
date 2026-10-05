@@ -48,6 +48,12 @@ h2 { font-size: 1.05rem; margin: 0; }
 .form-msg.bad { color: #9a3410; }
 .published-link { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
 .post-link { word-break: break-all; }
+.variant { border: 1px solid #f0ebe4; border-radius: 12px; padding: 10px 12px; margin: 10px 0; }
+.variant-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.variant-tag { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+.variant-tag.tiktok { background: #e8f4ff; color: #0b4f8a; }
+.variant-tag.instagram { background: #fbe7f3; color: #8a1d5c; }
+.variant-none { margin: 4px 0 10px; }
 .empty { background: #fff; border-radius: 12px; padding: 16px; }
 footer { margin-top: 18px; color: #777; font-size: 12px; line-height: 1.5; }
 @media (max-width: 640px) {
@@ -64,7 +70,7 @@ footer { margin-top: 18px; color: #777; font-size: 12px; line-height: 1.5; }
 <div class="note" id="banner">正在加载成片…</div>
 <div class="toolbar" id="filters"></div>
 <div id="list"></div>
-<footer>成片留在网盘，不放在 GitHub 上。发布链接由朋友在页面提交；播放、点赞、评论、分享、收藏由助理回填。Bot 不登录 TikTok 自动抓取。</footer>
+<footer>成片留在网盘，不放在 GitHub 上。每张卡片分「TikTok 泰语」和「Instagram 英语」两块；没有英文版的卡片只有泰语块。发布链接由朋友在页面提交；播放、点赞、评论、分享、收藏由助理回填。Bot 不登录 TikTok 自动抓取。</footer>
 <noscript>请启用 JavaScript。这个看板要从 catalog.json 读成片，并在页面上提交发布链接。</noscript>
 <script src="site-config.js"></script>
 <script type="module" src="app.js"></script>
