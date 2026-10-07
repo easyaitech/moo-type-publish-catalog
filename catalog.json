@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-07T02:23:41Z",
+  "updated_at": "2026-10-07T03:47:29Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 10,
-    "waiting_manual_publish": 10,
+    "total": 11,
+    "waiting_manual_publish": 11,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -378,6 +378,47 @@
         "drive_cover": "https://drive.google.com/file/d/1pGi2yWlAKOvNJd39XMr6Rvo4EvRPF15q/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1pGi2yWlAKOvNJd39XMr6Rvo4EvRPF15q&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1uRWwd_aUvhMvYYMQT2MMsWL3y7eVA12V/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "INFJ",
+      "title": "对了！还有最重要的一点：撒娇。",
+      "folder_title": "对了！还有最重要的一点：撒娇。",
+      "job_id": "job-1C8DQMGapT7pmhk7brU2gLujq2iJQF",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# ข้อความโพสต์ — INFJ · r0001\n\n## หัวข้อ (Title)\nจีบ INFJ ยังไงให้ติด อย่าเร่ง อย่าคุยเรื่องผู้ใหญ่\n\n## เนื้อหา (Body)\nไอเอ็นเอฟเจ ที่หลายคนเรียกติดปากว่าไฟเขียว จีบยังไงดีนะ คำถามนี้ยากจริงๆ\nแต่หลายคนชอบพวกเขานะ มักจะถูกดึงดูดด้วยเสน่ห์ที่ลึกลับนุ่มนวล อ่อนโยนแต่หนักแน่น\nกับพวกเขานะ ไม่มีเรื่องค่อยๆ ชอบหรอก ความประทับใจแรกสำคัญมาก แทบตัดสินตั้งแต่แรกเห็น\nเกณฑ์ก็ไม่ได้ยากนัก ดูสุภาพเรียบร้อย น่ารักมีสไตล์ แล้วก็ฉลาด พึ่งพาได้ก็พอ\nอย่าจีบเร่งเกินไปนะ ถ้าบีบเขาจะหนี ถ้ากดดัน เขามักจะปฏิเสธทันที\nเพราะพวกเขามักมองโลกในแง่ร้ายนิดๆ เชื่อในความรัก แต่ไม่ค่อยเชื่อว่าตัวเองจะเจอจริงๆ\nรอบตัวเขามีเกราะบางๆ อยู่ เลยอย่าตรงเกินไปนะ\nลองสร้างโอกาสเจอโดยบังเอิญ หรือจุดร่วมที่ดูเหมือนบังเอิญ เช่น วงดนตรีที่เขาฟัง ของกินที่เขาชอบ หรืองานที่คุณเคยทำมาก่อน\n\n...\n\nหลายคนไม่ชอบออกนอกบ้าน ก็เคารพสิ ให้เขาได้รับความเอาใจใส่ถึงบ้านเลย สะดวกสุด และได้ใจเร็วสุด\nสุดท้ายมีจุดที่ห้ามแตะเลย ต้องเป็นตัวเองจริงๆ ความจริงใจสำคัญที่สุด ถ้าเสแสร้ง พวกเขามักจับได้\nคุยกันอย่ามีเป้าหมายชัดเกินไปนะ\nแล้วอย่าคุยเรื่องผู้ใหญ่เด็ดขาด นั่นมักเป็นเรื่องที่เขาเลี่ยงที่สุด พูดทีไรมักโดนรังเกียจทันที\n\n## Hashtags\n#INFJ #MBTI #mbtiไทย #จีบ #ความรัก #INFJเก่าไฟเขียว #รู้ใจ\n\n---\n\n## 中文说明（供核对，非发布正文）\n标题沿用 script.json title；正文为泰语口播精简复述。未新增结论。\nrevision: r0001 · job: infj-zhui-sajiao · variant: tiktok_th · final sha: 5147e10e2edf…\nNOT published — delivery for human review only.\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1C8DQMGap-T7p-m-hk7brU2gLujq2iJQF",
+      "drive_video": "https://drive.google.com/file/d/1nCKsE7zDEVxvUIdw0TpglwMDYf8gSEP4/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1nCKsE7zDEVxvUIdw0TpglwMDYf8gSEP4&export=download",
+      "drive_cover": "https://drive.google.com/file/d/14V4s6BNqqdBpLd3GqMBG17WPdfz4yOXe/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=14V4s6BNqqdBpLd3GqMBG17WPdfz4yOXe&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1NfhZVF-VV4_0F8UhZGIh7j-1QC1ET5g1/view?usp=drivesdk",
+      "subfolder_name": "INFJ-r0001",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0002",
+        "caption": "How to chase an INFJ: don't rush, don't go dirty\n\nHow do you chase an INFJ? Honestly, it feels tough.\n\nA lot of people fall for them: soft mystery — gentle, steady.\n\nThey feel low pretty often. They trust love, yet doubt it.\n\nCasually say: I know good food. I can send it over. Just stay in.\n\nNever raise adult topics. Often a huge red flag. They lose interest fast.",
+        "hashtags": "#INFJ #MBTI #datingtips #feltart #personality #relationships #oldgreelight #chase",
+        "drive_video": "https://drive.google.com/file/d/1tbiXmqpaAFv0wLRlPZH0cWaJ5Or4FMES/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1tbiXmqpaAFv0wLRlPZH0cWaJ5Or4FMES&export=download",
+        "drive_cover": "https://drive.google.com/file/d/17TimPwCcjedB9ZEo40LNdtQG-6lcKJPW/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=17TimPwCcjedB9ZEo40LNdtQG-6lcKJPW&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1hjKuyrUjFm_soIKmH4il9KF1_6sjpP6k/view?usp=drivesdk"
       }
     }
   ],
