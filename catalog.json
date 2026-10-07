@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T04:09:13Z",
+  "updated_at": "2026-10-07T02:23:41Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 9,
-    "waiting_manual_publish": 9,
+    "total": 10,
+    "waiting_manual_publish": 10,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -337,6 +337,47 @@
         "drive_cover": "https://drive.google.com/file/d/1_PpW_IFfY7c4Z_HnEoWBfNuR_gv-ntot/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1_PpW_IFfY7c4Z_HnEoWBfNuR_gv-ntot&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1DP3FYFyx97nxHCmkYlNp0US7yMvaDv1W/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "ENFP",
+      "title": "千万别硬追，小狗不喜欢为爱失去自我的的人诶……他们喜欢温柔又坚定的！",
+      "folder_title": "千万别硬追，小狗不喜欢为爱失去自我的的人诶……他们喜欢温柔又坚定的！",
+      "job_id": "job-1WFAJvUZSfcy5ZBbQb4RsWXW15jrDkX",
+      "revision": "r0003",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# ข้อความโพสต์ — ENFP สายลูกหมา · r0003\n\n## หัวข้อ (Title)\nจีบ ENFP สายลูกหมายังไงให้ติด อย่าตามจีบหนักจนหมดเสน่ห์\n\n## เนื้อหา (Body)\nอยากจีบ ENFP สายลูกหมา ต้องทำยังไงดี?\n\nส่วนใหญ่เขาไม่ค่อยปลื้มคนที่มีแต่พลังลบ\nข้างนอกดูนิ่งๆ ได้ แต่ข้างในต้องอบอุ่นและมั่นคง\nเสน่ห์แบบมีมุมตัดกันสำคัญมาก — ผู้ใหญ่ที่ยังขี้เล่น หรือคนที่ดูเย็นชาแต่ใจอุ่นและรักเดียวใจเดียว\n\nดูแล เตือนนิดๆ หน่อยๆ ได้ แต่อย่าเจ้ากี้เจ้าการ และห้ามคุมเพราะไม่ไว้ใจ\nENFP ส่วนใหญ่รักอิสระ อยากได้คนใจกว้างที่ไว้ใจได้ เป็นหลักยึดเวลาเขาอารมณ์แกว่ง และฟังเรื่องเล่าจุกจิกของเขา\n\nสุดท้าย อย่าตามจีบหนักเกินไป ใช้เสน่ห์ดึงดูดเขาเข้ามาดีกว่า อย่าเป็นทาสรักเด็ดขาด\n\n## Hashtags\n#ENFP #MBTI #ลูกหมา #mbtiไทย #จีบ #ความรัก #ENFPลูกหมา #เสน่ห์\n\n---\n\n## 中文说明（供核对，非发布正文）\n标题沿用 script.json title；正文为泰语口播 1–16 段的精简复述：别负能量、外静内暖坚定、反差魅力、适度照顾别说教/别因不信任去管、爱自由要包容靠谱、做定心丸、会倾听、别猛追、靠吸引别当爱情奴隶。未新增结论；泛化保留 ส่วนใหญ่。\nrevision: r0003 · job: enfp-bie-yingzhui · variant: tiktok_th · final sha: 11b7239ad48a…\nNOT published — delivery for human review only.\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1WFAJvUZSfcy5ZBb_Qb4RsWX-W15jrDkX",
+      "drive_video": "https://drive.google.com/file/d/1l48TZ32mZkWQCILxX0MktIQVeB88mYUU/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1l48TZ32mZkWQCILxX0MktIQVeB88mYUU&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1ydvxzbVp5d1VH13FAfZNPZc58-Sazfe7/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=1ydvxzbVp5d1VH13FAfZNPZc58-Sazfe7&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1ry9b0tY8Iy9ENcMSxtY-TRcEle7z73r1/view?usp=drivesdk",
+      "subfolder_name": "ENFP-r0003",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0003",
+        "caption": "How to win over an ENFP: don't chase, attract\n\nHow do you charm an ENFP puppy?\n\nA lot of ENFPs avoid partners who stay gloomy. Look calm outside, yet stay warm and firm inside — and don't underestimate contrast: mature yet playful, or a little mysterious yet warm and loyal underneath.\n\nGentle care is great; preachy, bossy, or mistrust-driven control is not. ENFPs tend to value freedom, so they need an open mind, someone dependable, a steady anchor when they're stressed, and a good listener for their little rambles.\n\nAnd never chase too hard. Win them with attraction — never play the doormat.",
+        "hashtags": "#ENFP #MBTI #ENFPpuppy #datingtips #selfrespect #feltart #personality #relationships",
+        "drive_video": "https://drive.google.com/file/d/1sswsJdHStbZitxc7iDoUMaNH_BahL4ob/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1sswsJdHStbZitxc7iDoUMaNH_BahL4ob&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1pGi2yWlAKOvNJd39XMr6Rvo4EvRPF15q/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=1pGi2yWlAKOvNJd39XMr6Rvo4EvRPF15q&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1uRWwd_aUvhMvYYMQT2MMsWL3y7eVA12V/view?usp=drivesdk"
       }
     }
   ],
