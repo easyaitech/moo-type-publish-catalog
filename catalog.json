@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-09T04:54:05Z",
+  "updated_at": "2026-10-12T02:47:10Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 13,
-    "waiting_manual_publish": 13,
+    "total": 14,
+    "waiting_manual_publish": 14,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -499,6 +499,46 @@
         "drive_cover": "https://drive.google.com/file/d/1tyeXPjQSvjO-H6YDPh013H0OATyeZcPS/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1tyeXPjQSvjO-H6YDPh013H0OATyeZcPS&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1cQXgIfPPunFzuEusAJwB6X2QEggvrY6I/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "ISTP×ISFP",
+      "folder_title": "这是一对儿兄弟！！别代入情侣！！！",
+      "job_id": "job-1xVQghNVyHRQfg3klBqZGoYJx5I2KAHPJ",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# ข้อความโพสต์ — ISTP × ISFP · r0001\n\n## หัวข้อ (Title)\nISTP × ISFP เพื่อนซี้ ไม่ใช่คู่รัก\n\n## เนื้อหา (Body)\nสองเพื่อนซี้ที่ชิลสุดๆ เกลียดถูกสั่ง แล้วเลี่ยงโซเชียลมาก 💛 ปัญหาจะกองเท่าไหร่ ก็ยังไถมือถือก่อน\nรอบตัวคุณมีเพื่อนซี้แบบนี้ไหม คอมเมนต์มาเล่าหน่อย 👇\n\n## Hashtags\n#ISTP #ISFP #MBTI #mbtiไทย #เพื่อนซี้ #mbtiคู่เพื่อน\n\n---\n## 中文说明（供核对，非发布正文）\n标题：ISTP × ISFP 铁哥们，不是情侣。正文为口播精简 + 评论互动，无直播/引流。MBTI 娱乐向。\nNOT published — delivery for human review only. Thai needs native review.\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1xVQghNVyHRQfg3klBqZGoYJx5I2KAHPJ",
+      "drive_video": "https://drive.google.com/file/d/1ztworuU7Qzb0ZSzpECa0FDqt5mKQdleJ/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1ztworuU7Qzb0ZSzpECa0FDqt5mKQdleJ&export=download",
+      "drive_cover": "https://drive.google.com/file/d/13bBn21Ob9UIFZMZt1q8gLvk9G9-QSzJg/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=13bBn21Ob9UIFZMZt1q8gLvk9G9-QSzJg&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1UE_oJqnSr5bs0Fy9rZqh1P3lDTj4CTzk/view?usp=drivesdk",
+      "subfolder_name": "ISTP×ISFP-r0001",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0001",
+        "caption": "Chill bros who hate being managed and dodge social drama 💛 Problems pile up? They scroll their phone first.\nSeen a buddy like this? Drop a comment and tell me 👇\n(MBTI for fun, not a diagnosis.)",
+        "hashtags": "#ISTP #ISFP #MBTI #personalitytypes #mbtimemes #bestbuds ---",
+        "drive_video": "https://drive.google.com/file/d/1sSktGbpBPxdcJe2lKofp3WqnH0VOUrJo/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1sSktGbpBPxdcJe2lKofp3WqnH0VOUrJo&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1H2VUj75T2QvzayM6tSqpbSuKYwL2uqxc/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=1H2VUj75T2QvzayM6tSqpbSuKYwL2uqxc&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/15I8FQHdDgS5kKFYi9r8I6yzG0pRyiavJ/view?usp=drivesdk"
       }
     }
   ],
