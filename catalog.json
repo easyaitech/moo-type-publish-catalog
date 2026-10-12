@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T02:47:10Z",
+  "updated_at": "2026-10-12T06:57:06Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 14,
-    "waiting_manual_publish": 14,
+    "total": 15,
+    "waiting_manual_publish": 15,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -539,6 +539,46 @@
         "drive_cover": "https://drive.google.com/file/d/1H2VUj75T2QvzayM6tSqpbSuKYwL2uqxc/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1H2VUj75T2QvzayM6tSqpbSuKYwL2uqxc&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/15I8FQHdDgS5kKFYi9r8I6yzG0pRyiavJ/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "ENTP",
+      "folder_title": "ENTP：你要相信他，要欣赏他，要包容他的孩子气和突然出现的想法、灵感",
+      "job_id": "job-1Ph8vmd18SP5KS63_UVbO3VMz86nGjIik",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ENTP แพ้ทางคนแบบไหน? 🪁\n\n**正文**：\nอีเอ็นทีพี หลายคนอยากได้คนที่เชื่อในตัวเขา ชื่นชมเขา และรับความเด็กๆ กับไอเดียแปลกๆ ได้\nอิสระเจ็ดสิบ ดูแลสามสิบ เหมือนว่าวกับสายป่าน 🪁\nชาว ENTP ตรงไหม? เม้นต์บอกกันหน่อย 👇\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#ENTP #MBTI #MBTIไทย #ความรัก #บุคลิกภาพ\n\n> 无直播 / 引流 / 原作者 branding。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1Ph8vmd18SP5KS63_UVbO3VMz86nGjIik",
+      "drive_video": "https://drive.google.com/file/d/1641FobQWHoPgCGDmcoZR43JBX1u9D1AL/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1641FobQWHoPgCGDmcoZR43JBX1u9D1AL&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1L3Nd2JapzEMGaIRmx5oxHJAmMhBE_y7H/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=1L3Nd2JapzEMGaIRmx5oxHJAmMhBE_y7H&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1beNKho-yDhPbRa_iraqJGNw2-9a4gniO/view?usp=drivesdk",
+      "subfolder_name": "ENTP-r0001",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0001",
+        "caption": "Many ENTPs want someone who believes in them, admires them, and is cool with the kid in them, sudden ideas and all.\nSeventy percent freedom, thirty percent care. Like a kite and the person holding the string. 🪁\nENTPs, does this sound like you? Tell me below 👇\n(MBTI for fun, not a diagnosis.)",
+        "hashtags": "#ENTP #MBTI #personality #relationships #mbtimemes",
+        "drive_video": "https://drive.google.com/file/d/1Q6DAoMtK_j0-x6BveNVBN_FUm4WiOehv/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1Q6DAoMtK_j0-x6BveNVBN_FUm4WiOehv&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1AhKNiAeASfeYD4bIgkfGL5ksQMd0NICY/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=1AhKNiAeASfeYD4bIgkfGL5ksQMd0NICY&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1wtK2hQ8j3If1vpbHHYf9_sQkk8F2u2pW/view?usp=drivesdk"
       }
     }
   ],
