@@ -443,7 +443,7 @@ async function loadCatalog() {
 
 async function loadState() {
   if (!state.apiBase || !state.catalog) return;
-  const ids = (state.catalog.videos || []).map((video) => video.job_id).filter(Boolean);
+  const ids = (state.catalog.videos || []).map((video) => video.job_id).filter((id) => /^job-[a-zA-Z0-9]{8,64}$/.test(id || ""));
   const health = await fetch(`${state.apiBase}/v1/health`);
   if (!health.ok) throw new Error(`health ${health.status}`);
   const healthBody = await health.json();
