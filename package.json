@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "python3 -m unittest tests.test_catalog -v && node --test tests/merge.test.mjs"
+    "test": "python3 -m unittest tests.test_catalog -v && node --test tests/*.test.mjs"
   }
 }

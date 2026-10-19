@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "22"
       - name: Catalog and page merge tests
-        run: python3 -m unittest tests.test_catalog -v && node --test tests/merge.test.mjs
+        run: python3 -m unittest tests.test_catalog -v && node --test tests/*.test.mjs
       - name: Worker API tests
         working-directory: worker
         run: npm ci && npm test

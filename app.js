@@ -6,9 +6,18 @@ import {
   isTikTokUrl,
   mergeVideo,
   safeHttpUrl,
-  stageLabel,
   summarize,
 } from "./merge.js";
+import {
+  badgePresentation,
+  emptyListMessage,
+  filterChips,
+  metricText,
+  publishBlock,
+  statTimeText,
+  summaryCells,
+  syncAlertModel,
+} from "./sync-status.js";
 
 const TOKEN_KEY = "moo-friend-token";
 
@@ -34,7 +43,8 @@ const state = {
   filter: filterFromHash(),
   apiBase: resolveApiBase(),
   apiOk: false,
-  apiDetail: "",
+  apiError: "",
+  retrying: false,
   token: readToken(),
 };
 
@@ -113,20 +123,51 @@ function visibleVideos(videos) {
   });
 }
 
+function renderSyncAlert() {
+  const host = $("#sync-alert");
+  const model = syncAlertModel({
+    apiBase: state.apiBase,
+    apiOk: state.apiOk,
+    apiError: state.apiError,
+  });
+  host.replaceChildren();
+  if (!model) {
+    host.hidden = true;
+    host.className = "";
+    host.removeAttribute("role");
+    host.removeAttribute("aria-live");
+    delete host.dataset.syncKind;
+    return;
+  }
+  host.hidden = false;
+  host.className = model.tone === "config" ? "sync-alert config" : "sync-alert";
+  host.dataset.syncKind = model.kind;
+  host.setAttribute("role", model.role);
+  host.setAttribute("aria-live", model.role === "alert" ? "assertive" : "polite");
+  host.append(el("div", "sync-alert-title", model.title));
+  model.sections.forEach((section, index) => {
+    const paragraph = el("p");
+    paragraph.append(el("strong", "", `${section.label}。`), document.createTextNode(section.body));
+    host.append(paragraph);
+    if (index === 0 && model.raw) host.append(el("p", "sync-raw", `原始错误：${model.raw}`));
+  });
+  if (!model.retry) return;
+  const button = el("button", "btn retry", state.retrying ? "正在重试…" : "重试");
+  button.type = "button";
+  button.disabled = state.retrying;
+  button.addEventListener("click", () => {
+    retrySync();
+  });
+  host.append(button);
+}
+
 function renderSummary(summary) {
-  const cards = [
-    ["成片总数", summary.total],
-    ["待手动发布", summary.waiting_manual_publish],
-    ["已填发布链接", summary.published_with_link],
-    ["总播放", formatNum(summary.views)],
-    ["总点赞", formatNum(summary.likes)],
-    ["总评论", formatNum(summary.comments)],
-  ];
   const root = $("#summary");
   root.replaceChildren();
-  for (const [label, value] of cards) {
-    const card = el("div", "card");
-    card.append(el("div", "k", label), el("div", "v", String(value)));
+  for (const cell of summaryCells(summary, state.apiOk, formatNum)) {
+    const card = el("div", cell.unsynced ? "card unsynced" : "card");
+    const value = el("div", cell.unsynced ? "v unsynced" : "v", cell.value);
+    card.append(el("div", "k", cell.label), value);
     root.append(card);
   }
 }
@@ -148,31 +189,26 @@ function renderBanner() {
     note.append(document.createElement("br"));
   }
   note.append("「—」表示还没回填，不是抓取失败。Bot 不登录 TikTok。");
-  const status = el("div", "api-status");
-  if (!state.apiBase) {
-    status.textContent = "回填服务还没接上。可以先下载和复制；提交链接要等 Worker 部署后，或先把链接发给 John。";
-  } else if (state.apiOk) {
+  if (state.apiOk) {
+    const status = el("div", "api-status");
     status.textContent = "回填服务在线。填一次口令后，提交会直接记下，不用改 git。";
-  } else {
-    status.textContent = state.apiDetail || "回填服务暂时连不上。刷新后再试。";
+    note.append(status);
   }
-  note.append(status);
 }
 
 function renderFilters(summary) {
   const bar = $("#filters");
   bar.replaceChildren();
-  const options = [
-    ["all", `全部 ${summary.total}`],
-    ["waiting", `待发布 ${summary.waiting_manual_publish}`],
-    ["published", `已发布 ${summary.published_with_link}`],
-  ];
-  for (const [id, label] of options) {
-    const button = el("button", state.filter === id ? "chip on" : "chip", label);
+  for (const chip of filterChips(summary, state.apiOk)) {
+    const className = ["chip", state.filter === chip.id ? "on" : "", chip.unsynced ? "unsynced" : ""]
+      .filter(Boolean)
+      .join(" ");
+    const button = el("button", className, chip.label);
     button.type = "button";
+    if (chip.unsynced) button.title = "回填没同步，这个数量不能当真";
     button.addEventListener("click", () => {
-      state.filter = id;
-      const hash = id === "all" ? "#all" : `#${id}`;
+      state.filter = chip.id;
+      const hash = chip.id === "all" ? "#all" : `#${chip.id}`;
       history.replaceState(null, "", hash);
       render();
     });
@@ -194,8 +230,9 @@ function renderFilters(summary) {
 }
 
 function metric(label, value) {
-  const cell = el("div", "metric");
-  cell.append(el("div", "mk", label), el("div", "mv", formatNum(value)));
+  const unsynced = !state.apiOk;
+  const cell = el("div", unsynced ? "metric unsynced" : "metric");
+  cell.append(el("div", "mk", label), el("div", unsynced ? "mv unsynced" : "mv", metricText(value, state.apiOk, formatNum)));
   return cell;
 }
 
@@ -209,7 +246,16 @@ function renderPublishForm(video, host) {
   const button = el("button", "btn primary", video.publish_link ? "更新链接" : "我已发布，提交链接");
   button.type = "submit";
   const message = el("div", "form-msg");
-  if (!state.apiBase) button.disabled = true;
+  if (!state.apiOk) {
+    const block = publishBlock(state.apiBase);
+    input.disabled = true;
+    button.disabled = true;
+    button.textContent = "状态未同步，不能提交";
+    input.title = block.text;
+    button.title = block.text;
+    form.classList.add("blocked");
+    host.append(el("div", block.className, block.text));
+  }
   form.append(input, button, message);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -218,9 +264,21 @@ function renderPublishForm(video, host) {
   host.append(form);
 }
 
+function thrownMessage(error) {
+  if (error instanceof Error && error.message) return error.message;
+  if (typeof error === "string" && error.trim()) return error.trim();
+  return "error";
+}
+
 async function submitPublish(video, rawUrl, button, message) {
   const publishLink = String(rawUrl || "").trim();
   message.className = "form-msg";
+  if (!state.apiOk) {
+    message.classList.add("bad");
+    message.textContent = publishBlock(state.apiBase).text;
+    button.disabled = true;
+    return;
+  }
   if (!isTikTokUrl(publishLink)) {
     message.classList.add("bad");
     message.textContent = "请贴 https 的 TikTok 链接（tiktok.com / vm.tiktok.com / vt.tiktok.com）。";
@@ -359,7 +417,8 @@ function renderCard(video) {
   const meta = el("div", "muted", cardMeta(video));
   title.append(name, meta);
   const published = Boolean(video.publish_link);
-  const badge = el("span", published ? "badge ok" : "badge wait", stageLabel(video.stage, published));
+  const badgeInfo = badgePresentation(video, state.apiOk);
+  const badge = el("span", badgeInfo.className, badgeInfo.text);
   head.append(title, badge);
   card.append(head);
 
@@ -371,11 +430,7 @@ function renderCard(video) {
     metric("分享", video.stats?.shares),
     metric("收藏", video.stats?.saves),
   );
-  const updated = el(
-    "div",
-    "muted stat-time",
-    video.stats?.updated_at ? `数据更新 ${video.stats.updated_at}` : "数据更新 —",
-  );
+  const updated = el("div", "muted stat-time", statTimeText(video.stats?.updated_at, state.apiOk));
   card.append(metrics, updated);
 
   card.append(renderTikTokSection(video));
@@ -396,7 +451,7 @@ function renderCard(video) {
   const publish = el("div", "publish");
   if (published) {
     const row = el("div", "published-link");
-    row.append(el("span", "muted", "发布链接"));
+    row.append(el("span", "muted", state.apiOk ? "发布链接" : "底稿里的链接（还没和回填服务核对）"));
     const anchor = linkButton(video.publish_link, video.publish_link, false);
     if (anchor) {
       anchor.classList.add("post-link");
@@ -409,7 +464,7 @@ function renderCard(video) {
     renderPublishForm(video, details);
     publish.append(details);
   } else {
-    publish.append(el("div", "copy-label", "TikTok 泰语版发布后，把 TikTok 链接贴在这里"));
+    if (state.apiOk) publish.append(el("div", "copy-label", "TikTok 泰语版发布后，把 TikTok 链接贴在这里"));
     renderPublishForm(video, publish);
   }
   card.append(publish);
@@ -421,6 +476,7 @@ function render() {
   const videos = mergedVideos();
   const summary = summarize(videos);
   $("#subtitle").textContent = `成片包 · 待发布 / 已发布 · 目录更新 ${state.catalog.updated_at || ""} UTC`;
+  renderSyncAlert();
   renderSummary(summary);
   renderBanner();
   renderFilters(summary);
@@ -428,7 +484,13 @@ function render() {
   const shown = visibleVideos(videos);
   list.replaceChildren();
   if (!shown.length) {
-    list.append(el("p", "empty", "这个筛选下没有成片。"));
+    list.append(
+      el(
+        "p",
+        "empty",
+        emptyListMessage(state.filter, { synced: state.apiOk, configured: Boolean(state.apiBase) }),
+      ),
+    );
     return;
   }
   const waitingFirst = [...shown].sort((a, b) => Number(Boolean(a.publish_link)) - Number(Boolean(b.publish_link)));
@@ -453,6 +515,38 @@ async function loadState() {
   const body = await response.json();
   state.overlays = body.overlays || {};
   state.apiOk = true;
+  state.apiError = "";
+}
+
+let retryFlight = null;
+
+async function refreshOverlay() {
+  if (!state.apiBase || !state.catalog) {
+    state.apiOk = false;
+    state.apiError = "";
+    return;
+  }
+  try {
+    await loadState();
+  } catch (error) {
+    state.apiOk = false;
+    state.overlays = {};
+    state.apiError = thrownMessage(error);
+  }
+}
+
+async function retrySync() {
+  if (retryFlight || state.retrying || !state.apiBase) return;
+  state.retrying = true;
+  render();
+  retryFlight = refreshOverlay();
+  try {
+    await retryFlight;
+  } finally {
+    retryFlight = null;
+    state.retrying = false;
+    render();
+  }
 }
 
 async function boot() {
@@ -463,14 +557,7 @@ async function boot() {
     list.replaceChildren(el("p", "empty", "成片目录没有加载出来。确认 catalog.json 和页面在同一目录。"));
     return;
   }
-  if (state.apiBase) {
-    try {
-      await loadState();
-    } catch (error) {
-      state.apiOk = false;
-      state.apiDetail = `回填服务连不上（${error.message || "error"}）。下载和文案仍可用。`;
-    }
-  }
+  if (state.apiBase) await refreshOverlay();
   render();
 }
 
