@@ -8,13 +8,13 @@ const NETWORK_RE =
   /failed to fetch|networkerror|network request failed|load failed|fetch failed|internet connection appears to be offline|access-control-allow-origin/i;
 
 const FAILURE_CONSEQUENCE =
-  "现在页面上的「已发布」「发布链接」「播放 / 点赞 / 评论」不完整。看到的「待发布」数量可能偏多，不代表视频没发，也不代表数据丢了。下载和文案仍可用。";
+  "页面上的「已发布」「发布链接」「播放 / 点赞 / 评论」不完整。看到的「待发布」数量可能偏多，不代表视频没发，也不代表数据丢了。下载和文案仍可用。";
 
 const FAILURE_ADVICE =
   "换一个网络（连上 Wi‑Fi，或关掉再打开代理）后点「重试」，也可以刷新页面。如果还是不行，先别重复提交链接，把这个画面截图发给 John。";
 
 const UNCONFIGURED_CONSEQUENCE =
-  "现在只能看到 GitHub 上的底稿，朋友已经提交的发布链接、播放、点赞和评论都不会出现。看到的「待发布」数量可能偏多，不代表视频没发，也不代表数据丢了。下载和文案仍可用。";
+  "只能看到 GitHub 上的底稿，朋友已经提交的发布链接、播放、点赞和评论都不会出现。看到的「待发布」数量可能偏多，不代表视频没发，也不代表数据丢了。下载和文案仍可用。";
 
 const UNCONFIGURED_ADVICE =
   "换网络没有用。请把 TikTok 链接先发给 John，等他把 Worker 地址配上后再刷新。先别在页面上重复提交。";
