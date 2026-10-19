@@ -304,6 +304,287 @@ test("refresh-stats and the cron scrape public pages without wiping failures", a
   }, { outboundService: tiktokOutbound(seen), unsafeTriggerHandlers: true });
 });
 
+function refreshLogEntries(lines) {
+  const entries = [];
+  for (const line of lines) {
+    const start = line.indexOf('{"event":"refresh_stats"');
+    if (start === -1) continue;
+    entries.push(JSON.parse(line.slice(start)));
+  }
+  return entries;
+}
+
+test("refresh failure log names the page and does not wipe or echo secrets", async () => {
+  const SECRET_COOKIE = "sessionid=SUPERSECRETCOOKIE";
+  const SECRET_QUERY = "token=SUPERSECRETQUERY";
+  const JOB_CAP = "job-diagcaptcha000001";
+  const JOB_HTTP = "job-diaghttp500000001";
+  const JOB_JSON = "job-diagjsonparse0001";
+  const JOB_LOGIN = "job-diagloginurl00001";
+  const JOB_NOITEM = "job-diagnoitem0000001";
+  const JOB_NOSTATS = "job-diagnostats000001";
+  const JOB_OK = "job-diagsuccess000001";
+  const JOB_STATUS = "job-diagstatus0000001";
+  const JOB_BIG = "job-diagtoobig0000001";
+  const CAPTCHA = `<html><head><title>Verify to continue</title></head><body><div id="captcha-verify-container">captcha</div><!-- ${SECRET_COOKIE} --></body></html>`;
+  const BROKEN = `<html><head><title>TikTok</title></head><body><script id="__UNIVERSAL_DATA_FOR_REHYDRATION__">{</script></body></html>`;
+  const LOGIN = `<html><head><title>Log in</title></head><body>${SECRET_COOKIE}</body></html>`;
+  const TOO_BIG = `<title>Too big</title><!-- ${SECRET_COOKIE} -->${"x".repeat(2_000_100)}`;
+  const STATUS_MSG = "statusmsg-do-not-log";
+
+  function detail(payload, title) {
+    return `<html><head><title>${title}</title></head><body><script id="__UNIVERSAL_DATA_FOR_REHYDRATION__" type="application/json">${JSON.stringify(payload)}</script></body></html>`;
+  }
+
+  const statusPage = detail({
+    __DEFAULT_SCOPE__: { "webapp.video-detail": { statusCode: 10204, statusMsg: STATUS_MSG } },
+  }, "TikTok");
+  const baitPage = detail({
+    __DEFAULT_SCOPE__: {
+      "webapp.video-detail": { statusCode: 0, note: "please log in and verify this captcha" },
+    },
+  }, "Clip");
+  const noStatsPage = detail({
+    __DEFAULT_SCOPE__: {
+      "webapp.video-detail": {
+        statusCode: 0,
+        itemInfo: { itemStruct: { stats: { playCount: 1, diggCount: 1, commentCount: 1, shareCount: 1 } } },
+      },
+    },
+  }, "A clip");
+  const pages = {
+    "/4242424242": CAPTCHA,
+    "/102041024": statusPage,
+    "/111111111": BROKEN,
+    "/222222222": noStatsPage,
+    "/333333333": baitPage,
+    "/111222333": `${FIXTURE}<!-- ${SECRET_COOKIE} -->`,
+  };
+  const lines = [];
+  const originalLog = console.log;
+  console.log = (...args) => {
+    lines.push(args.map((part) => String(part)).join(" "));
+    originalLog.apply(console, args);
+  };
+  try {
+    await withWorker({ FRIEND_TOKEN: FRIEND, ADMIN_TOKEN: ADMIN }, async (mf) => {
+      assert.equal((await publish(mf, JOB_CAP, `https://vt.tiktok.com/ZDiagCap/?${SECRET_QUERY}`)).status, 200);
+      assert.equal((await publish(mf, JOB_HTTP, "https://www.tiktok.com/@mootype/video/500500500")).status, 200);
+      assert.equal((await publish(mf, JOB_JSON, "https://www.tiktok.com/@mootype/video/111111111")).status, 200);
+      assert.equal((await publish(mf, JOB_LOGIN, `https://www.tiktok.com/login?${SECRET_QUERY}`)).status, 200);
+      assert.equal((await publish(mf, JOB_NOITEM, "https://www.tiktok.com/@mootype/video/333333333")).status, 200);
+      assert.equal((await publish(mf, JOB_NOSTATS, "https://www.tiktok.com/@mootype/video/222222222")).status, 200);
+      const published = await publish(mf, JOB_OK, `https://www.tiktok.com/@mootype/video/111222333?${SECRET_QUERY}`);
+      assert.equal(published.status, 200);
+      const publishedAt = published.body.overlay.published_at;
+      assert.equal((await publish(mf, JOB_STATUS, "https://www.tiktok.com/@mootype/video/102041024")).status, 200);
+      assert.equal((await publish(mf, JOB_BIG, "https://www.tiktok.com/@mootype/video/200000000")).status, 200);
+
+      async function setViews(id, views) {
+        const response = await readJson(
+          await mf.dispatchFetch("http://example.com/v1/stats", {
+            method: "POST",
+            headers: { "content-type": "application/json", "x-moo-token": ADMIN },
+            body: JSON.stringify({ id, views, source: "manual" }),
+          }),
+        );
+        assert.equal(response.status, 200);
+      }
+      await setViews(JOB_CAP, 11);
+      await setViews(JOB_HTTP, 22);
+      await setViews(JOB_JSON, 33);
+      await setViews(JOB_LOGIN, 44);
+      await setViews(JOB_NOITEM, 55);
+      await setViews(JOB_NOSTATS, 66);
+      await setViews(JOB_STATUS, 77);
+      await setViews(JOB_BIG, 88);
+      await setViews(JOB_OK, 1);
+
+      const refreshed = await readJson(
+        await mf.dispatchFetch("http://example.com/v1/refresh-stats", {
+          method: "POST",
+          headers: { "content-type": "application/json", "x-moo-token": ADMIN },
+          body: "{}",
+        }),
+      );
+      assert.equal(refreshed.status, 200);
+      assert.equal(refreshed.body.ok, false);
+      assert.deepEqual(refreshed.body.refreshed, [JOB_OK]);
+      assert.deepEqual(refreshed.body.failed, [
+        { id: JOB_CAP, error: "stats_missing" },
+        { id: JOB_HTTP, error: "http_500" },
+        { id: JOB_JSON, error: "stats_missing" },
+        { id: JOB_LOGIN, error: "stats_missing" },
+        { id: JOB_NOITEM, error: "stats_missing" },
+        { id: JOB_NOSTATS, error: "stats_missing" },
+        { id: JOB_STATUS, error: "stats_missing" },
+        { id: JOB_BIG, error: "html_too_large" },
+      ]);
+      const apiText = JSON.stringify(refreshed.body);
+      assert.equal(apiText.includes("final_url"), false);
+      assert.equal(apiText.includes("html_bytes"), false);
+      assert.equal(apiText.includes("SUPERSECRET"), false);
+      assert.equal(apiText.includes(ADMIN), false);
+
+      const state = await readJson(
+        await mf.dispatchFetch(
+          `http://example.com/v1/state?ids=${JOB_CAP},${JOB_HTTP},${JOB_JSON},${JOB_LOGIN},${JOB_NOITEM},${JOB_NOSTATS},${JOB_STATUS},${JOB_BIG},${JOB_OK}`,
+        ),
+      );
+      assert.equal(state.body.overlays[JOB_CAP].stats.views, 11);
+      assert.equal(state.body.overlays[JOB_CAP].stats.source, "manual");
+      assert.equal(state.body.overlays[JOB_HTTP].stats.views, 22);
+      assert.equal(state.body.overlays[JOB_JSON].stats.views, 33);
+      assert.equal(state.body.overlays[JOB_LOGIN].stats.views, 44);
+      assert.equal(state.body.overlays[JOB_NOITEM].stats.views, 55);
+      assert.equal(state.body.overlays[JOB_NOSTATS].stats.views, 66);
+      assert.equal(state.body.overlays[JOB_STATUS].stats.views, 77);
+      assert.equal(state.body.overlays[JOB_BIG].stats.views, 88);
+      assert.equal(state.body.overlays[JOB_OK].stats.views, 345);
+      assert.equal(state.body.overlays[JOB_OK].stats.likes, 9);
+      assert.equal(state.body.overlays[JOB_OK].stats.source, "tiktok-public");
+      assert.equal(state.body.overlays[JOB_OK].published_at, publishedAt);
+      assert.equal(state.body.overlays[JOB_OK].publish_link, `https://www.tiktok.com/@mootype/video/111222333?${SECRET_QUERY}`);
+
+      const cron = await mf.dispatchFetch("http://example.com/cdn-cgi/handler/scheduled?cron=0+*/3+*+*+*");
+      assert.equal(cron.status, 200);
+      const afterCron = await readJson(await mf.dispatchFetch(`http://example.com/v1/state?ids=${JOB_CAP},${JOB_OK}`));
+      assert.equal(afterCron.body.overlays[JOB_CAP].stats.views, 11);
+      assert.equal(afterCron.body.overlays[JOB_CAP].stats.source, "manual");
+      assert.equal(afterCron.body.overlays[JOB_OK].stats.views, 345);
+
+      const entries = refreshLogEntries(lines).filter((entry) => entry.refreshed.includes(JOB_OK));
+      assert.equal(entries.length, 2);
+      assert.equal(entries[0].cron, "");
+      assert.equal(entries[1].cron, "0 */3 * * *");
+      assert.deepEqual(entries[0].refreshed, [JOB_OK]);
+      assert.deepEqual(entries[1].refreshed, [JOB_OK]);
+      const big = entries[0].failed.find((item) => item.id === JOB_BIG);
+      assert.ok(big);
+      assert.ok(big.html_bytes > 2_000_000);
+      assert.ok(big.html_bytes <= Buffer.byteLength(TOO_BIG));
+      const failed = [
+        {
+          id: JOB_CAP,
+          error: "no_rehydration",
+          final_url: "https://www.tiktok.com/@mootype/video/4242424242",
+          http_status: 200,
+          html_bytes: Buffer.byteLength(CAPTCHA),
+          markers: ["captcha", "verify"],
+          title: "Verify to continue",
+        },
+        {
+          id: JOB_HTTP,
+          error: "http_500",
+          final_url: "https://www.tiktok.com/@mootype/video/500500500",
+          http_status: 500,
+        },
+        {
+          id: JOB_JSON,
+          error: "json_parse",
+          final_url: "https://www.tiktok.com/@mootype/video/111111111",
+          http_status: 200,
+          html_bytes: Buffer.byteLength(BROKEN),
+          title: "TikTok",
+        },
+        {
+          id: JOB_LOGIN,
+          error: "no_rehydration",
+          final_url: "https://www.tiktok.com/login",
+          http_status: 200,
+          html_bytes: Buffer.byteLength(LOGIN),
+          markers: ["login"],
+          title: "Log in",
+        },
+        {
+          id: JOB_NOITEM,
+          error: "no_item",
+          final_url: "https://www.tiktok.com/@mootype/video/333333333",
+          http_status: 200,
+          html_bytes: Buffer.byteLength(baitPage),
+          title: "Clip",
+        },
+        {
+          id: JOB_NOSTATS,
+          error: "no_stats",
+          final_url: "https://www.tiktok.com/@mootype/video/222222222",
+          http_status: 200,
+          html_bytes: Buffer.byteLength(noStatsPage),
+          title: "A clip",
+        },
+        {
+          id: JOB_STATUS,
+          error: "status_code",
+          status_code: 10204,
+          final_url: "https://www.tiktok.com/@mootype/video/102041024",
+          http_status: 200,
+          html_bytes: Buffer.byteLength(statusPage),
+          title: "TikTok",
+        },
+        {
+          id: JOB_BIG,
+          error: "html_too_large",
+          final_url: "https://www.tiktok.com/@mootype/video/200000000",
+          http_status: 200,
+          html_bytes: big.html_bytes,
+          title: "Too big",
+        },
+      ];
+      assert.deepEqual(entries[0].failed, failed);
+      assert.deepEqual(entries[1].failed, failed);
+      const logText = JSON.stringify(entries);
+      assert.equal(logText.includes("SUPERSECRET"), false);
+      assert.equal(logText.includes("sessionid"), false);
+      assert.equal(logText.includes("please log in"), false);
+      assert.equal(logText.includes(STATUS_MSG), false);
+      assert.equal(logText.includes("<html"), false);
+      assert.equal(logText.includes("<script"), false);
+      assert.equal(logText.includes(ADMIN), false);
+      assert.equal(logText.includes("x".repeat(80)), false);
+      assert.ok(logText.length < 8000);
+    }, {
+      unsafeTriggerHandlers: true,
+      outboundService: async (request) => {
+        const url = new URL(request.url);
+        if (url.hostname === "vt.tiktok.com" && url.pathname.includes("ZDiagCap")) {
+          return new Response(null, {
+            status: 302,
+            headers: { location: `https://www.tiktok.com/@mootype/video/4242424242?${SECRET_QUERY}` },
+          });
+        }
+        if (url.hostname === "www.tiktok.com" && url.pathname === "/login") {
+          return new Response(LOGIN, {
+            status: 200,
+            headers: { "content-type": "text/html", "set-cookie": SECRET_COOKIE },
+          });
+        }
+        if (url.hostname === "www.tiktok.com" && url.pathname.endsWith("/200000000")) {
+          return new Response(TOO_BIG, {
+            status: 200,
+            headers: { "content-type": "text/html", "set-cookie": SECRET_COOKIE },
+          });
+        }
+        if (url.hostname === "www.tiktok.com" && url.pathname.endsWith("/500500500")) {
+          return new Response(SECRET_COOKIE, {
+            status: 500,
+            headers: { "set-cookie": SECRET_COOKIE },
+          });
+        }
+        const path = Object.keys(pages).find((suffix) => url.pathname.endsWith(suffix));
+        if (path) {
+          return new Response(pages[path], {
+            status: 200,
+            headers: { "content-type": "text/html", "set-cookie": SECRET_COOKIE },
+          });
+        }
+        return new Response("blocked", { status: 599 });
+      },
+    });
+  } finally {
+    console.log = originalLog;
+  }
+});
+
 test("short tokens disable writes", async () => {
   await withWorker({ FRIEND_TOKEN: "short", ADMIN_TOKEN: "also-short" }, async (mf) => {
     const health = await readJson(await mf.dispatchFetch("http://example.com/v1/health"));

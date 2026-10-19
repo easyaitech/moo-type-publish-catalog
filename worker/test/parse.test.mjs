@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { parseTikTokPublicStats } from "../src/index.js";
+import { inspectTikTokHtml, parseTikTokPublicStats, refreshFailureLog } from "../src/index.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const FIXTURE = fs.readFileSync(path.join(HERE, "fixtures/tiktok-rehydration.html"), "utf8");
@@ -108,4 +108,129 @@ test("invalid counts and missing markup do not invent numbers", () => {
     },
   });
   assert.equal(parseTikTokPublicStats(negative), null);
+});
+
+test("missing stats are named by the first break in the page", () => {
+  assert.deepEqual(inspectTikTokHtml("<html><body>log in</body></html>"), {
+    counts: null,
+    reason: "no_rehydration",
+  });
+  assert.equal(
+    inspectTikTokHtml('<script id="__UNIVERSAL_DATA_FOR_REHYDRATION__">{</script>').reason,
+    "json_parse",
+  );
+  assert.deepEqual(
+    inspectTikTokHtml(page({
+      __DEFAULT_SCOPE__: { "webapp.video-detail": { statusCode: 10204 } },
+    })),
+    { counts: null, reason: "status_code", statusCode: 10204 },
+  );
+  assert.deepEqual(
+    inspectTikTokHtml(page({
+      __DEFAULT_SCOPE__: { "webapp.video-detail": { statusCode: "10221" } },
+    })),
+    { counts: null, reason: "status_code", statusCode: 10221 },
+  );
+  assert.equal(
+    inspectTikTokHtml(page({
+      __DEFAULT_SCOPE__: { "webapp.reflow.video.detail": { statusCode: 7 } },
+    })).statusCode,
+    7,
+  );
+  assert.equal(
+    inspectTikTokHtml(page({
+      __DEFAULT_SCOPE__: { "webapp.video-detail": { statusCode: "0" } },
+    })).reason,
+    "no_item",
+  );
+  const blockedDetail = page({
+    __DEFAULT_SCOPE__: {
+      "webapp.video-detail": { statusCode: 0 },
+      "webapp.reflow.video.detail": {
+        statusCode: 9,
+        itemInfo: { itemStruct: { stats: { ...FULL } } },
+      },
+    },
+  });
+  assert.equal(parseTikTokPublicStats(blockedDetail), null);
+  assert.equal(inspectTikTokHtml(blockedDetail).reason, "no_item");
+  assert.equal(
+    inspectTikTokHtml(page({
+      __DEFAULT_SCOPE__: {
+        "webapp.video-detail": {
+          statusCode: 0,
+          note: "please log in and verify this captcha",
+        },
+      },
+    })).reason,
+    "no_item",
+  );
+  assert.equal(
+    inspectTikTokHtml(page({
+      __DEFAULT_SCOPE__: {
+        "webapp.video-detail": {
+          itemInfo: { itemStruct: { stats: { playCount: 1 } } },
+        },
+      },
+    })).reason,
+    "no_stats",
+  );
+});
+
+test("a non-zero status code does not hide counts that are already on the page", () => {
+  const html = page({
+    __DEFAULT_SCOPE__: {
+      "webapp.video-detail": {
+        statusCode: 10204,
+        itemInfo: { itemStruct: { stats: { ...FULL } } },
+      },
+    },
+  });
+  assert.equal(parseTikTokPublicStats(html).views, 345);
+  assert.equal(inspectTikTokHtml(html).reason, null);
+});
+
+test("failure log keeps the short reason and drops secrets", () => {
+  const hidden = refreshFailureLog({
+    id: "job-0123456789abcdef",
+    error: "stats_missing",
+    logError: "no_rehydration",
+    diag: {
+      final_url: "https://user:pass@www.tiktok.com/@a/video/1?token=SECRETQUERY&x=1#frag",
+      http_status: 200,
+      html_bytes: 40,
+      title: "sessionid=SECRETCOOKIE please verify",
+      markers: ["verify", "made-up"],
+      html: "<html>SECRETCOOKIE</html>",
+      cookie: "sessionid=SECRETCOOKIE",
+    },
+  });
+  assert.deepEqual(hidden, {
+    id: "job-0123456789abcdef",
+    error: "no_rehydration",
+    http_status: 200,
+    html_bytes: 40,
+    markers: ["verify"],
+  });
+  assert.equal(JSON.stringify(hidden).includes("SECRET"), false);
+
+  const login = refreshFailureLog({
+    id: "job-0123456789abcdef",
+    error: "stats_missing",
+    logError: "status_code",
+    diag: {
+      status_code: "10204",
+      final_url: "https://www.tiktok.com/login?token=SECRETQUERY",
+      http_status: 200,
+      html_bytes: 12,
+      title: `  ${"A".repeat(120)}\n`,
+    },
+  });
+  assert.equal(login.error, "status_code");
+  assert.equal(login.status_code, 10204);
+  assert.equal(login.final_url, "https://www.tiktok.com/login");
+  assert.equal(login.markers.includes("login"), true);
+  assert.equal(login.title.length, 80);
+  assert.equal(JSON.stringify(login).includes("SECRETQUERY"), false);
+  assert.equal(Object.hasOwn(login, "html"), false);
 });

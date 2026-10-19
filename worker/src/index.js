@@ -255,12 +255,143 @@ const SAFE_ERRORS = new Set([
   "link_changed",
   "invalid_id",
 ]);
+const PARSE_REASONS = new Set(["no_rehydration", "json_parse", "status_code", "no_item", "no_stats"]);
+const PAGE_MARKERS = ["captcha", "verify", "login"];
+const MAX_TITLE_CHARS = 80;
+const MAX_LOG_URL_CHARS = 200;
+const MARKER_SAMPLE_CHARS = 12000;
+const TITLE_SCAN_CHARS = 8000;
 
 function briefError(err) {
   const message = err && typeof err.message === "string" ? err.message : "";
   if (SAFE_ERRORS.has(message) || /^http_\d{3}$/.test(message)) return message;
   if (err && (err.name === "TimeoutError" || err.name === "AbortError")) return "timeout";
   return "fetch_failed";
+}
+
+function normalizeStatusCode(value) {
+  if (typeof value === "number" && Number.isInteger(value) && value >= -1000000 && value <= 1000000) return value;
+  if (typeof value === "string" && /^-?\d{1,7}$/.test(value.trim())) {
+    const number = Number(value.trim());
+    if (Number.isInteger(number) && number >= -1000000 && number <= 1000000) return number;
+  }
+  return undefined;
+}
+
+function firstDetailEntry(data) {
+  const scope = data && typeof data === "object" ? data.__DEFAULT_SCOPE__ : null;
+  if (!scope || typeof scope !== "object") return null;
+  for (const key of DETAIL_KEYS) {
+    if (!Object.prototype.hasOwnProperty.call(scope, key)) continue;
+    const entry = scope[key];
+    return entry && typeof entry === "object" ? entry : null;
+  }
+  return null;
+}
+
+function detailStatusCode(data) {
+  const entry = firstDetailEntry(data);
+  if (!entry || !Object.prototype.hasOwnProperty.call(entry, "statusCode")) return undefined;
+  return normalizeStatusCode(entry.statusCode);
+}
+
+function safePageUrl(value) {
+  try {
+    const url = new URL(String(value || ""));
+    if (url.username || url.password) return undefined;
+    if (url.protocol !== "https:" && url.protocol !== "http:") return undefined;
+    const path = (url.pathname || "/").slice(0, MAX_LOG_URL_CHARS);
+    return `${url.origin}${path}`;
+  } catch {
+    return undefined;
+  }
+}
+
+function titleLooksSensitive(text) {
+  return /cookie|sessionid|\btoken\b|password|\bsecret\b|authorization/i.test(text);
+}
+
+function pageTitle(html) {
+  const head = String(html || "").slice(0, TITLE_SCAN_CHARS);
+  const match = head.match(/<title\b[^>]*>([^<]{0,300})/i);
+  if (!match) return undefined;
+  const text = match[1].replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim();
+  if (!text) return undefined;
+  if (titleLooksSensitive(text)) return undefined;
+  return text.slice(0, MAX_TITLE_CHARS);
+}
+
+function markerSample(html) {
+  return String(html || "").replace(SCRIPT_RE, " ").slice(0, MARKER_SAMPLE_CHARS);
+}
+
+function pageMarkers(sample) {
+  const markers = [];
+  if (/captcha/i.test(sample)) markers.push("captcha");
+  if (/verify/i.test(sample)) markers.push("verify");
+  if (/log\s*in|sign\s*in/i.test(sample)) markers.push("login");
+  return markers;
+}
+
+function pageSignals(html, finalUrl) {
+  const title = pageTitle(html);
+  const sample = `${finalUrl || ""}\n${title || ""}\n${markerSample(html)}`;
+  return { title, markers: pageMarkers(sample) };
+}
+
+function signalsFromHtml(html, htmlBytes) {
+  const signals = pageSignals(html, "");
+  const diag = {};
+  if (Number.isInteger(htmlBytes) && htmlBytes >= 0) diag.html_bytes = htmlBytes;
+  if (signals.title) diag.title = signals.title;
+  if (signals.markers.length) diag.markers = signals.markers;
+  return diag;
+}
+
+function attachDiag(err, diag) {
+  if (!err || !diag) return err;
+  const next = { ...(err.diag || {}) };
+  for (const [key, value] of Object.entries(diag)) {
+    if (value === undefined || value === "") continue;
+    next[key] = value;
+  }
+  if (Object.keys(next).length) err.diag = next;
+  return err;
+}
+
+// HTTP keeps the coarse error. This log line is the only place with the
+// finer reason and page facts — never the document, cookies, or query string.
+export function refreshFailureLog(outcome) {
+  const coarse = outcome && typeof outcome.error === "string" ? outcome.error : "";
+  const specific = outcome && outcome.logError;
+  let error = "fetch_failed";
+  if (PARSE_REASONS.has(specific)) error = specific;
+  else if (SAFE_ERRORS.has(coarse) || /^http_\d{3}$/.test(coarse)) error = coarse;
+  const entry = { id: outcome && outcome.id, error };
+  const diag = outcome && outcome.diag && typeof outcome.diag === "object" ? outcome.diag : {};
+  if (error === "status_code") {
+    const code = normalizeStatusCode(diag.status_code);
+    if (code !== undefined && code !== 0) entry.status_code = code;
+  }
+  const finalUrl = typeof diag.final_url === "string" ? safePageUrl(diag.final_url) : undefined;
+  if (finalUrl) entry.final_url = finalUrl;
+  if (Number.isInteger(diag.http_status) && diag.http_status >= 100 && diag.http_status <= 599) {
+    entry.http_status = diag.http_status;
+  }
+  if (Number.isSafeInteger(diag.html_bytes) && diag.html_bytes >= 0) {
+    entry.html_bytes = diag.html_bytes;
+  }
+  const found = new Set(Array.isArray(diag.markers) ? diag.markers : []);
+  for (const name of pageMarkers(finalUrl || "")) found.add(name);
+  const markers = PAGE_MARKERS.filter((name) => found.has(name));
+  if (markers.length) entry.markers = markers;
+  if (typeof diag.title === "string") {
+    const title = diag.title.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim();
+    if (title && !titleLooksSensitive(title)) {
+      entry.title = title.slice(0, MAX_TITLE_CHARS);
+    }
+  }
+  return entry;
 }
 
 function coerceCount(value) {
@@ -324,19 +455,29 @@ function findFirstItemStruct(root) {
   return null;
 }
 
-export function parseTikTokPublicStats(html) {
-  if (typeof html !== "string" || !html) return null;
+export function inspectTikTokHtml(html) {
+  if (typeof html !== "string" || !html) return { counts: null, reason: "no_rehydration" };
   const match = html.match(SCRIPT_RE);
-  if (!match) return null;
+  if (!match) return { counts: null, reason: "no_rehydration" };
   let data;
   try {
     data = JSON.parse(match[1].trim());
   } catch {
-    return null;
+    return { counts: null, reason: "json_parse" };
   }
   const item = resolveItemStruct(data);
-  if (!item) return null;
-  return countsFromItem(item);
+  const counts = countsFromItem(item);
+  if (counts) return { counts, reason: null };
+  const statusCode = detailStatusCode(data);
+  if (statusCode !== undefined && statusCode !== 0) {
+    return { counts: null, reason: "status_code", statusCode };
+  }
+  if (!item) return { counts: null, reason: "no_item" };
+  return { counts: null, reason: "no_stats" };
+}
+
+export function parseTikTokPublicStats(html) {
+  return inspectTikTokHtml(html).counts;
 }
 
 async function cancelBody(response) {
@@ -347,8 +488,15 @@ async function cancelBody(response) {
   }
 }
 
+function oversizedSample(html, extra) {
+  const room = MARKER_SAMPLE_CHARS - html.length;
+  if (!extra || room <= 0) return html;
+  const slice = extra.byteLength > room ? extra.subarray(0, room) : extra;
+  return html + new TextDecoder().decode(slice);
+}
+
 async function readHtmlSnippet(response) {
-  if (!response.body) return "";
+  if (!response.body) return { html: "", htmlBytes: 0 };
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let html = "";
@@ -358,7 +506,11 @@ async function readHtmlSnippet(response) {
       const { done, value } = await reader.read();
       if (done) break;
       total += value.byteLength;
-      if (total > MAX_HTML_BYTES) throw new Error("html_too_large");
+      if (total > MAX_HTML_BYTES) {
+        const err = new Error("html_too_large");
+        err.diag = signalsFromHtml(oversizedSample(html, value), total);
+        throw err;
+      }
       html += decoder.decode(value, { stream: true });
       const idAt = html.indexOf(REHYDRATION_ID);
       if (idAt !== -1 && html.indexOf("</script>", idAt) !== -1) break;
@@ -371,7 +523,7 @@ async function readHtmlSnippet(response) {
     }
   }
   html += decoder.decode();
-  return html;
+  return { html, htmlBytes: total };
 }
 
 async function fetchTikTokHtml(startUrl) {
@@ -379,7 +531,9 @@ async function fetchTikTokHtml(startUrl) {
   const signal = AbortSignal.timeout(FETCH_TIMEOUT_MS);
   let current = startUrl;
   for (let hop = 0; hop <= MAX_REDIRECTS; hop += 1) {
-    if (!isTikTokUrl(current)) throw new Error("invalid_url");
+    if (!isTikTokUrl(current)) {
+      throw attachDiag(new Error("invalid_url"), { final_url: safePageUrl(current) });
+    }
     let response;
     try {
       response = await fetch(current, {
@@ -394,14 +548,15 @@ async function fetchTikTokHtml(startUrl) {
         },
       });
     } catch (err) {
-      if (err && (err.name === "TimeoutError" || err.name === "AbortError")) throw new Error("timeout");
-      throw new Error("fetch_failed");
+      const code = err && (err.name === "TimeoutError" || err.name === "AbortError") ? "timeout" : "fetch_failed";
+      throw attachDiag(new Error(code), { final_url: safePageUrl(current) });
     }
+    const where = { final_url: safePageUrl(current), http_status: response.status };
     if (response.status >= 300 && response.status < 400) {
       const location = response.headers.get("location");
       await cancelBody(response);
-      if (!location) throw new Error("bad_redirect");
-      if (hop === MAX_REDIRECTS) throw new Error("too_many_redirects");
+      if (!location) throw attachDiag(new Error("bad_redirect"), where);
+      if (hop === MAX_REDIRECTS) throw attachDiag(new Error("too_many_redirects"), where);
       current = new URL(location, current).href;
       continue;
     }
@@ -409,11 +564,16 @@ async function fetchTikTokHtml(startUrl) {
       const status = response.status;
       await cancelBody(response);
       if (!Number.isInteger(status) || status < 100 || status > 599) throw new Error("fetch_failed");
-      throw new Error(`http_${status}`);
+      throw attachDiag(new Error(`http_${status}`), where);
     }
-    return readHtmlSnippet(response);
+    try {
+      const read = await readHtmlSnippet(response);
+      return { html: read.html, diag: { ...where, html_bytes: read.htmlBytes } };
+    } catch (err) {
+      throw attachDiag(err, where);
+    }
   }
-  throw new Error("too_many_redirects");
+  throw attachDiag(new Error("too_many_redirects"), { final_url: safePageUrl(current) });
 }
 
 async function listOverlayIds(env) {
@@ -458,13 +618,28 @@ async function refreshOne(env, id, explicit) {
       return explicit ? { id, status: "failed", error: "no_publish_link" } : { id, status: "skipped" };
     }
     if (!isTikTokUrl(publishLink)) return { id, status: "failed", error: "invalid_url" };
-    let counts;
+    let fetched;
     try {
-      counts = parseTikTokPublicStats(await fetchTikTokHtml(publishLink));
+      fetched = await fetchTikTokHtml(publishLink);
     } catch (err) {
-      return { id, status: "failed", error: briefError(err) };
+      return { id, status: "failed", error: briefError(err), diag: err && err.diag };
     }
-    if (!counts) return { id, status: "failed", error: "stats_missing" };
+    const inspected = inspectTikTokHtml(fetched.html);
+    if (!inspected.counts) {
+      const signals = pageSignals(fetched.html, fetched.diag && fetched.diag.final_url);
+      const diag = { ...(fetched.diag || {}) };
+      if (signals.title) diag.title = signals.title;
+      if (signals.markers.length) diag.markers = signals.markers;
+      if (inspected.reason === "status_code") diag.status_code = inspected.statusCode;
+      return {
+        id,
+        status: "failed",
+        error: "stats_missing",
+        logError: inspected.reason,
+        diag,
+      };
+    }
+    const counts = inspected.counts;
     const latest = await readOverlay(env, id);
     if (!latest || String(latest.publish_link || "").trim() !== publishLink) {
       return { id, status: "failed", error: "link_changed" };
@@ -485,7 +660,7 @@ async function refreshOne(env, id, explicit) {
     });
     return { id, status: "refreshed" };
   } catch (err) {
-    return { id, status: "failed", error: briefError(err) };
+    return { id, status: "failed", error: briefError(err), diag: err && err.diag };
   }
 }
 
@@ -506,7 +681,7 @@ async function refreshPublicStats(env, options = {}) {
     cron: options.cron || "",
     ok: result.ok,
     refreshed: result.refreshed,
-    failed: result.failed,
+    failed: outcomes.filter((outcome) => outcome && outcome.status === "failed").map(refreshFailureLog),
   }));
   return result;
 }

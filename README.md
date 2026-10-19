@@ -177,7 +177,52 @@ curl -sS -X POST "$MOO_API_BASE/v1/refresh-stats" \
   -d '{"id":"job-0123456789abcdef0123456789abcdef"}'
 ```
 
-不带 `id`（空 body）会刷新所有已填链接的条目。返回形如 `{ "ok": true, "refreshed": ["job-..."], "failed": [{ "id": "job-...", "error": "stats_missing" }] }`。`refreshed` 是这次写成功的 job id。`failed` 是没写上的 id 和简短原因。有失败时 `ok` 为 false，已经成功的仍在 `refreshed` 里。失败不会清掉旧数字。
+不带 `id`（空 body）会刷新所有已填链接的条目。返回形如 `{ "ok": true, "refreshed": ["job-..."], "failed": [{ "id": "job-...", "error": "stats_missing" }] }`。`refreshed` 是这次写成功的 job id。`failed` 是没写上的 id 和简短原因。有失败时 `ok` 为 false，已经成功的仍在 `refreshed` 里。失败不会清掉旧数字。接口这一层保持这样：解析不到数字时，`error` 仍是 `stats_missing`，响应里不带页面内容。
+
+同一次运行会在 Worker 日志里写一行 `event` 为 `refresh_stats` 的记录（定时任务和手动刷新都是这一行）。解析失败时，日志里的 `error` 会写成下面更具体的原因，用来分辨 TikTok 把数据中心的请求挡成了哪一种。接口返回不变。
+
+| 日志里的 error | 意思 |
+|---|---|
+| `no_rehydration` | 页面里没有那段公开计数脚本 |
+| `json_parse` | 有这段脚本，但里面不是合法的 JSON |
+| `status_code` | 视频详情的 `statusCode` 不是 0。旁边的 `status_code` 是实际数字 |
+| `no_item` | 没有视频条目 |
+| `no_stats` | 有视频条目，但播放、点赞这些数字不齐 |
+
+失败项里还会带上这些字段。没有的就省略，避免日志过长：
+
+| 字段 | 意思 |
+|---|---|
+| `final_url` | 跳转结束后的地址，去掉 `?` 后面的参数 |
+| `http_status` | HTTP 状态码 |
+| `html_bytes` | Worker 实际读到的字节数。找到计数脚本会停，所以上限大约 2MB。成功的不记这个数 |
+| `markers` | 页面标题、正文开头或最终地址里出现了哪些字样：`captcha`、`verify`、`login`（也认 log in、sign in）。只是提示，要和 `error` 一起看 |
+| `title` | 页面标题，最多 80 个字符。标题里像口令、cookie 的不会写入 |
+| `status_code` | 只有原因是 `status_code` 时才有，值是视频详情返回的数字 |
+
+日志不写 cookie、口令、请求参数，也不写整页 HTML。成功的条目仍然只记 job id。网络失败（例如 `http_500`、`timeout`）的 `error` 和接口一样；拿得到地址或状态码时带上 `final_url` 和 `http_status`。
+
+示例（200，但是验证页，旧数字不会被盖掉）：
+
+```json
+{
+  "event": "refresh_stats",
+  "cron": "0 */3 * * *",
+  "ok": false,
+  "refreshed": [],
+  "failed": [{
+    "id": "job-0123456789abcdef0123456789abcdef",
+    "error": "no_rehydration",
+    "final_url": "https://www.tiktok.com/@name/video/123",
+    "http_status": 200,
+    "html_bytes": 4821,
+    "markers": ["captcha", "verify"],
+    "title": "Verify to continue"
+  }]
+}
+```
+
+到 Cloudflare 的 Worker 日志里看 `refresh_stats` 这一行即可。部署这一版之后，下一次定时任务（每 3 小时）或上面的手动刷新就会打出这种日志。
 
 朋友提交的链接只在 KV 里。要收进 git 做备份：
 
@@ -244,4 +289,4 @@ node --test tests/merge.test.mjs
 cd worker && npm ci && npm test
 ```
 
-Worker 测试用 Miniflare：没口令不能写、非 TikTok 链接会拒绝、朋友口令不能改数据、管理员可以写播放数，并且关掉进程再打开后链接还在。解析播放数用一份本地 HTML 片段，测试不会请求 TikTok。
+Worker 测试用 Miniflare：没口令不能写、非 TikTok 链接会拒绝、朋友口令不能改数据、管理员可以写播放数，并且关掉进程再打开后链接还在。解析播放数用一份本地 HTML 片段，测试不会请求 TikTok。刷新失败时会检查日志里的具体原因和页面特征，并确认整页 HTML、cookie、地址参数都不会写进去，旧数字也不会被清掉。
