@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T06:57:06Z",
+  "updated_at": "2026-10-20T01:28:21Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 15,
-    "waiting_manual_publish": 15,
+    "total": 16,
+    "waiting_manual_publish": 16,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -579,6 +579,46 @@
         "drive_cover": "https://drive.google.com/file/d/1AhKNiAeASfeYD4bIgkfGL5ksQMd0NICY/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1AhKNiAeASfeYD4bIgkfGL5ksQMd0NICY&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1wtK2hQ8j3If1vpbHHYf9_sQkk8F2u2pW/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "INTP",
+      "folder_title": "姬圈狂喜，智性恋狂喜，姐妹们，不是硬舔，我是真喜欢intp的女性，好tm性感有种跨性别的美woc，有种打破常规女性定义的美啊啊啊啊！",
+      "job_id": "job-19VhYXtQPc2AbEnpIyTqLXBWFXNTRAe",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：สาว INTP มีเสน่ห์ตรงไหน? 🧠\n\n**正文**：\nสาวๆ ไอเอ็นทีพี หลายคนเสน่ห์อยู่ที่ความคิด ชวนคุยเรื่องเพ้อๆ ได้ทั้งวัน 💭\nใครมีเพื่อนสาว INTP แบบนี้บ้าง? เม้นต์เล่าหน่อย 👇\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#INTP #MBTI #MBTIไทย #บุคลิกภาพ\n\n> 无直播 / 引流 / 原作者 branding / 性向标签。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/19VhYXt_QPc2AbEnpIyT-qLXBWFXNTRAe",
+      "drive_video": "https://drive.google.com/file/d/1GzG8ro4fJhwvHpSx5UL5EgSL8QkwS4i0/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1GzG8ro4fJhwvHpSx5UL5EgSL8QkwS4i0&export=download",
+      "drive_cover": "https://drive.google.com/file/d/13t8CNkW95dqZN2frercjcovUuBsvhvAM/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=13t8CNkW95dqZN2frercjcovUuBsvhvAM&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/158CJFa2vfaTt70QVhjVJJP3-TbvYNlTn/view?usp=drivesdk",
+      "subfolder_name": "INTP-r0002",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0002",
+        "caption": "For a lot of INTP women, the charm is all in how they think. Bring them your wildest idea and see. 💭\nGot an INTP friend like this? Tell me in the comments 👇\n(MBTI is for fun, not a diagnosis.)",
+        "hashtags": "#INTP #MBTI #personality #introvert #deepthinkers",
+        "drive_video": "https://drive.google.com/file/d/1kIAfcdhrcYF_ybTLhEemu7Xaff1oqDAW/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1kIAfcdhrcYF_ybTLhEemu7Xaff1oqDAW&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1HkhmBVwW5RaRa-RcwvPA08-nO_vYJKo4/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=1HkhmBVwW5RaRa-RcwvPA08-nO_vYJKo4&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1sv76QzjSvqMMFHPDcBw9nX6F8n_qh-tx/view?usp=drivesdk"
       }
     }
   ],
