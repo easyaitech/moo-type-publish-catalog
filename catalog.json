@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-20T01:28:21Z",
+  "updated_at": "2026-10-21T03:31:37Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 16,
-    "waiting_manual_publish": 16,
+    "total": 17,
+    "waiting_manual_publish": 17,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -619,6 +619,46 @@
         "drive_cover": "https://drive.google.com/file/d/1HkhmBVwW5RaRa-RcwvPA08-nO_vYJKo4/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1HkhmBVwW5RaRa-RcwvPA08-nO_vYJKo4&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1sv76QzjSvqMMFHPDcBw9nX6F8n_qh-tx/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "ENTP×ENTJ×INTP×ISTP×ESTJ×INTJ",
+      "folder_title": "容易被讨厌的MBTI",
+      "job_id": "job-1s4KyUBnPZvnwTCpfE8QxJGtGncXp",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：เก่งแท้ๆ แต่ทำไมโดนเข้าใจผิด? 6 ไทป์ MBTI ที่ภาพแรกเสียเปรียบ\n\n**正文**：\nเก่งก็เก่ง แต่ภาพแรกดันเสียเปรียบ 😅 ENTP ENTJ INTP ISTP ESTJ INTJ\nมีเราหรือเพื่อนเราอยู่ในนี้ไหม? ทุกคนคิดว่าไง เมนต์บอกหน่อย 👇\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย ไม่ได้เรียงอันดับ)\n\n**Hashtags**：#MBTI #MBTIไทย #ENTP #ENTJ #INTP #ISTP #ESTJ #INTJ #บุคลิกภาพ\n\n> 中文：明明很能干，为什么总被误会？第一印象吃亏的 6 种 MBTI。无直播/引流/原作者 branding/排名。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1s4KyUBn_P_ZvnwTC-pfE8QxJGtG_ncXp",
+      "drive_video": "https://drive.google.com/file/d/1ctaCQgpt4O3uDBroUabguCMv0Myq0L3T/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1ctaCQgpt4O3uDBroUabguCMv0Myq0L3T&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1NPNWLG7B9luozaUBzo7Y4SNUfuTJmDfY/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=1NPNWLG7B9luozaUBzo7Y4SNUfuTJmDfY&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1v4m-VTMgHCImWFmRDE-ycl8ppaFoiMnB/view?usp=drivesdk",
+      "subfolder_name": "ENTP×ENTJ×INTP×ISTP×ESTJ×INTJ-r0001",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0001",
+        "caption": "Super capable, yet always misread first? 😅 ENTP, ENTJ, INTP, ISTP, ESTJ, INTJ.\nSpot yourself, or your bestie? Tell me what you think 👇\n(MBTI is just for fun, not a diagnosis. Not a ranking.)",
+        "hashtags": "#MBTI #ENTP #ENTJ #INTP #ISTP #ESTJ #INTJ #personalitytypes",
+        "drive_video": "https://drive.google.com/file/d/1mjdc5DAsIW6KLoeX4m4DCpGQjS3jPZj4/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1mjdc5DAsIW6KLoeX4m4DCpGQjS3jPZj4&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1IYLn499b3DYcOQg_ldwxtnpMjJu_ZrxQ/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=1IYLn499b3DYcOQg_ldwxtnpMjJu_ZrxQ&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1TQem-Kt-whJogNpp0a_-LvZpZUhWQSJ1/view?usp=drivesdk"
       }
     }
   ],
