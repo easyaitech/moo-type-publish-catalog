@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-21T03:31:37Z",
+  "updated_at": "2026-10-22T02:27:00Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 17,
-    "waiting_manual_publish": 17,
+    "total": 18,
+    "waiting_manual_publish": 18,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -659,6 +659,46 @@
         "drive_cover": "https://drive.google.com/file/d/1IYLn499b3DYcOQg_ldwxtnpMjJu_ZrxQ/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1IYLn499b3DYcOQg_ldwxtnpMjJu_ZrxQ&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1TQem-Kt-whJogNpp0a_-LvZpZUhWQSJ1/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "INFP",
+      "folder_title": "💜小蝴蝶！！！崛起！！！！！！！！！！",
+      "job_id": "job-1FO2RlFI0wPnIGxiTQijymtDkVlPxLGi",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：INFP ทั้งที่ไม่ค่อยชอบแข่ง แต่ต้องฝืนอยู่ในที่ทำงานที่แข่งกันเดือด? 🦋\n\n**正文**：\nดูเหมือนทนไหว แต่จริงๆ อาจแค่กำลังเล่นบทที่สังคมคาดหวัง 🌿\nคติประจำใจของคุณคืออะไร? เม้นต์บอกกันหน่อย 👇\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#INFP #MBTI #MBTIไทย #บุคลิกภาพ\n\n> 无直播 / 引流 / 原作者 branding；不劝辞职。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1FO2RlFI0wPnIGx_iTQijymtDkVlPxLGi",
+      "drive_video": "https://drive.google.com/file/d/1T8iNd37AR4tHgHX_Fu5gMkIRi02-VUJ0/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1T8iNd37AR4tHgHX_Fu5gMkIRi02-VUJ0&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1KvaaaAj7D5czhnrOhqJkPPeOOnp7aLpA/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=1KvaaaAj7D5czhnrOhqJkPPeOOnp7aLpA&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/15yWxkYIcGGHUwolzTnYc8vVEiYMPRx9-/view?usp=drivesdk",
+      "subfolder_name": "INFP-r0002",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0002",
+        "caption": "You may look fine, but you might just be playing the role expected. 🌿\nWhat's your life motto? Drop it in the comments 👇\n(MBTI is for fun, not a diagnosis.)",
+        "hashtags": "#INFP #MBTI #personality #introvert #mediator",
+        "drive_video": "https://drive.google.com/file/d/1Vw256jzFoxAW0o3dmNPjgOHHH_iztLKK/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1Vw256jzFoxAW0o3dmNPjgOHHH_iztLKK&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1KzrdUYYZXU1kVAb__QRnCLy7mWgmzeqT/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=1KzrdUYYZXU1kVAb__QRnCLy7mWgmzeqT&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1DFqatw4wXIvU4A4ZD9iXu4wSNp86ySZI/view?usp=drivesdk"
       }
     }
   ],
