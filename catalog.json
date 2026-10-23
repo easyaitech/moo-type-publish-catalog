@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T02:27:00Z",
+  "updated_at": "2026-10-23T07:55:16Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 18,
-    "waiting_manual_publish": 18,
+    "total": 19,
+    "waiting_manual_publish": 19,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -699,6 +699,46 @@
         "drive_cover": "https://drive.google.com/file/d/1KzrdUYYZXU1kVAb__QRnCLy7mWgmzeqT/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1KzrdUYYZXU1kVAb__QRnCLy7mWgmzeqT&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1DFqatw4wXIvU4A4ZD9iXu4wSNp86ySZI/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "ISFP",
+      "folder_title": "ISFP会暴露的7个行为",
+      "job_id": "job-sanarenaiisfpbarerukoudou",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "ดูเหมือนชิล แต่พฤติกรรมเล็กๆ มักโป๊ะ 🦋\nข้อไหนตรงกับไอเอสเอฟพีบ้าง? อาบน้ำช้า / งานวันสุดท้าย / อะไรก็ได้ / ห้องเละ… 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n#MBTI #MBTIไทย #ISFP #นิสัย #บุคลิกภาพ",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1kW0Wajk_LuDGz_v4q60rWEqv8pcbBn76",
+      "drive_video": "https://drive.google.com/file/d/1Fo_OlS5SPdj8KDLDYZwzAoa9LspiGMGK/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1Fo_OlS5SPdj8KDLDYZwzAoa9LspiGMGK&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1A9dYiP1U7UzkQQncKGP3blb1LwQRa3fZ/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1A9dYiP1U7UzkQQncKGP3blb1LwQRa3fZ&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1Jtel70D5n4ixV3h0NpFS5Px88at4shsU/view",
+      "subfolder_name": "ISFP-r0002",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0002",
+        "caption": "# Publish copy — instagram_en（草稿，人审前不发布）\n\n**Title**: ISFPs look chill, but tiny habits give them away\n\n**Caption**:\nSeem chill at first glance — then the little habits spill it 🦋\nWhich ones feel like you? Slow showers, last-day work, \"whatever\" dinners, messy rooms… 🌿\n(MBTI is just for fun, not a diagnosis.)\n\n**Hashtags**: #MBTI #ISFP #personalitytypes #habits\n\n> 中文：ISFP 看起来很放松，可一点小习惯常会露馅。无直播/引流/原作者 branding。英语需独立审核。",
+        "hashtags": "",
+        "drive_video": "https://drive.google.com/file/d/1itY86JjmhK9bcDevSEetnm3H_L5l_oCr/view",
+        "drive_video_download": "https://drive.google.com/uc?id=1itY86JjmhK9bcDevSEetnm3H_L5l_oCr&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1LW9F3PjfgnTkNB2-HjhO9uY9cg8nlo6a/view",
+        "drive_cover_download": "https://drive.google.com/uc?id=1LW9F3PjfgnTkNB2-HjhO9uY9cg8nlo6a&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1_W93mmSJSl58uGzZjSYy75Wt2Z-bo6Po/view"
       }
     }
   ],
