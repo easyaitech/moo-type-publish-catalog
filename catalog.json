@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T07:55:16Z",
+  "updated_at": "2026-10-24T01:11:46Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 19,
-    "waiting_manual_publish": 19,
+    "total": 20,
+    "waiting_manual_publish": 20,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -739,6 +739,46 @@
         "drive_cover": "https://drive.google.com/file/d/1LW9F3PjfgnTkNB2-HjhO9uY9cg8nlo6a/view",
         "drive_cover_download": "https://drive.google.com/uc?id=1LW9F3PjfgnTkNB2-HjhO9uY9cg8nlo6a&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1_W93mmSJSl58uGzZjSYy75Wt2Z-bo6Po/view"
+      }
+    },
+    {
+      "label": "ISFP",
+      "folder_title": "总结了三点：",
+      "job_id": "job-1cZ7d4u6FXoIW0TSSCOOOWAe8nKim7bhW",
+      "revision": "r0003",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ISFP ดูใจเย็น แต่หลายคนดื้อ — จีบยังไงดี?\n\n**正文**：\nดูเหมือนใจเย็น แต่หลายคนดื้ออยู่นะ 🦋\nอยากจีบหรือคบกับไอเอสเอฟพีไหม? จำไว้สามข้อ — ช่วยเลือก / ชมจริงใจ / ให้เห็นความมั่นคง 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ISFP #จีบ #บุคลิกภาพ\n\n> 中文：ISFP 看起来心很静，但很多人挺倔——到底怎么追？矛盾钩子标题。无直播/引流/原作者 branding。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1cZ7d4u6FXoIW0TSSCOOOWAe8nKim7bhW",
+      "drive_video": "https://drive.google.com/file/d/1pmGv5euzlTDqdNjM7MOCuVKU0_g59-Mn/view?usp=drivesdk",
+      "drive_video_download": "https://drive.google.com/uc?id=1pmGv5euzlTDqdNjM7MOCuVKU0_g59-Mn&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1wXXZXODbuNpf7zlJ9jLWBlsj9JkeRjzL/view?usp=drivesdk",
+      "drive_cover_download": "https://drive.google.com/uc?id=1wXXZXODbuNpf7zlJ9jLWBlsj9JkeRjzL&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1ySRKL3MEhpEl99lTySiKPzAadKloGQ52/view?usp=drivesdk",
+      "subfolder_name": "ISFP-r0003",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0002",
+        "caption": "They seem chill, yet many stay stubborn 🦋\nThinking of dating an ISFP? Three tips: help them choose, lead with honest praise, show you're steady 🌿\n(MBTI is just for fun, not a diagnosis.)",
+        "hashtags": "#MBTI #ISFP #datingtips #personalitytypes",
+        "drive_video": "https://drive.google.com/file/d/1fiW9RrT5ejjdfQ-ueL0sG_MsJk8rDr1b/view?usp=drivesdk",
+        "drive_video_download": "https://drive.google.com/uc?id=1fiW9RrT5ejjdfQ-ueL0sG_MsJk8rDr1b&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1cPDt7oJ5zLUDULCwOsDUTatSSHF9L3VD/view?usp=drivesdk",
+        "drive_cover_download": "https://drive.google.com/uc?id=1cPDt7oJ5zLUDULCwOsDUTatSSHF9L3VD&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1MsRYkz9s7QLG4-EIT2Dy_URyKCsfQ_6h/view?usp=drivesdk"
       }
     }
   ],
