@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-24T01:11:46Z",
+  "updated_at": "2026-10-24T04:43:11Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 20,
-    "waiting_manual_publish": 20,
+    "total": 21,
+    "waiting_manual_publish": 21,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -779,6 +779,46 @@
         "drive_cover": "https://drive.google.com/file/d/1cPDt7oJ5zLUDULCwOsDUTatSSHF9L3VD/view?usp=drivesdk",
         "drive_cover_download": "https://drive.google.com/uc?id=1cPDt7oJ5zLUDULCwOsDUTatSSHF9L3VD&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1MsRYkz9s7QLG4-EIT2Dy_URyKCsfQ_6h/view?usp=drivesdk"
+      }
+    },
+    {
+      "label": "ENFJ",
+      "folder_title": "什么星座出现ENFJ人格是爆改或高阶？ 大家一直都要的正文的爆改和高阶来啦",
+      "job_id": "job-1I2xqzH18xJbWdDYNpilQtLjYiiT2ITz",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ENFJ บนราศีไหนคืออัปเกรด — บนราศีไหนคือเปลี่ยนใหญ่?\n\n**正文**：\nบางราศีเหมือนโตเต็มที่ แต่บางราศีเหมือนเปลี่ยนคนเลย 🦋\nมีน-ธนู-กันย์ = อัปเกรด? เมษ พฤษภ เมถุน กุมภ์ มังกร = เปลี่ยนใหญ่? 🌿\n(MBTI×ราศี เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ENFJ #ราศี #บุคลิกภาพ\n\n> 中文：ENFJ 在哪些星座算升级，在哪些星座像大改写？矛盾钩子标题。无直播/引流/原作者 branding。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1I2xqzH-18xJbWdDYNpilQtLjYiiT2ITz",
+      "drive_video": "https://drive.google.com/file/d/1Ls0OHelR4GlhIPr3hisRhWrN99uoqiGP/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1Ls0OHelR4GlhIPr3hisRhWrN99uoqiGP&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1AwQt0wGp3IDpmbN9JvGsI_AorvhKQ9gL/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1AwQt0wGp3IDpmbN9JvGsI_AorvhKQ9gL&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1KzneEnsPR3HR1k9257x3AC9Ps7RWsQ5I/view",
+      "subfolder_name": "ENFJ-r0002",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0001",
+        "caption": "# Publish copy — instagram_en（草稿，人审前不发布）\n\n**Title**: ENFJs on some signs feel like a glow-up — on others, a total rewrite\n\n**Caption**:\nSome ENFJ signs feel mature. Others feel fully rewritten 🦋\nGlow-up path or big rewrite — which feels like you? 🌿\n(MBTI × zodiac is just for fun, not a diagnosis.)\n\n**Hashtags**: #MBTI #ENFJ #zodiac #personalitytypes #astrology\n\n> 中文：ENFJ 在有的星座像升级，在有的星座像大改写。无直播/引流/原作者 branding。英语需独立审核。",
+        "hashtags": "",
+        "drive_video": "https://drive.google.com/file/d/1Dv07IjDsmzfCg5ONPEZGfIw5TFf77brp/view",
+        "drive_video_download": "https://drive.google.com/uc?id=1Dv07IjDsmzfCg5ONPEZGfIw5TFf77brp&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1_3U-4s4wUHJwzpEhOQ3CdfHa2vVfSztI/view",
+        "drive_cover_download": "https://drive.google.com/uc?id=1_3U-4s4wUHJwzpEhOQ3CdfHa2vVfSztI&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1H28mkagEl4LJ2aumCKkreiQBZSiLxCQk/view"
       }
     }
   ],
