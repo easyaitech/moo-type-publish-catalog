@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-24T04:43:11Z",
+  "updated_at": "2026-10-26T06:03:53Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 21,
-    "waiting_manual_publish": 21,
+    "total": 22,
+    "waiting_manual_publish": 22,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -819,6 +819,46 @@
         "drive_cover": "https://drive.google.com/file/d/1_3U-4s4wUHJwzpEhOQ3CdfHa2vVfSztI/view",
         "drive_cover_download": "https://drive.google.com/uc?id=1_3U-4s4wUHJwzpEhOQ3CdfHa2vVfSztI&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1H28mkagEl4LJ2aumCKkreiQBZSiLxCQk/view"
+      }
+    },
+    {
+      "label": "ESFP",
+      "folder_title": "ESFP面对真正讨厌的人",
+      "job_id": "job-19ytMn7HKAduqkZP08aY206F33Ta7wIM",
+      "revision": "r0003",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ESFP ดูอบอุ่นกับคนเก่ง — แต่เจอคนไม่ชอบจริงๆ มักถอยระยะ?\n\n**正文**：\nดูอบอุ่นกับคนเก่ง แต่เจอคนที่ไม่ชอบจริงๆ มักถอยระยะ 🎭\nสามอย่างที่หลายคนทำ + พลิกแล้วอาจสนิทเร็ว? 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ESFP #บุคลิกภาพ #นิสัย\n\n> 中文：ESFP 跟人显得很热络，可碰到真正不喜欢的人却常拉开距离？矛盾钩子标题。无直播/引流/原作者 branding。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/19ytMn7HKAduqkZP08aY206F33Ta7wIM_",
+      "drive_video": "https://drive.google.com/file/d/1MLNPFta73HKUtWIUu1Cfh3z7Tjnh_cP0/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1MLNPFta73HKUtWIUu1Cfh3z7Tjnh_cP0&export=download",
+      "drive_cover": "https://drive.google.com/file/d/16BvuecHtM6MUfcAqS_d-yzef_rjF0vyk/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=16BvuecHtM6MUfcAqS_d-yzef_rjF0vyk&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1MagiQWziJB5iyOVRyDgr26v-_P2_Ffex/view",
+      "subfolder_name": "ESFP-r0003",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0003",
+        "caption": "# Publish copy — instagram_en (draft; human review before publish)\n\n**Title**: ESFPs look warm with a crowd — but with people they truly dislike, many pull back\n\n**Caption**:\nESFPs seem social and outgoing… yet with people they truly dislike, many stay a bit distant. 🎭\nThree soft moves + a flip that can get surprisingly close. 🌿\n(MBTI for fun — not a diagnosis)\n\n**Hashtags**: #MBTI #ESFP #personality #softlaunch #forfun\n\n> Conflict-angle title. No livestream CTA / no @sanarenai branding.",
+        "hashtags": "",
+        "drive_video": "https://drive.google.com/file/d/1rpUySdyKI31bG_px-Sh7lYyxq6r9juCo/view",
+        "drive_video_download": "https://drive.google.com/uc?id=1rpUySdyKI31bG_px-Sh7lYyxq6r9juCo&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1bITJme0M175dwIAsQQqPZ1EbZFgt2TiH/view",
+        "drive_cover_download": "https://drive.google.com/uc?id=1bITJme0M175dwIAsQQqPZ1EbZFgt2TiH&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1Rqvglv-85eoJlzUApAjKOlUK_VfhGkcU/view"
       }
     }
   ],
