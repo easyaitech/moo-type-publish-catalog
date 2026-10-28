@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-28T03:33:18Z",
+  "updated_at": "2026-10-28T12:05:23Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 23,
-    "waiting_manual_publish": 23,
+    "total": 24,
+    "waiting_manual_publish": 24,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -899,6 +899,46 @@
         "drive_cover": "https://drive.google.com/file/d/1l5wLrOxw46InYazGkauNU1xbaMJhn_ZU/view",
         "drive_cover_download": "https://drive.google.com/uc?id=1l5wLrOxw46InYazGkauNU1xbaMJhn_ZU&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1rsBlaWAWXtZoi_vSLAjzCvD4T7xXPSoa/view"
+      }
+    },
+    {
+      "label": "SP",
+      "folder_title": "SP型不高兴的信号",
+      "job_id": "job-1axaBSkjVTjWUZNVxv2bQNbi6ylmVJtb",
+      "revision": "r0005",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ISTP ISFP ESTP ESFP ดูชิล — แต่พออารมณ์ไม่ดี มักโชว์สัญญาณ?\n\n**正文**：\nดูชิลๆ แต่พออารมณ์ไม่ดี มักโชว์สัญญาณออกมา 👀\nอยากเปลี่ยนบรรยากาศ · กินคนเดียว · อยากมีพื้นที่ส่วนตัว · สีหน้าบอก · ห้วนขึ้น · เสียงต่ำ · พูดน้อย 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ISTP #ISFP #ESTP #ESFP #บุคลิกภาพ\n\n> 中文：四型看起来随性，心情不好时往往藏不住信号。矛盾钩子标题。soft-all。无 @sanarenai/16P/直播。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1axaBSkjVTjWUZNVxv2bQNbi6ylmVJt-b",
+      "drive_video": "https://drive.google.com/file/d/1R8UDiV0Fg0t6KeGF0ApO5GKY9vT_xHLb/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1R8UDiV0Fg0t6KeGF0ApO5GKY9vT_xHLb&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1kqD9oEzjtD0ZNGRrJW0AJwT48XkQBxAQ/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1kqD9oEzjtD0ZNGRrJW0AJwT48XkQBxAQ&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1kwZQ2spc55UIE7ApryGHZcluz7MHo3TD/view",
+      "subfolder_name": "SP-r0005",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0004",
+        "caption": "# Publish copy — instagram_en (draft; human review before publish)\n\n**Title**: ISTP, ISFP, ESTP, ESFP look chill — but when upset, signs often show\n\n**Caption**:\nThey look pretty chill… but when they're upset, the signs often show. 👀\nChange of scene · solo meals · more personal space · face gives it away · abrupt moves · lower voice · fewer words. 🌿\n(MBTI for fun — not a diagnosis)\n\n**Hashtags**: #MBTI #ISTP #ISFP #ESTP #ESFP #personality #forfun\n\n> Conflict-angle title. Soft-all. Shared four-type signs. No @sanarenai / livestream CTA.",
+        "hashtags": "",
+        "drive_video": "https://drive.google.com/file/d/1SW9teBjZlD15SvyzTXvCiw--WMqfkLMw/view",
+        "drive_video_download": "https://drive.google.com/uc?id=1SW9teBjZlD15SvyzTXvCiw--WMqfkLMw&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1ihNVlJljNYStUH628AxSPC4oB90rzTlV/view",
+        "drive_cover_download": "https://drive.google.com/uc?id=1ihNVlJljNYStUH628AxSPC4oB90rzTlV&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1OvOBOhDOwBSPf2jsIpyy5QWMkRQKuBfo/view"
       }
     }
   ],
