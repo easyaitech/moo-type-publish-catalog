@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-26T06:03:53Z",
+  "updated_at": "2026-10-28T03:33:18Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 22,
-    "waiting_manual_publish": 22,
+    "total": 23,
+    "waiting_manual_publish": 23,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -859,6 +859,46 @@
         "drive_cover": "https://drive.google.com/file/d/1bITJme0M175dwIAsQQqPZ1EbZFgt2TiH/view",
         "drive_cover_download": "https://drive.google.com/uc?id=1bITJme0M175dwIAsQQqPZ1EbZFgt2TiH&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1Rqvglv-85eoJlzUApAjKOlUK_VfhGkcU/view"
+      }
+    },
+    {
+      "label": "ENFP",
+      "folder_title": "一个认真的小狗分析！小狗又来啦！！各位小狗查收！",
+      "job_id": "job-1TXfxsvHQoIHvx5kWGiSGiusctW8FN",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ENFP ดูสนุกแบบลูกหมา — แต่จริงๆ มักใส่ใจ และคิดมากง่าย?\n\n**正文**：\nดูสนุกแบบลูกหมา แต่จริงๆ มักใส่ใจ — และคิดมากง่าย 🐶\nความเข้าใจคน + แรงบันดาลใจ + เสน่ห์… แต่ระวังตีความเกินจนเหนื่อยในใจ 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ENFP #บุคลิกภาพ #นิสัย\n\n> 中文：ENFP 看起来像快乐小狗一样闹腾，其实却很体贴、也容易想太多？矛盾钩子标题。无萝卜头/直播/采访 CTA。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1TXfxsvHQoIHvx5k_WGiSG--iusctW8FN",
+      "drive_video": "https://drive.google.com/file/d/1Nj-acMr5frJWJkWZRsZlA6ducgE0WTk4/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1Nj-acMr5frJWJkWZRsZlA6ducgE0WTk4&export=download",
+      "drive_cover": "https://drive.google.com/file/d/17Mj9MWQ062PmkeIab8mQrgOCK6OnRxod/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=17Mj9MWQ062PmkeIab8mQrgOCK6OnRxod&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1VlarIO8imXupvoOq1NRBLFfVZSPOg-Fs/view",
+      "subfolder_name": "ENFP-r0002",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0001",
+        "caption": "# Publish copy — instagram_en (draft; human review before publish)\n\n**Title**: ENFPs look like happy pups — but many care deeply, and overthink a lot\n\n**Caption**:\nENFPs look like happy, playful pups… but many care deeply — and overthink a lot. 🐶\nEmpathy + inspiration + charm… just watch the over-reading spiral. 🌿\n(MBTI for fun — not a diagnosis)\n\n**Hashtags**: #MBTI #ENFP #personality #happypuppy #forfun\n\n> Conflict-angle title. No livestream / interview CTA / no 萝卜头 branding.",
+        "hashtags": "",
+        "drive_video": "https://drive.google.com/file/d/19wKkcN1IwdSnrpeqUN0-tFEVMsIXlNWB/view",
+        "drive_video_download": "https://drive.google.com/uc?id=19wKkcN1IwdSnrpeqUN0-tFEVMsIXlNWB&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1l5wLrOxw46InYazGkauNU1xbaMJhn_ZU/view",
+        "drive_cover_download": "https://drive.google.com/uc?id=1l5wLrOxw46InYazGkauNU1xbaMJhn_ZU&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1rsBlaWAWXtZoi_vSLAjzCvD4T7xXPSoa/view"
       }
     }
   ],
