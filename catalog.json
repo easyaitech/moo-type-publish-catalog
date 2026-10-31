@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-28T12:05:23Z",
+  "updated_at": "2026-10-31T01:39:57Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 24,
-    "waiting_manual_publish": 24,
+    "total": 25,
+    "waiting_manual_publish": 25,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -939,6 +939,46 @@
         "drive_cover": "https://drive.google.com/file/d/1ihNVlJljNYStUH628AxSPC4oB90rzTlV/view",
         "drive_cover_download": "https://drive.google.com/uc?id=1ihNVlJljNYStUH628AxSPC4oB90rzTlV&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1OvOBOhDOwBSPf2jsIpyy5QWMkRQKuBfo/view"
+      }
+    },
+    {
+      "label": "ENFJ",
+      "folder_title": "ENFJ宝剑哥真的很怕被拒绝…真的很怕让别人尴尬……",
+      "job_id": "job-1cNIKeVEZAy5bEL3psvqOhn15mcVd",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ENFJ ดูเอาใจใส่ — แต่ในความรัก มักกลัวขอคบ?\n\n**正文**：\nดูเอาใจใส่ แต่ในความรัก มักกลัวขอคบ เพราะกลัวทำให้อีกฝ่ายอึดอัด 💭\nพูดไม่ออก ก็เลยเทใจดูแล — แล้วพลาดจังหวะคบกัน 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ENFJ #บุคลิกภาพ #ความรัก\n\n> 中文：ENFJ 看起来很会照顾人——但在感情里，往往怕开口表白？矛盾钩子标题。无萝卜头/宝剑口播/直播 CTA。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1cNIKeVEZAy5-bE-L3p_svqOhn_15mcVd",
+      "drive_video": "https://drive.google.com/file/d/1sAzLvxDbeqB-lsvEGTaKAXOhcqrMEGQG/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1sAzLvxDbeqB-lsvEGTaKAXOhcqrMEGQG&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1oyNlmAS3CGnmMZ1JcaDslRkA4RUK7Zuv/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1oyNlmAS3CGnmMZ1JcaDslRkA4RUK7Zuv&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1KmVm6Z5iseNhghl-iRZ-anb7oMyc4X-Y/view",
+      "subfolder_name": "ENFJ-r0002",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0002",
+        "caption": "# Publish copy — instagram_en (draft; human review before publish)\n\n**Title**: ENFJs look so caring — but in love, many fear asking\n\n**Caption**:\nENFJs look caring day to day… but in love, many fear asking. 💭\nWords stay stuck — quiet little deeds carry their care. 🌿\n(MBTI for fun — not a diagnosis)\n\n**Hashtags**: #MBTI #ENFJ #personality #dating #forfun\n\n> Conflict-angle title. No livestream CTA / no 萝卜头 branding / no sword-nickname in copy.",
+        "hashtags": "",
+        "drive_video": "https://drive.google.com/file/d/1dBkif_s0fyijJXQDwEVWcSPxQyqHYIc7/view",
+        "drive_video_download": "https://drive.google.com/uc?id=1dBkif_s0fyijJXQDwEVWcSPxQyqHYIc7&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1o9Z0Nw0_ACxaUeHRyDetO8uVgQENaplt/view",
+        "drive_cover_download": "https://drive.google.com/uc?id=1o9Z0Nw0_ACxaUeHRyDetO8uVgQENaplt&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1xppkjNbTiYCam5QVcmv6iF1I8B8gr6EF/view"
       }
     }
   ],
