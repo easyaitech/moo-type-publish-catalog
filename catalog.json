@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-31T01:39:57Z",
+  "updated_at": "2026-10-31T08:40:43Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 25,
-    "waiting_manual_publish": 25,
+    "total": 26,
+    "waiting_manual_publish": 26,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -979,6 +979,46 @@
         "drive_cover": "https://drive.google.com/file/d/1o9Z0Nw0_ACxaUeHRyDetO8uVgQENaplt/view",
         "drive_cover_download": "https://drive.google.com/uc?id=1o9Z0Nw0_ACxaUeHRyDetO8uVgQENaplt&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1xppkjNbTiYCam5QVcmv6iF1I8B8gr6EF/view"
+      }
+    },
+    {
+      "label": "ENFP",
+      "folder_title": "把ENFP当恋人的好处",
+      "job_id": "job-1lmVFbqOvQJvO4Z1xYjbxT6I0PUaXlCR",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ENFP มีเพื่อนเยอะ — แต่สายตามักมีแค่คนที่ชอบ?\n\n**正文**：\nหลายคนมีเพื่อนเยอะ — แต่พอชอบใคร สายตามักมีแค่คนนั้น 💭\nข้อดีห้าข้อถ้าได้คบอีเอ็นเอฟพี：จริงจัง / ใช้ชีวิตร่วมกันสนุก / ใจกว้าง / แชร์ความสนุก / ถูกมองเห็น 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ENFP #บุคลิกภาพ #ความรัก\n\n> 中文：ENFP 朋友很多——但眼里往往只有喜欢的人？矛盾钩子标题。无 @sanarenai/系列自称。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1lmVFbqOvQJvO4-Z1xYjbxT6I0PUaXlCR",
+      "drive_video": "https://drive.google.com/file/d/1shoEVLDSJQzv7TXfzQzmO_vgJuZo4089/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1shoEVLDSJQzv7TXfzQzmO_vgJuZo4089&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1ap5mWNsYQ1iLy3Q0ssqy2kChildI80-L/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1ap5mWNsYQ1iLy3Q0ssqy2kChildI80-L&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1HRZmzNTE_OlmWkfRV8LJSZDCVqf6vqb_/view",
+      "subfolder_name": "ENFP-r0002",
+      "local_release": "",
+      "instagram_en": {
+        "platform": "Instagram",
+        "language": "en",
+        "revision": "r0001",
+        "caption": "# Publish copy — instagram_en（draft; no social until human confirm）\n\n**Title**: ENFPs seem social — yet focus locks in on one crush\n\n**Caption**:\nLots of friends — yet focus locks in. One crush only 💭\nFive dating perks with an ENFP: deep focus · long life together · soft heart · share joy · feel seen 🌿\n(MBTI for entertainment, not a diagnosis)\n\n**Hashtags**: #MBTI #ENFP #PersonalityTypes #Dating #FeelSeen\n\n> Soft-all applied. No @sanarenai / series CTA.",
+        "hashtags": "",
+        "drive_video": "https://drive.google.com/file/d/1rIyT4UHXZSw-GLYh2vjgI882szqVoYNc/view",
+        "drive_video_download": "https://drive.google.com/uc?id=1rIyT4UHXZSw-GLYh2vjgI882szqVoYNc&export=download",
+        "drive_cover": "https://drive.google.com/file/d/1pfgR4hUWcmayxI8P18ofhKophOZ0VxKg/view",
+        "drive_cover_download": "https://drive.google.com/uc?id=1pfgR4hUWcmayxI8P18ofhKophOZ0VxKg&export=download",
+        "drive_publish_copy": "https://drive.google.com/file/d/1zUd-VdZKb6AY8VAo_GpibrkLPu925_9A/view"
       }
     }
   ],
