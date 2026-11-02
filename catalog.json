@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-31T08:40:43Z",
+  "updated_at": "2026-11-02T15:36:20Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 26,
-    "waiting_manual_publish": 26,
+    "total": 27,
+    "waiting_manual_publish": 27,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1020,6 +1020,34 @@
         "drive_cover_download": "https://drive.google.com/uc?id=1pfgR4hUWcmayxI8P18ofhKophOZ0VxKg&export=download",
         "drive_publish_copy": "https://drive.google.com/file/d/1zUd-VdZKb6AY8VAo_GpibrkLPu925_9A/view"
       }
+    },
+    {
+      "label": "ISFP",
+      "folder_title": "Isfp怎么追？2️⃣",
+      "job_id": "job-1kUTdnOnZtOsWGZNeqYg5qAKyCYWOgV",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ISFP ดูเงียบ แต่ไม่ผลัก — จีบต่อยังไง?\n\n**正文**：\nดูเงียบ แต่ถ้าไม่ผลัก ก็จีบต่อได้ 🦋\nเคยชวนไอเอสเอฟพีออกไปกินข้าวไหม? ต่อจากสามข้อคราวก่อน — วันนี้คุยต่อเรื่องจีบแบบนุ่มๆ 🌿\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ISFP #จีบ #บุคลิกภาพ\n\n> 中文：ISFP 看着安静，但不排斥你——接下来怎么追？。矛盾钩子标题。轻呼应 part1 续集，不重复三点。无直播/引流/原作者 branding。泰语需母语审核。soft-all。tiktok_th only。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1-kUTdnO-nZtOsWGZNeqYg5qAKyCYWOgV",
+      "drive_video": "https://drive.google.com/file/d/1gwDAAkX9Lc8SY1g5HghOQNtLOBW5L7kq/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1gwDAAkX9Lc8SY1g5HghOQNtLOBW5L7kq&export=download",
+      "drive_cover": "https://drive.google.com/file/d/19ahHIp6cCL3NZIGC6hzPfj8jqIwV1PSd/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=19ahHIp6cCL3NZIGC6hzPfj8jqIwV1PSd&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1yaXvndc-0h1db-uVj3O2P1XjKKAkFrRD/view",
+      "subfolder_name": "ISFP-r0001",
+      "local_release": ""
     }
   ],
   "notes_zh": "发布链接由朋友在页面提交；播放/点赞等数据由助理回填。Bot 不登录 TikTok 自动抓取。"
