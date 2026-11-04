@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-02T15:36:20Z",
+  "updated_at": "2026-11-04T06:19:00Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 27,
-    "waiting_manual_publish": 27,
+    "total": 28,
+    "waiting_manual_publish": 28,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1047,6 +1047,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=19ahHIp6cCL3NZIGC6hzPfj8jqIwV1PSd&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1yaXvndc-0h1db-uVj3O2P1XjKKAkFrRD/view",
       "subfolder_name": "ISFP-r0001",
+      "local_release": ""
+    },
+    {
+      "label": "16P",
+      "folder_title": "MBTI人气度",
+      "job_id": "job-1LeFEHDimZ1eMUex7Zvjm2bYTFJ1WiHlq",
+      "revision": "r0003",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ดูเหมือนแรง แต่ไม่ใช่จัดอันดับ — ทัศนคติความนิยมของ 16 ไทป์\n\n**正文**：\nดูเหมือนจัดอันดับ — แต่จริงๆ แค่ทัศนคติต่อความนิยม 😅\nมีเพื่อนอยู่ในนี้ไหม? สี่ช่วงสนุกๆ ของ 16 ไทป์ MBTI แล้วคุณอยู่ช่วงไหน? 👇\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย ไม่ได้เรียงอันดับ)\n\n**Hashtags**：#MBTI #MBTIไทย #ความนิยม #ทัศนคติ #16Types #บุคลิกภาพ\n\n> 中文：看着像人气排行，其实是态度分档——16型怎么看待人气。矛盾钩子标题。态度分档非排行。无直播/引流/原作者 branding。泰语需母语审核。soft-all。tiktok_th only。r0003 kiraware 每型一段。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1LeFEHDimZ1eMUex7Zvjm2bYTFJ1WiHlq",
+      "drive_video": "https://drive.google.com/file/d/1zr9dmwWEa-wFkjLEMCKqsthsNe82Q6Ju/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1zr9dmwWEa-wFkjLEMCKqsthsNe82Q6Ju&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1ULFkmrXwN9zNPK_nqj6fZolmrHqs0P0_/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1ULFkmrXwN9zNPK_nqj6fZolmrHqs0P0_&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1EIbVG5_DNXjKeKaURTygSKL48wppQc-5/view",
+      "subfolder_name": "16P-r0003",
       "local_release": ""
     }
   ],
