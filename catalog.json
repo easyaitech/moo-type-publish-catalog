@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-04T06:19:00Z",
+  "updated_at": "2026-11-05T03:16:13Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 28,
-    "waiting_manual_publish": 28,
+    "total": 29,
+    "waiting_manual_publish": 29,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1075,6 +1075,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1ULFkmrXwN9zNPK_nqj6fZolmrHqs0P0_&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1EIbVG5_DNXjKeKaURTygSKL48wppQc-5/view",
       "subfolder_name": "16P-r0003",
+      "local_release": ""
+    },
+    {
+      "label": "INTP",
+      "folder_title": "天选intp星座！隐藏款太好猜了吧，晚上直播间揭晓嘿嘿",
+      "job_id": "job-13i2O2SCMcEJX20f8Ntr4aWfXA6OL0rTs",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：INTP กับราศีที่ถูกพูดถึงบ่อย มีรุ่นลับด้วย 🔮\n\n**正文**：\nไอเอ็นทีพี คู่กับราศีไหนถูกพูดถึงบ่อย? สองแบบเจอบ่อย + หนึ่งรุ่นลับ 👀\nเดาซิรุ่นลับคือราศีไหน คอมเมนต์บอกหน่อยว่าคุณว่าใคร 👇\n(MBTI×ราศี เพื่อความบันเทิง ไม่ใช่การวินิจฉัย / ไม่ใช่คำทำนาย)\n\n**Hashtags**：#INTP #ENTP #MBTI #MBTIไทย #ราศี #ราศีกุมภ์ #ราศีธนู\n\n> 无直播 / 引流 / 原作者 branding。隐藏款不揭晓。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/13i2O2SCMcEJX20f8Ntr4aWfXA6OL0rTs",
+      "drive_video": "https://drive.google.com/file/d/1j8sTxiHcW0Xj9OVncpedW8IoWK9vfsNQ/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1j8sTxiHcW0Xj9OVncpedW8IoWK9vfsNQ&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1mAqtMdpEf_iFcov-s_334LTShml-Nn5D/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1mAqtMdpEf_iFcov-s_334LTShml-Nn5D&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1ivTuOPXwL--CTQ1C0x5XXBFHaa9OYO8E/view",
+      "subfolder_name": "INTP-r0001",
       "local_release": ""
     }
   ],
