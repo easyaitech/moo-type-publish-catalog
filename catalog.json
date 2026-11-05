@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T03:16:13Z",
+  "updated_at": "2026-11-05T14:18:45Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 29,
-    "waiting_manual_publish": 29,
+    "total": 30,
+    "waiting_manual_publish": 30,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1103,6 +1103,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1mAqtMdpEf_iFcov-s_334LTShml-Nn5D&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1ivTuOPXwL--CTQ1C0x5XXBFHaa9OYO8E/view",
       "subfolder_name": "INTP-r0001",
+      "local_release": ""
+    },
+    {
+      "label": "ENFP",
+      "folder_title": "ENFP日常吐槽",
+      "job_id": "job-10pYI4CS9uucbCI4LWkYZAEWB2PipfORh",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ENFP ดูสนุกสุดๆ แต่ชาร์จตอนอยู่คนเดียว 🔋✨\n\n**正文**：\nดูสนุกสุดๆ แต่จริงๆ ชาร์จตอนอยู่คนเดียว 🦋\nอีเอ็นเอฟพี ชีวิตประจำวันแบบนี้ไหม? ตั้งปลุกแล้วไม่ลุก / ตารางแน่น / ปาดติ๊กต็อกจนตัวพัง / กินไก่ทอดคนเดียว 👀\nมีใครเป็นแบบนี้บ้างไหม?\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ENFP #ชีวิตประจำวัน #บุคลิกภาพ\n\n> 中文：ENFP 看起来超会玩，其实独处才充电。矛盾冲突角度标题。无直播/引流/原作者 branding。泰语需母语审核。soft-all A1B1C1D1E1F1。tiktok_th only。人审前不发。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/10pYI4CS9uucbCI4LWkYZAEWB2PipfORh",
+      "drive_video": "https://drive.google.com/file/d/1QzFffERfpXVzJEfepC7QTYy_X_mQQ1jh/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1QzFffERfpXVzJEfepC7QTYy_X_mQQ1jh&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1-YyTkQ-R9VbwVZNdrwvVcP4KlSqAjfIa/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1-YyTkQ-R9VbwVZNdrwvVcP4KlSqAjfIa&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1BvCL_cFre9fssXCNwaLlJskH59ndKeQ7/view",
+      "subfolder_name": "ENFP-r0002",
       "local_release": ""
     }
   ],
