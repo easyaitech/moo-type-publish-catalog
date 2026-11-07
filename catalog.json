@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T14:18:45Z",
+  "updated_at": "2026-11-07T01:16:03Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 30,
-    "waiting_manual_publish": 30,
+    "total": 31,
+    "waiting_manual_publish": 31,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1131,6 +1131,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1-YyTkQ-R9VbwVZNdrwvVcP4KlSqAjfIa&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1BvCL_cFre9fssXCNwaLlJskH59ndKeQ7/view",
       "subfolder_name": "ENFP-r0002",
+      "local_release": ""
+    },
+    {
+      "label": "ISFP",
+      "folder_title": "一般来说小画家只有在意识到舒适圈快要崩塌的时候才会去卷，卷完找到第二个舒适圈，进去之后就又开摆了哈哈哈哈哈哈哈哈",
+      "job_id": "job-1o6nGCg5RJSb8URweXOZHvpjXX49j9",
+      "revision": "r0003",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ISFP กับโซนสบาย — ราศีที่ถูกพูดถึงบ่อย มีรุ่นลับด้วย 🎨\n\n**正文**：\nไอเอสเอฟพี ชอบอยู่สบายๆ ในโซนสบาย ราศีไหนถูกพูดถึงบ่อยว่าเข้ากัน? มีคู่มือ และมีรุ่นลับด้วย 👀\nเดาซิรุ่นลับคือราศีไหน คอมเมนต์บอกหน่อยว่าคุณว่าใคร 👇\n(MBTI×ราศี เพื่อความบันเทิง ไม่ใช่การวินิจฉัย / ไม่ใช่คำทำนาย)\n\n**Hashtags**：#ISFP #INFJ #MBTI #MBTIไทย #ราศี #ราศีพฤษภ\n\n> 无直播 / 引流 / 原作者 branding。隐藏款不揭晓。标题轻呼应舒适圈（B1），口播未展开「第二舒适圈」。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1o6nGCg5R_JSb8-URweX-OZHvpjXX49j9",
+      "drive_video": "https://drive.google.com/file/d/1da-PCARcamNrQaN5ckX-VjmyseACPlBz/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1da-PCARcamNrQaN5ckX-VjmyseACPlBz&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1R-XWQibdggZn2BH8Wfsda_OzVynwdkyf/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1R-XWQibdggZn2BH8Wfsda_OzVynwdkyf&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1Ke-_DijaZucLUXZe8eMRyubrHGkEaEUv/view",
+      "subfolder_name": "ISFP-r0003",
       "local_release": ""
     }
   ],
