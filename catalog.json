@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T01:16:03Z",
+  "updated_at": "2026-11-09T06:02:31Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 31,
-    "waiting_manual_publish": 31,
+    "total": 32,
+    "waiting_manual_publish": 32,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1159,6 +1159,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1R-XWQibdggZn2BH8Wfsda_OzVynwdkyf&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1Ke-_DijaZucLUXZe8eMRyubrHGkEaEUv/view",
       "subfolder_name": "ISFP-r0003",
+      "local_release": ""
+    },
+    {
+      "label": "星座",
+      "folder_title": "对象已读不回时，这些星座在干嘛",
+      "job_id": "job-14jMeRVEyOF5EsmY6C8LLY7YqCV21NyU",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（已审，可手动发布）\n\n**标题**：อ่านแล้วไม่ตอบ — ราศีพวกนี้ทำอะไรอยู่?\n\n**正文**：\nอ่านแล้วไม่ตอบ… อย่าเพิ่งโกรธ มาดูก่อนว่าแต่ละราศีอาจทำอะไรอยู่ 😂\nเมถุน / ธนู / พิจิก / มีน — คุณเป็นราศีไหน? คอมเมนต์บอกหน่อย 💬\n(เพื่อความบันเทิง ไม่ใช่หมอดู / ไม่ใช่คำทำนาย)\n\n**Hashtags**：#ราศี #ราศีไทย #ดูดวงแบบขำๆ #อ่านแล้วไม่ตอบ #ราศีในบ้านเรา\n\n> 中文：对象已读不回时，这些星座在干嘛。娱乐情景喜剧；非命运断言。tiktok_th only。泰语母语已审（John 2026-11-09 确认）。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/14jMeRVEyOF5EsmY6-C8LLY7YqCV21NyU",
+      "drive_video": "https://drive.google.com/file/d/11P6xnev8ElLMJ_dYv3MHVcC38f55ouiM/view",
+      "drive_video_download": "https://drive.google.com/uc?id=11P6xnev8ElLMJ_dYv3MHVcC38f55ouiM&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1zKS_gtCJ2N03bh0PafRdURbRWQ_ifM6J/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1zKS_gtCJ2N03bh0PafRdURbRWQ_ifM6J&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/17VmHo4yVzMgsdtkgecWMMqUfSp3M7Wg3/view",
+      "subfolder_name": "星座-r0001",
       "local_release": ""
     }
   ],
