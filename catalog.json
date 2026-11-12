@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-09T06:02:31Z",
+  "updated_at": "2026-11-12T02:43:45Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 32,
-    "waiting_manual_publish": 32,
+    "total": 33,
+    "waiting_manual_publish": 33,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1187,6 +1187,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1zKS_gtCJ2N03bh0PafRdURbRWQ_ifM6J&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/17VmHo4yVzMgsdtkgecWMMqUfSp3M7Wg3/view",
       "subfolder_name": "星座-r0001",
+      "local_release": ""
+    },
+    {
+      "label": "INFJ",
+      "folder_title": "老绿登事事有回应",
+      "job_id": "job-1xXQIpKWqad3ioh5YwGnazPoH6GiL6TZ",
+      "revision": "r0003",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Thai title\nทุกเรื่องมีคำตอบ แต่เหมือนเป็นหน้าที่\n# Description\nคุยกันดี แต่ใจยังเหมือนอยู่ไกล บางทีสิ่งที่เห็นก็ยังไม่ใช่ตัวตนทั้งหมดของเขา แล้วคุณเคยรู้สึกแบบนี้ไหม? คุยเรื่องบุคลิกกันสนุก ๆ ไม่ใช่ทุกคนจะเป็นเหมือนกันนะ\n# Tags\n#INFJ #MBTI #ความสัมพันธ์ #ตัวตน #แอนิเมชัน\n# 中文回译\n标题：件件有着落，却仿佛件件是任务。\n描述：聊得很好，心却仿佛还很远。有时你看见的还不是他的全部。你有过这种感觉吗？轻松聊人格，不是所有人都一样。\n标签：INFJ / MBTI / 关系 / 自我 / 动画\nnative_approved=false；仅草案，不发布。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1xXQ-IpKWqad3ioh5YwGnazPoH6GiL6TZ",
+      "drive_video": "https://drive.google.com/file/d/1y3Q7L-KJQoblf0lTaU2Fp98KRJok5HhC/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1y3Q7L-KJQoblf0lTaU2Fp98KRJok5HhC&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1iq7KjK5CXcr1e0HiKWczSgIE0_3zHjPb/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1iq7KjK5CXcr1e0HiKWczSgIE0_3zHjPb&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1YkDVxbFwCtTqoilGfJ6YU2DlmCUZIZ4_/view",
+      "subfolder_name": "INFJ-r0003",
       "local_release": ""
     }
   ],
