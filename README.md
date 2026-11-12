@@ -224,6 +224,50 @@ curl -sS -X POST "$MOO_API_BASE/v1/refresh-stats" \
 
 到 Cloudflare 的 Worker 日志里看 `refresh_stats` 这一行即可。部署这一版之后，下一次定时任务（每 3 小时）或上面的手动刷新就会打出这种日志。
 
+## 助手电脑抓数（box-stats）
+
+主力是助手电脑每天跑一次 `box-stats/run.sh`：从这台电脑的网络打开每个已绑定的 TikTok 公开页，核对页面里的视频编号和作者（`MOO_TIKTOK_ACCOUNT`）都对得上，再用管理员口令写进 Worker（`POST /v1/stats`）。Worker 每 3 小时的定时抓取保留，作为补充。
+
+安装（只需 Node 20+，没有其他依赖）：
+
+```bash
+cp box-stats/env.example box-stats/.env   # 填 MOO_ADMIN_TOKEN，或用 MOO_ADMIN_TOKEN_FILE 指向口令文件
+box-stats/run.sh --dry-run                # 只读：抓页面、核对，不写入，也不需要口令
+box-stats/run.sh                          # 正式写入
+```
+
+口令只从 `.env` 或环境变量读，不能放在命令行参数里，也不会出现在输出和日志里。`.env`、`logs/` 已在 `.gitignore` 里。每次运行在 `box-stats/logs/stats-日期.jsonl` 追加一行完整结果，终端最后一行形如 `targets=24 ok=24 failed=0 skipped_no_link=7 reasons=...`。退出码：0 全部成功，3 部分失败，4 全部失败，2 配置问题（没口令、连不上 Worker）。
+
+写入规则：
+
+- 五个数字必须全部是页面上的整数才写。缺一项就整条不写，不会写成 0。
+- 失败的条目什么都不写，旧数字留着。
+- 页面里的视频编号或作者和绑定的链接不一致，记为 `wrong_video`，不写。视频编号按文字比较，不转成数字（TikTok 的编号超过 JavaScript 能精确表示的范围）。
+- 某项比上次少了 20% 以上（且多于 10），记为 `suspicious_drop`，不写，等人看。
+- 写入前再读一次链接，链接被改了就不写（`link_changed`）。
+- 主页面拿不到数时，再试一次公开的嵌入页 `embed/v2`。嵌入页没有收藏数，所以只写播放、点赞、评论、分享，收藏保持原值，来源记为 `box-tiktok-embed`。嵌入页限流很快，只当后备用。
+
+| reason | 意思 | 怎么办 |
+|---|---|---|
+| `challenge` | 拿到的是验证/滑块页 | 这台电脑的网络被 TikTok 拦了。换网络或稍后再跑 |
+| `login_wall` | 拿到的是登录页 | 同上 |
+| `region_blocked` | 页面说本地区不可用 | 换出口网络（如走代理，`.env` 里设 `HTTPS_PROXY`） |
+| `video_not_found` | 页面正常，但视频不存在（`status_code` 10204） | 链接里的视频编号错了或视频已删，检查绑定的链接 |
+| `video_private` | 视频私密或仅好友可见 | 让发布人改成公开 |
+| `video_unavailable` | 其他非 0 的 `status_code` | 看 `status_code` |
+| `wrong_video` | 页面是别的视频或别的账号 | 检查绑定的链接 |
+| `layout_changed` | 页面能打开但读不到数；`detail` 是 `no_data_script` / `json_parse` / `no_item` / `no_stats` | 用 `--save-failed-html` 存下页面，发给助理改解析 |
+| `http_429` / `http_5xx` / `timeout` / `network_error` | 网络或限流，已自动重试 | 稍后再跑 |
+| `http_400` / `http_403` 等 | TikTok 拒绝了这次请求 | 看 `final_url` |
+| `redirect_off_tiktok` | 跳转到了非 tiktok.com 地址，没有跟过去 | 检查网络是否被劫持 |
+| `suspicious_drop` / `link_changed` | 见上面写入规则 | 人工看一眼 |
+| `write_unauthorized` | Worker 拒绝口令（401/403） | 核对 `.env` 里的口令 |
+| `write_failed` | Worker 其他错误，`worker_error` 是原因 | 看 `worker_error` |
+
+`markers`（`captcha`、`verify`、`login`）只在页面完全没有数据块时才记录。正常的 TikTok 页面代码里本来就有这些字样，所以单凭它们不能说明被拦。
+
+排查时可以加 `--save-failed-html ./box-stats/failed-html`，把失败的页面原样存在本机（不上传），再加 `--only job-...` 只跑一条。
+
 朋友提交的链接只在 KV 里。要收进 git 做备份：
 
 ```bash
@@ -285,8 +329,10 @@ python3 -m http.server 4173
 
 ```bash
 python3 -m unittest tests.test_catalog -v
-node --test tests/merge.test.mjs
+node --test tests/*.test.mjs
 cd worker && npm ci && npm test
 ```
 
 Worker 测试用 Miniflare：没口令不能写、非 TikTok 链接会拒绝、朋友口令不能改数据、管理员可以写播放数，并且关掉进程再打开后链接还在。解析播放数用一份本地 HTML 片段，测试不会请求 TikTok。刷新失败时会检查日志里的具体原因和页面特征，并确认整页 HTML、cookie、地址参数都不会写进去，旧数字也不会被清掉。
+
+`tests/box-stats.test.mjs` 用从真实页面裁下来的样本（`tests/fixtures/box-stats/`）检查助手电脑抓数：正常页、视频不存在、验证页、登录页、别的视频、缺一项数字、嵌入页后备、限流重试、跳出 tiktok.com、口令被拒、大幅下降，确认失败时不写、缺失不变 0、日志里没有口令和整页 HTML。
