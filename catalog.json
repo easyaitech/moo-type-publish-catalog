@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-12T15:23:53Z",
+  "updated_at": "2026-11-22T05:00:39Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 34,
-    "waiting_manual_publish": 34,
+    "total": 35,
+    "waiting_manual_publish": 35,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1243,6 +1243,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1aZsvJjCGnhXmYFrfTuKCtTzDZjZFGMvT&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1vdTm_8TC6PGm_yFEthJaf_LpOCBDro4s/view",
       "subfolder_name": "ISFP-r0003",
+      "local_release": ""
+    },
+    {
+      "label": "ENTP",
+      "folder_title": "ENTP隐藏款坚定",
+      "job_id": "job-1Sa7uhw7HM46iL8hrLRor90J016uwksLu",
+      "revision": "r0003",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Thai title\nENTP บวกราศี หลุดภาพจำ\n# Description\nอีเอ็นทีพี บวกคนละราศี แล้วภาพจำหลุดหมด ราศีกันย์ที่ดูไม่ค่อยเหมือนกันย์ ราศีเมษพลังเด็กที่ไฟไหม้ฟาง แล้วยังมีรุ่นลับที่มุ่งแบบไม่เปลี่ยน รอบตัวคุณมีคนแบบนี้ไหม คุยเล่นเรื่องบุคลิก ไม่ใช่การวินิจฉัยนะ\n# Tags\n#ENTP #MBTI #ราศี #ราศีกันย์ #ราศีเมษ #แอนิเมชัน\n# 中文回译\n标题：ENTP 叠上星座，完全不像原本的印象。\n描述：ENTP 叠上不同星座，原本的印象就全对不上了。处女座那款不太像传统处女座，白羊座那款像旺盛的孩气却又像稻草火，后面还有一个认准了就不改的隐藏款。你身边有这样的人吗？轻松聊人格，不是诊断。\n标签：ENTP / MBTI / 星座 / 处女座 / 白羊座 / 动画\nnative_approved=false；仅发布文案草稿，不发布、不上传。\n# 注意\n口播、字幕与标题描述均未使用源片标题里的非口播关键词；描述里的「隐藏款」不点名星座，也不是猜星座导流句。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1Sa7uhw7HM46iL8hrLRor90J016uwksLu",
+      "drive_video": "https://drive.google.com/file/d/1kMeUyPlBiL2u60Aifdze80Od_9JRSRlm/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1kMeUyPlBiL2u60Aifdze80Od_9JRSRlm&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1vgAeLqVDI1of37RAd3_rBCht8MJni9sY/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1vgAeLqVDI1of37RAd3_rBCht8MJni9sY&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1AFHhsgpPiZ3htjfaP8hbZ328dcBcjLsZ/view",
+      "subfolder_name": "ENTP-r0003",
       "local_release": ""
     }
   ],
