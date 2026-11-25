@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25T06:30:09Z",
+  "updated_at": "2026-11-25T07:41:48Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -1165,7 +1165,7 @@
       "label": "星座",
       "folder_title": "对象已读不回时，这些星座在干嘛",
       "job_id": "job-14jMeRVEyOF5EsmY6C8LLY7YqCV21NyU",
-      "revision": "r0001",
+      "revision": "r0003",
       "stage": "WAITING_MANUAL_PUBLISH",
       "platform": "TikTok",
       "publish_link": "",
@@ -1186,7 +1186,7 @@
       "drive_cover": "https://drive.google.com/file/d/1zKS_gtCJ2N03bh0PafRdURbRWQ_ifM6J/view",
       "drive_cover_download": "https://drive.google.com/uc?id=1zKS_gtCJ2N03bh0PafRdURbRWQ_ifM6J&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/17VmHo4yVzMgsdtkgecWMMqUfSp3M7Wg3/view",
-      "subfolder_name": "星座-r0001",
+      "subfolder_name": "星座-r0003",
       "local_release": ""
     },
     {
