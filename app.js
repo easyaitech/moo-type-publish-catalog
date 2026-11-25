@@ -256,6 +256,7 @@ function renderBanner() {
 function renderFilters(summary) {
   const bar = $("#filters");
   bar.replaceChildren();
+  const group = el("div", "filter-group");
   for (const chip of filterChips(summary, state.apiOk)) {
     const className = ["chip", state.filter === chip.id ? "on" : "", chip.unsynced ? "unsynced" : ""]
       .filter(Boolean)
@@ -270,8 +271,9 @@ function renderFilters(summary) {
       history.replaceState(null, "", hash);
       render();
     });
-    bar.append(button);
+    group.append(button);
   }
+  bar.append(group);
 
   const search = el("div", "search");
   const searchInput = el("input");
@@ -473,17 +475,21 @@ function appendLinks(host, buttons) {
   if (links.childElementCount) host.append(links);
 }
 
-function metaLine(video) {
+function metaBits(video) {
   const heading = video.title || video.folder_title || video.label || "";
-  const label = String(video.label || "").trim();
+  const wrap = el("div", "bits");
+  const add = (text, className) => {
+    const value = String(text || "").trim();
+    if (!value || value === heading) return;
+    wrap.append(el("span", className || "bit", value));
+  };
+  if (instagramBlock(video)) add("英文", "bit en");
+  add(video.label);
   const revision = String(video.revision || "").trim();
-  const parts = [];
-  if (instagramBlock(video)) parts.push("含英文版");
-  if (label && label !== heading) parts.push(label);
-  if (revision && revision !== heading && revision !== label) parts.push(revision);
-  const platform = String(video.platform || "").trim() || "TikTok";
-  if (platform && platform !== heading) parts.push(platform);
-  return parts.join(" · ");
+  if (revision && revision !== String(video.label || "").trim()) add(revision);
+  const platform = String(video.platform || "").trim();
+  if (platform && platform !== "TikTok") add(platform);
+  return wrap;
 }
 
 const SHORT_BADGE = {
@@ -491,12 +497,18 @@ const SHORT_BADGE = {
   状态未同步: "未同步",
 };
 
-function glanceText(video) {
-  if (!state.apiOk) return "";
-  const parts = [];
-  if (typeof video.stats?.views === "number") parts.push(`播放 ${formatNum(video.stats.views)}`);
-  if (typeof video.stats?.likes === "number") parts.push(`赞 ${formatNum(video.stats.likes)}`);
-  return parts.join(" · ");
+function glanceNode(video) {
+  if (!state.apiOk) return null;
+  const box = el("div", "glance");
+  const add = (label, value) => {
+    if (typeof value !== "number") return;
+    const cell = el("div", "glance-cell");
+    cell.append(el("span", "glance-k", label), el("span", "glance-v", formatNum(value)));
+    box.append(cell);
+  };
+  add("播放", video.stats?.views);
+  add("赞", video.stats?.likes);
+  return box.childElementCount ? box : null;
 }
 
 function togglePanel(id, panel) {
@@ -603,6 +615,7 @@ function renderFilesPanel(video) {
       linkButton(video.drive_video, "打开视频", false),
       linkButton(video.drive_cover, "打开封面", false),
       linkButton(video.drive_publish_copy, "文案文件", false),
+      linkButton(video.drive_folder, "打开文件夹", false),
     ]),
   );
   const instagram = instagramBlock(video);
@@ -616,13 +629,6 @@ function renderFilesPanel(video) {
         linkButton(instagram.drive_publish_copy, "文案文件", false),
       ]),
     );
-  }
-  const folder = linkButton(video.drive_folder, "打开文件夹", false);
-  if (folder) {
-    const row = el("div", "links");
-    row.style.marginTop = "8px";
-    row.append(folder);
-    panel.append(row);
   }
   return panel;
 }
@@ -688,7 +694,7 @@ function renderCard(video) {
   const name = el("h2", "title-line", displayTitle);
   name.title = displayTitle;
   const metaRow = el("div", "meta-row");
-  metaRow.append(el("div", "muted meta-line", metaLine(video)));
+  metaRow.append(metaBits(video));
   const segs = el("div", "segs");
   const actions = [
     ["copy", "文案", ""],
@@ -704,8 +710,8 @@ function renderCard(video) {
   top.append(badge, titleWrap);
 
   const aside = el("div", "aside");
-  const glance = glanceText(video);
-  if (glance) aside.append(el("div", "glance", glance));
+  const glance = glanceNode(video);
+  if (glance) aside.append(glance);
   if (published) {
     const post = linkButton(video.publish_link, "打开帖子", false);
     if (post) {
@@ -787,7 +793,7 @@ function render() {
   if (!state.catalog) return;
   const summary = summarize(mergedVideos());
   state.summary = summary;
-  $("#subtitle").textContent = `待发布 / 已发布 · 目录 ${catalogTime(state.catalog.updated_at)}`;
+  $("#subtitle").textContent = state.catalog.updated_at ? `目录 ${catalogTime(state.catalog.updated_at)}` : "";
   renderSyncAlert();
   renderSummary(summary);
   renderBanner();
