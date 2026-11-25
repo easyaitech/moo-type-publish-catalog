@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25T01:55:11Z",
+  "updated_at": "2026-11-25T02:27:22Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 36,
-    "waiting_manual_publish": 36,
+    "total": 37,
+    "waiting_manual_publish": 37,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1299,6 +1299,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=146if-8dajD5BZPIEOSlQeas6_rdo44La&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1XAZg8wC67VTVbwnlndr2tFko1TBho2vx/view",
       "subfolder_name": "ENFP-r0007",
+      "local_release": ""
+    },
+    {
+      "label": "INFJ×ENFP",
+      "folder_title": "这种两个人的我不会录……只能做个图片发上来啦呜呜",
+      "job_id": "job-1UrWU23MzTNibfL83AcNmGY02ov9eSu9e",
+      "revision": "r0002",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# ข้อความโพสต์ — INFJ × ENFP · r0001\n\n## หัวข้อ (Title)\nINFJ × ENFP ทำไมถึงคลิกกัน\n\n## เนื้อหา (Body)\nไอเดียพรั่งพรู vs ผู้ฟังที่ดีที่สุด 💛 ลองมองผ่านสายตา INFJ ว่า ENFP พิเศษยังไง แล้วสองคนนี้เติมกันตรงไหน\nแล้วคุณล่ะ มองคู่ INFJ × ENFP ยังไงบ้าง คอมเมนต์มาคุยกันหน่อย 👇\n\n## Hashtags\n#INFJ #ENFP #MBTI #mbtiไทย #คู่MBTI #ความรัก\n\n---\n## 中文说明（供核对，非发布正文）\n标题：INFJ × ENFP 为什么这么合拍。正文为口播精简复述 + 评论互动，无直播/引流。MBTI 娱乐向。\nNOT published — delivery for human review only. Thai needs native review.\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1UrWU23MzTNibfL83AcNmGY02ov9eSu9e",
+      "drive_video": "https://drive.google.com/file/d/1K7GbFOBkJYyT-3D5QS5oDfLSnkxzS4UW/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1K7GbFOBkJYyT-3D5QS5oDfLSnkxzS4UW&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1szJfQv-GXs2BsefcgKQ1Hsg9s6JBXiZt/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1szJfQv-GXs2BsefcgKQ1Hsg9s6JBXiZt&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1ITgDX9MwlKJn9udYQ1dwnEAvDTjL6C5d/view",
+      "subfolder_name": "INFJ×ENFP-r0002",
       "local_release": ""
     }
   ],
