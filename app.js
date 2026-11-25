@@ -1,5 +1,4 @@
 import {
-  cardMeta,
   downloadUrl,
   instagramBlock,
   instagramCopyText,
@@ -46,6 +45,16 @@ const state = {
   apiError: "",
   retrying: false,
   token: readToken(),
+  query: "",
+  helpOpen: false,
+  tokenEditing: false,
+  open: null,
+  drafts: {},
+  flash: null,
+  toast: "",
+  justId: "",
+  pinJust: false,
+  summary: null,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -60,6 +69,12 @@ function resolveApiBase() {
   const fromQuery = new URLSearchParams(location.search).get("api");
   const configured = fromQuery || (window.MOO_SITE && window.MOO_SITE.apiBase) || "";
   return String(configured).trim().replace(/\/$/, "");
+}
+
+function catalogTime(value) {
+  const text = String(value || "").trim();
+  const match = text.match(/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})/);
+  return match ? `${match[1]} ${match[2]} UTC` : text;
 }
 
 function formatNum(value) {
@@ -114,13 +129,42 @@ function mergedVideos() {
   );
 }
 
+function searchHay(video) {
+  const instagram = instagramBlock(video);
+  return [
+    video.title,
+    video.folder_title,
+    video.label,
+    video.revision,
+    video.subfolder_name,
+    video.platform,
+    video.publish_link,
+    video.publish_copy,
+    instagram?.caption,
+    instagram?.hashtags,
+  ]
+    .filter(Boolean)
+    .join("\n")
+    .toLowerCase();
+}
+
 function visibleVideos(videos) {
+  const query = state.query.trim().toLowerCase();
   return videos.filter((video) => {
     const published = Boolean(video.publish_link);
-    if (state.filter === "waiting") return !published;
-    if (state.filter === "published") return published;
-    return true;
+    if (state.filter === "waiting" && published) return false;
+    if (state.filter === "published" && !published) return false;
+    if (!query) return true;
+    return searchHay(video).includes(query);
   });
+}
+
+function rememberDrafts() {
+  for (const card of document.querySelectorAll("#list [data-job]")) {
+    const input = card.querySelector(".publish-form input");
+    if (!input) continue;
+    state.drafts[card.dataset.job] = input.value;
+  }
 }
 
 function renderSyncAlert() {
@@ -175,25 +219,38 @@ function renderSummary(summary) {
 function renderBanner() {
   const note = $("#banner");
   note.replaceChildren();
+  const row = el("div", "note-row");
+  const summary = el("span", "", "先下载视频、复制文案、发出去，再点「填链接」把帖子地址贴回来。");
+  const toggle = el("button", "note-toggle", state.helpOpen ? "收起说明" : "查看说明");
+  toggle.type = "button";
+  toggle.setAttribute("aria-expanded", state.helpOpen ? "true" : "false");
+  toggle.addEventListener("click", () => {
+    state.helpOpen = !state.helpOpen;
+    renderBanner();
+  });
+  row.append(summary, toggle);
+  note.append(row);
+  if (!state.helpOpen) return;
+  const body = el("div", "note-body");
+  const lead = el("p");
+  lead.textContent = "每条片子默认只显示标题。点「文案」「下载」「数据」「填链接」再展开。有英文版的，在「文案」和「下载」里切换到 Instagram，英文另外发。";
+  body.append(lead);
   const folder = safeHttpUrl(state.catalog?.batch_folder_url || "");
-  note.append("朋友：下载视频和封面，复制文案，手动发到 TikTok，再把帖子链接填回对应卡片。有「Instagram 英语」的卡片，英文版另外手动发 Instagram。");
-  note.append(document.createElement("br"));
   if (folder) {
-    note.append("批次文件夹：");
-    const anchor = el("a");
+    const line = el("p");
+    line.append("这一批成片：");
+    const anchor = el("a", "", "打开网盘文件夹");
     anchor.href = folder;
     anchor.target = "_blank";
     anchor.rel = "noopener";
-    anchor.textContent = folder;
-    note.append(anchor);
-    note.append(document.createElement("br"));
+    line.append(anchor);
+    body.append(line);
   }
-  note.append("「—」表示还没回填，不是抓取失败。Bot 不登录 TikTok。");
+  body.append(el("p", "", "数据里的「—」表示还没回填，不是抓取失败。这个页面不会登录 TikTok。"));
   if (state.apiOk) {
-    const status = el("div", "api-status");
-    status.textContent = "回填服务在线。填一次口令后，提交会直接记下，不用改 git。";
-    note.append(status);
+    body.append(el("p", "api-status", "回填在线。口令填一次就留在这台浏览器里，提交后不用改别的。"));
   }
+  note.append(body);
 }
 
 function renderFilters(summary) {
@@ -208,25 +265,76 @@ function renderFilters(summary) {
     if (chip.unsynced) button.title = "回填没同步，这个数量不能当真";
     button.addEventListener("click", () => {
       state.filter = chip.id;
+      state.toast = "";
       const hash = chip.id === "all" ? "#all" : `#${chip.id}`;
       history.replaceState(null, "", hash);
       render();
     });
     bar.append(button);
   }
-  const tokenLabel = el("label", "token");
-  tokenLabel.append(el("span", "", "回填口令"));
-  const input = el("input");
-  input.type = "password";
-  input.autocomplete = "off";
-  input.placeholder = "John 单独给你的口令";
-  input.value = state.token;
-  input.addEventListener("input", () => {
-    state.token = input.value;
-    writeToken(state.token);
+
+  const search = el("div", "search");
+  const searchInput = el("input");
+  searchInput.type = "search";
+  searchInput.placeholder = "搜标题、标签";
+  searchInput.setAttribute("aria-label", "搜标题、标签");
+  searchInput.value = state.query;
+  searchInput.autocomplete = "off";
+  searchInput.enterKeyHint = "search";
+  const clear = el("button", "clear", "×");
+  clear.type = "button";
+  clear.setAttribute("aria-label", "清除搜索");
+  clear.hidden = !state.query.trim();
+  searchInput.addEventListener("input", () => {
+    state.query = searchInput.value;
+    clear.hidden = !state.query.trim();
+    renderList();
   });
-  tokenLabel.append(input);
-  bar.append(tokenLabel);
+  clear.addEventListener("click", () => {
+    state.query = "";
+    searchInput.value = "";
+    clear.hidden = true;
+    renderList();
+    searchInput.focus();
+  });
+  search.append(searchInput, clear);
+  bar.append(search);
+
+  if (state.token.trim() && !state.tokenEditing) {
+    const saved = el("button", "token-saved", "口令已保存");
+    saved.type = "button";
+    saved.title = "点这里可以改口令";
+    saved.addEventListener("click", () => {
+      state.tokenEditing = true;
+      renderFilters(state.summary);
+      document.querySelector(".token input")?.focus();
+    });
+    bar.append(saved);
+  } else {
+    const tokenLabel = el("label", "token");
+    tokenLabel.append(el("span", "", "回填口令"));
+    const input = el("input");
+    input.type = "password";
+    input.autocomplete = "off";
+    input.placeholder = "John 单独给你的口令";
+    input.value = state.token;
+    input.addEventListener("input", () => {
+      state.token = input.value;
+      writeToken(state.token);
+    });
+    input.addEventListener("blur", () => {
+      window.setTimeout(() => {
+        if (!state.token.trim() || state.tokenEditing === false) return;
+        if (document.activeElement === input) return;
+        state.tokenEditing = false;
+        renderFilters(state.summary);
+      }, 180);
+    });
+    tokenLabel.append(input);
+    bar.append(tokenLabel);
+  }
+
+  bar.append(el("p", "count", ""));
 }
 
 function metric(label, value) {
@@ -242,7 +350,9 @@ function renderPublishForm(video, host) {
   input.type = "url";
   input.required = true;
   input.placeholder = "https://www.tiktok.com/@账号/video/…";
-  input.value = video.publish_link || "";
+  input.value = Object.prototype.hasOwnProperty.call(state.drafts, video.job_id)
+    ? state.drafts[video.job_id]
+    : video.publish_link || "";
   const button = el("button", "btn primary", video.publish_link ? "更新链接" : "我已发布，提交链接");
   button.type = "submit";
   const message = el("div", "form-msg");
@@ -318,8 +428,21 @@ async function submitPublish(video, rawUrl, button, message) {
       return;
     }
     state.overlays[video.job_id] = payload.overlay;
-    message.classList.add("ok");
-    message.textContent = "已记下，状态改为已发布。";
+    delete state.drafts[video.job_id];
+    const hidden = state.filter === "waiting" || (state.query.trim() && !searchHay({ ...video, publish_link: publishLink }).includes(state.query.trim().toLowerCase()));
+    if (hidden) {
+      state.flash = null;
+      state.open = null;
+      state.justId = "";
+      state.pinJust = false;
+      state.toast = "已记下。这条已改为已发布，可以在「已发布」里看到。";
+    } else {
+      state.flash = { id: video.job_id, text: "已记下，这条已改为已发布。", tone: "ok" };
+      state.open = { id: video.job_id, panel: "link", lang: "th" };
+      state.justId = video.job_id;
+      state.pinJust = true;
+      state.toast = "";
+    }
     render();
   } catch {
     message.classList.add("bad");
@@ -350,78 +473,164 @@ function appendLinks(host, buttons) {
   if (links.childElementCount) host.append(links);
 }
 
-function variantSection(kind, heading, revision) {
-  const section = el("section", `variant variant-${kind}`);
-  const head = el("div", "variant-head");
-  head.append(el("span", `variant-tag ${kind}`, heading));
-  if (revision) head.append(el("span", "muted", revision));
-  section.append(head);
-  return section;
+function metaLine(video) {
+  const heading = video.title || video.folder_title || video.label || "";
+  const label = String(video.label || "").trim();
+  const revision = String(video.revision || "").trim();
+  const parts = [];
+  if (instagramBlock(video)) parts.push("含英文版");
+  if (label && label !== heading) parts.push(label);
+  if (revision && revision !== heading && revision !== label) parts.push(revision);
+  const platform = String(video.platform || "").trim() || "TikTok";
+  if (platform && platform !== heading) parts.push(platform);
+  return parts.join(" · ");
 }
 
-/** Thai TikTok cut: the original card body (copy + downloads), now labelled. */
-function renderTikTokSection(video) {
-  const section = variantSection("tiktok", "TikTok 泰语", video.revision);
-  const copyBlock = el("div", "copy-block");
-  copyBlock.append(el("div", "copy-label", "发布文案"));
-  if (video.publish_copy) {
-    const pre = el("pre", "copy-text");
-    pre.textContent = video.publish_copy;
-    copyBlock.append(pre, copyButton("复制文案", video.publish_copy));
-  } else {
-    copyBlock.append(el("p", "muted", "文案还没写进看板。打开网盘文案，复制后再发。"));
+const SHORT_BADGE = {
+  待手动发布: "待发布",
+  状态未同步: "未同步",
+};
+
+function glanceText(video) {
+  if (!state.apiOk) return "";
+  const parts = [];
+  if (typeof video.stats?.views === "number") parts.push(`播放 ${formatNum(video.stats.views)}`);
+  if (typeof video.stats?.likes === "number") parts.push(`赞 ${formatNum(video.stats.likes)}`);
+  return parts.join(" · ");
+}
+
+function togglePanel(id, panel) {
+  rememberDrafts();
+  const same = state.open?.id === id && state.open?.panel === panel;
+  if (state.flash && (state.flash.id !== id || panel !== "link")) state.flash = null;
+  if (same) {
+    state.open = null;
+    renderList();
+    return;
   }
-  section.append(copyBlock);
-  appendLinks(section, [
-    linkButton(downloadUrl(video.drive_video_download, video.drive_video), "下载视频", true),
-    linkButton(downloadUrl(video.drive_cover_download, video.drive_cover), "下载封面", true),
-    linkButton(video.drive_video, "打开视频", false),
-    linkButton(video.drive_cover, "打开封面", false),
-    linkButton(video.drive_publish_copy, "文案文件", false),
-  ]);
-  return section;
-}
-
-/** English Instagram cut: caption + hashtags with the same copy / download controls. */
-function renderInstagramSection(block) {
-  const section = variantSection("instagram", "Instagram 英语", block.revision);
-  const copyBlock = el("div", "copy-block");
-  copyBlock.append(el("div", "copy-label", "英文文案（caption + hashtags）"));
-  const fullText = instagramCopyText(block);
-  if (fullText) {
-    const pre = el("pre", "copy-text");
-    pre.lang = "en";
-    pre.textContent = fullText;
-    copyBlock.append(pre, copyButton("复制文案", fullText));
-    if (block.hashtags) copyBlock.append(" ", copyButton("只复制标签", block.hashtags));
-  } else {
-    copyBlock.append(el("p", "muted", "英文文案还没写进看板。打开网盘文案，复制后再发。"));
+  state.open = { id, panel, lang: state.open?.id === id ? state.open.lang || "th" : "th" };
+  renderList({ reveal: true });
+  if (panel === "link") {
+    document.querySelector(`[data-job="${CSS.escape(id)}"] .publish-form input`)?.focus();
   }
-  section.append(copyBlock);
-  appendLinks(section, [
-    linkButton(block.drive_video_download, "下载视频", true),
-    linkButton(block.drive_cover_download, "下载封面", true),
-    linkButton(block.drive_video, "打开视频", false),
-    linkButton(block.drive_cover, "打开封面", false),
-    linkButton(block.drive_publish_copy, "文案文件", false),
-  ]);
-  return section;
 }
 
-function renderCard(video) {
-  const card = el("article", "item");
-  const head = el("div", "item-head");
-  const title = el("div");
-  const displayTitle = video.title || video.folder_title || video.label || "";
-  const name = el("h2", "", displayTitle);
-  const meta = el("div", "muted", cardMeta(video));
-  title.append(name, meta);
-  const published = Boolean(video.publish_link);
-  const badgeInfo = badgePresentation(video, state.apiOk);
-  const badge = el("span", badgeInfo.className, badgeInfo.text);
-  head.append(title, badge);
-  card.append(head);
+function setOpenLang(id, lang) {
+  if (!state.open || state.open.id !== id) return;
+  state.open = { ...state.open, lang };
+  renderList();
+}
 
+function segButton(label, pressed, onClick, extraClass, expanded) {
+  const button = el("button", ["seg", extraClass, pressed ? "on" : ""].filter(Boolean).join(" "), label);
+  button.type = "button";
+  if (expanded) button.setAttribute("aria-expanded", pressed ? "true" : "false");
+  else button.setAttribute("aria-pressed", pressed ? "true" : "false");
+  button.addEventListener("click", onClick);
+  return button;
+}
+
+function renderCopyBody(label, text, copyLabel, extraButton) {
+  const block = el("div", "copy-block");
+  block.append(el("div", "copy-label", label));
+  if (text) {
+    const pre = el("pre", "copy-text");
+    pre.textContent = text;
+    const row = el("div", "links");
+    row.append(copyButton(copyLabel, text));
+    if (extraButton) row.append(extraButton);
+    block.append(pre, row);
+  } else {
+    block.append(el("p", "muted", "文案还没写进看板。可以先打开网盘里的文案文件。"));
+  }
+  return block;
+}
+
+function renderCopyPanel(video) {
+  const panel = el("div", "panel");
+  panel.setAttribute("role", "region");
+  panel.setAttribute("aria-label", "文案");
+  const instagram = instagramBlock(video);
+  const lang = instagram && state.open?.lang === "en" ? "en" : "th";
+  if (instagram) {
+    const switcher = el("div", "lang-switch");
+    switcher.append(
+      segButton("泰语 TikTok", lang === "th", () => setOpenLang(video.job_id, "th")),
+      segButton("英语 Instagram", lang === "en", () => setOpenLang(video.job_id, "en")),
+    );
+    panel.append(switcher);
+  }
+  if (lang === "en") {
+    const fullText = instagramCopyText(instagram);
+    const tags = instagram.hashtags ? copyButton("只复制标签", instagram.hashtags) : null;
+    const body = renderCopyBody(
+      instagram.revision ? `英文文案 · ${instagram.revision}` : "英文文案",
+      fullText,
+      "复制文案",
+      tags,
+    );
+    const pre = body.querySelector(".copy-text");
+    if (pre) pre.lang = "en";
+    panel.append(body);
+    const file = linkButton(instagram.drive_publish_copy, "打开英文文案文件", false);
+    if (file) panel.append(file);
+  } else {
+    panel.append(
+      renderCopyBody(video.revision ? `泰语文案 · ${video.revision}` : "泰语文案", video.publish_copy, "复制文案"),
+    );
+    const file = linkButton(video.drive_publish_copy, "打开文案文件", false);
+    if (!video.publish_copy && file) panel.append(file);
+  }
+  return panel;
+}
+
+function fileGroup(title, buttons) {
+  const group = el("div", "file-group");
+  group.append(el("div", "copy-label", title));
+  appendLinks(group, buttons);
+  if (!group.querySelector(".links")) group.append(el("p", "muted", "还没有可下载的文件。"));
+  return group;
+}
+
+function renderFilesPanel(video) {
+  const panel = el("div", "panel");
+  panel.setAttribute("role", "region");
+  panel.setAttribute("aria-label", "下载");
+  panel.append(
+    fileGroup("TikTok 泰语", [
+      linkButton(downloadUrl(video.drive_video_download, video.drive_video), "下载视频", true),
+      linkButton(downloadUrl(video.drive_cover_download, video.drive_cover), "下载封面", true),
+      linkButton(video.drive_video, "打开视频", false),
+      linkButton(video.drive_cover, "打开封面", false),
+      linkButton(video.drive_publish_copy, "文案文件", false),
+    ]),
+  );
+  const instagram = instagramBlock(video);
+  if (instagram) {
+    panel.append(
+      fileGroup("Instagram 英语", [
+        linkButton(instagram.drive_video_download, "下载视频", true),
+        linkButton(instagram.drive_cover_download, "下载封面", true),
+        linkButton(instagram.drive_video, "打开视频", false),
+        linkButton(instagram.drive_cover, "打开封面", false),
+        linkButton(instagram.drive_publish_copy, "文案文件", false),
+      ]),
+    );
+  }
+  const folder = linkButton(video.drive_folder, "打开文件夹", false);
+  if (folder) {
+    const row = el("div", "links");
+    row.style.marginTop = "8px";
+    row.append(folder);
+    panel.append(row);
+  }
+  return panel;
+}
+
+function renderStatsPanel(video) {
+  const panel = el("div", "panel");
+  panel.setAttribute("role", "region");
+  panel.setAttribute("aria-label", "数据");
   const metrics = el("div", "metrics");
   metrics.append(
     metric("播放", video.stats?.views),
@@ -430,72 +639,170 @@ function renderCard(video) {
     metric("分享", video.stats?.shares),
     metric("收藏", video.stats?.saves),
   );
-  const updated = el("div", "muted stat-time", statTimeText(video.stats?.updated_at, state.apiOk));
-  card.append(metrics, updated);
+  panel.append(metrics, el("div", "muted stat-time", statTimeText(video.stats?.updated_at, state.apiOk)));
+  return panel;
+}
 
-  card.append(renderTikTokSection(video));
-  const instagram = instagramBlock(video);
-  if (instagram) {
-    card.append(renderInstagramSection(instagram));
-  } else {
-    card.append(el("div", "muted variant-none", "Instagram 英语：这条还没有英文版。"));
+function renderLinkPanel(video) {
+  const panel = el("div", "panel");
+  panel.setAttribute("role", "region");
+  panel.setAttribute("aria-label", "发布链接");
+  const published = Boolean(video.publish_link);
+  if (state.flash?.id === video.job_id) {
+    panel.append(el("div", state.flash.tone === "ok" ? "form-msg ok" : "form-msg", state.flash.text));
   }
-
-  const shared = el("div", "links");
-  const folderButton = linkButton(video.drive_folder, "文件夹", false);
-  if (folderButton) {
-    shared.append(folderButton);
-    card.append(shared);
-  }
-
-  const publish = el("div", "publish");
   if (published) {
     const row = el("div", "published-link");
-    row.append(el("span", "muted", state.apiOk ? "发布链接" : "底稿里的链接（还没和回填服务核对）"));
+    row.append(el("span", "muted", state.apiOk ? "当前链接" : "底稿里的链接（还没和回填服务核对）"));
     const anchor = linkButton(video.publish_link, video.publish_link, false);
     if (anchor) {
       anchor.classList.add("post-link");
       row.append(anchor);
     }
-    publish.append(row);
-    if (video.published_at) publish.append(el("div", "muted", `提交于 ${video.published_at}`));
-    const details = el("details");
-    details.append(el("summary", "", "更正链接"));
-    renderPublishForm(video, details);
-    publish.append(details);
-  } else {
-    if (state.apiOk) publish.append(el("div", "copy-label", "TikTok 泰语版发布后，把 TikTok 链接贴在这里"));
-    renderPublishForm(video, publish);
+    panel.append(row);
+    if (video.published_at) panel.append(el("div", "muted", `提交于 ${video.published_at}`));
+    panel.append(el("div", "copy-label", "要换链接时再填下面"));
+  } else if (state.apiOk) {
+    panel.append(el("div", "copy-label", "发出去之后，把 TikTok 链接贴在这里"));
   }
-  card.append(publish);
+  renderPublishForm(video, panel);
+  return panel;
+}
+
+function renderCard(video) {
+  const published = Boolean(video.publish_link);
+  const tone = !state.apiOk ? "unsynced" : published ? "ok" : "wait";
+  const open = state.open?.id === video.job_id ? state.open.panel : "";
+  const card = el(
+    "article",
+    ["item", `item-${tone}`, open ? "open" : "", state.justId === video.job_id ? "just" : ""].filter(Boolean).join(" "),
+  );
+  card.dataset.job = video.job_id || "";
+
+  const top = el("div", "item-top");
+  const badgeInfo = badgePresentation(video, state.apiOk);
+  const badge = el("span", badgeInfo.className, SHORT_BADGE[badgeInfo.text] || badgeInfo.text);
+  if (SHORT_BADGE[badgeInfo.text]) badge.title = badgeInfo.text;
+  const titleWrap = el("div", "title-wrap");
+  const displayTitle = video.title || video.folder_title || video.label || "未命名";
+  const name = el("h2", "title-line", displayTitle);
+  name.title = displayTitle;
+  const metaRow = el("div", "meta-row");
+  metaRow.append(el("div", "muted meta-line", metaLine(video)));
+  const segs = el("div", "segs");
+  const actions = [
+    ["copy", "文案", ""],
+    ["files", "下载", ""],
+    ["stats", "数据", ""],
+    ["link", published ? "改链接" : "填链接", published ? "" : "emphasis"],
+  ];
+  for (const [id, label, extra] of actions) {
+    segs.append(segButton(label, open === id, () => togglePanel(video.job_id, id), extra, true));
+  }
+  metaRow.append(segs);
+  titleWrap.append(name, metaRow);
+  top.append(badge, titleWrap);
+
+  const aside = el("div", "aside");
+  const glance = glanceText(video);
+  if (glance) aside.append(el("div", "glance", glance));
+  if (published) {
+    const post = linkButton(video.publish_link, "打开帖子", false);
+    if (post) {
+      post.classList.remove("btn");
+      post.classList.add("text-link");
+      aside.append(post);
+    }
+  }
+  if (aside.childElementCount) top.append(aside);
+  card.append(top);
+
+  if (open === "copy") card.append(renderCopyPanel(video));
+  if (open === "files") card.append(renderFilesPanel(video));
+  if (open === "stats") card.append(renderStatsPanel(video));
+  if (open === "link") card.append(renderLinkPanel(video));
   return card;
 }
 
-function render() {
-  if (!state.catalog) return;
-  const videos = mergedVideos();
-  const summary = summarize(videos);
-  $("#subtitle").textContent = `成片包 · 待发布 / 已发布 · 目录更新 ${state.catalog.updated_at || ""} UTC`;
-  renderSyncAlert();
-  renderSummary(summary);
-  renderBanner();
-  renderFilters(summary);
+function updateCount(shownCount) {
+  const node = document.querySelector("#filters .count");
+  if (!node) return;
+  node.textContent = state.query.trim() ? (shownCount ? `找到 ${shownCount} 条` : "没有找到") : "";
+}
+
+function renderList({ reveal = false } = {}) {
+  rememberDrafts();
   const list = $("#list");
-  const shown = visibleVideos(videos);
+  const shown = visibleVideos(mergedVideos());
+  updateCount(shown.length);
   list.replaceChildren();
   if (!shown.length) {
+    const query = state.query.trim();
     list.append(
       el(
         "p",
         "empty",
-        emptyListMessage(state.filter, { synced: state.apiOk, configured: Boolean(state.apiBase) }),
+        query
+          ? `没有找到「${query.slice(0, 40)}」。换个词，或点搜索框里的 ×。`
+          : emptyListMessage(state.filter, { synced: state.apiOk, configured: Boolean(state.apiBase) }),
       ),
     );
     return;
   }
   const waitingFirst = [...shown].sort((a, b) => Number(Boolean(a.publish_link)) - Number(Boolean(b.publish_link)));
   for (const video of waitingFirst) list.append(renderCard(video));
+  const revealId = reveal && state.open ? state.open.id : "";
+  if (revealId) {
+    const card = list.querySelector(`[data-job="${CSS.escape(revealId)}"]`);
+    (card?.querySelector(".panel") || card)?.scrollIntoView({ block: "nearest" });
+  }
+  if (state.pinJust && state.justId) {
+    state.pinJust = false;
+    list.querySelector(`[data-job="${CSS.escape(state.justId)}"]`)?.scrollIntoView({ block: "nearest" });
+  }
+  if (state.justId) {
+    const marked = state.justId;
+    window.setTimeout(() => {
+      if (state.justId !== marked) return;
+      state.justId = "";
+      document.querySelector(`[data-job="${CSS.escape(marked)}"]`)?.classList.remove("just");
+    }, 1600);
+  }
 }
+
+function renderToast() {
+  const existing = $("#toast");
+  if (!state.toast) {
+    existing?.remove();
+    return;
+  }
+  const toast = existing || el("div", "toast");
+  toast.id = "toast";
+  toast.setAttribute("role", "status");
+  toast.textContent = state.toast;
+  if (!existing) $("#list").before(toast);
+}
+
+function render() {
+  if (!state.catalog) return;
+  const summary = summarize(mergedVideos());
+  state.summary = summary;
+  $("#subtitle").textContent = `待发布 / 已发布 · 目录 ${catalogTime(state.catalog.updated_at)}`;
+  renderSyncAlert();
+  renderSummary(summary);
+  renderBanner();
+  renderFilters(summary);
+  renderToast();
+  renderList();
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !state.open) return;
+  const tag = document.activeElement?.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA") return;
+  state.open = null;
+  renderList();
+});
 
 async function loadCatalog() {
   const response = await fetch("catalog.json", { cache: "no-cache" });
