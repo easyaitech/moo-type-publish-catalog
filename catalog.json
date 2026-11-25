@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-22T05:00:39Z",
+  "updated_at": "2026-11-25T01:55:11Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 35,
-    "waiting_manual_publish": 35,
+    "total": 36,
+    "waiting_manual_publish": 36,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1271,6 +1271,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1vgAeLqVDI1of37RAd3_rBCht8MJni9sY&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1AFHhsgpPiZ3htjfaP8hbZ328dcBcjLsZ/view",
       "subfolder_name": "ENTP-r0003",
+      "local_release": ""
+    },
+    {
+      "label": "ENFP",
+      "folder_title": "和ENFP长久相处的方法",
+      "job_id": "job-1CaA67FBCoN8VBZfwOkGPfvCvrlFnDGop",
+      "revision": "r0007",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Thai title\nENFP เข้ากับทุกคน แต่กลัวโดนคุม — 3 ข้อให้อยู่ด้วยกันได้ยาว\n\n# Description\nเข้ากับทุกคน แต่กลัวโดนคุม ENFP หลายคนถ้าโดนคุมแน่นไปจะอึดอัดนะ 3 ข้อนี้ช่วยให้อยู่ด้วยกันได้นาน รอบตัวคุณมี ENFP แบบนี้ไหม? คุยเรื่องบุคลิกแบบสนุกๆ ไม่ใช่การวินิจฉัยนะ\n\n# Tags\n#ENFP #MBTI #ความสัมพันธ์ #นิสัย #แอนิเมชัน\n\n# 中文回译\n标题：ENFP 跟谁都合得来，但怕被控制——长久相处三条\n描述：跟谁都合得来，但怕被控制。被管得太紧，很多 ENFP 会觉得憋屈。这三条能帮你们相处得更久。你身边有这样的 ENFP 吗？轻松聊人格，不是诊断。\n标签：ENFP / MBTI / 关系 / 性格 / 动画\nnative_approved=false；仅草案，不发布。标题与描述已与 r0004 首句口播对齐（去掉「看起来／ดู」）。首句口播不读类型名；发布文案里的 ENFP 是书面名称。timing=PENDING，不预称前 3 秒或前 5 秒已通过。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1CaA67FBCoN8VBZfwOkGPfvCvrlFnDGop",
+      "drive_video": "https://drive.google.com/file/d/1TJc_0fQeV1nkCV71GGd6CpslZylsLD71/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1TJc_0fQeV1nkCV71GGd6CpslZylsLD71&export=download",
+      "drive_cover": "https://drive.google.com/file/d/146if-8dajD5BZPIEOSlQeas6_rdo44La/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=146if-8dajD5BZPIEOSlQeas6_rdo44La&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1XAZg8wC67VTVbwnlndr2tFko1TBho2vx/view",
+      "subfolder_name": "ENFP-r0007",
       "local_release": ""
     }
   ],
