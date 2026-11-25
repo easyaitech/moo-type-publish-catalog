@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25T02:27:22Z",
+  "updated_at": "2026-11-25T02:28:22Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 37,
-    "waiting_manual_publish": 37,
+    "total": 38,
+    "waiting_manual_publish": 38,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1327,6 +1327,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1szJfQv-GXs2BsefcgKQ1Hsg9s6JBXiZt&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1ITgDX9MwlKJn9udYQ1dwnEAvDTjL6C5d/view",
       "subfolder_name": "INFJ×ENFP-r0002",
+      "local_release": ""
+    },
+    {
+      "label": "ISFP",
+      "folder_title": "ISFP面对真正讨厌的人",
+      "job_id": "job-1LaKYuqGwHC6iT2LqQZSWs5eAlhbDBNB9",
+      "revision": "r0001",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Publish copy — tiktok_th（草稿，人审前不发布）\n\n**标题**：ISFP ใจดีกับทุกคน ยกเว้นคนที่เกลียดจริงๆ\n\n**正文**：\n4 สัญญาณที่บอกว่า ISFP ไม่โอเคกับคุณแล้ว 😶 ไม่ยิ้ม ตอบสั้น บ่นในใจ และไม่แคร์อีกต่อไป\nใครเคยโดน ISFP เมินบ้าง? เมนต์มา 👇\n(MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n\n**Hashtags**：#MBTI #MBTIไทย #ISFP #บุคลิกภาพ #16personalities\n\n> 中文：ISFP 对谁都温柔，除了真正讨厌的人；4 个信号：不笑、回话短、心里吐槽、不在乎了。谁被 ISFP 冷落过？无直播/引流/原作者 branding。泰语需母语审核。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1LaKYuqGwHC6iT2LqQZSWs5eAlhbDBNB9",
+      "drive_video": "https://drive.google.com/file/d/12q7pdl_o0JlyJCHSuHF0xKSnl6ppTwx2/view",
+      "drive_video_download": "https://drive.google.com/uc?id=12q7pdl_o0JlyJCHSuHF0xKSnl6ppTwx2&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1Udl0ShhdVd651dmh6SI9j6EXF79WCC4K/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1Udl0ShhdVd651dmh6SI9j6EXF79WCC4K&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1pnW-viIyIf5jUsG_CNO0hvluEgbt1xs9/view",
+      "subfolder_name": "ISFP-r0001",
       "local_release": ""
     }
   ],
