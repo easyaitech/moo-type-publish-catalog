@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26T13:31:21Z",
+  "updated_at": "2026-11-26T18:17:02Z",
   "title": "MOO TYPE 发布与数据看板",
   "shared_drive_id": "0APEwIGFXzdMWUk9PVA",
   "shared_drive_url": "https://drive.google.com/drive/folders/0APEwIGFXzdMWUk9PVA",
@@ -7,8 +7,8 @@
   "batch_folder_id": "1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "batch_folder_url": "https://drive.google.com/drive/folders/1gttIluYMAMknEcc6O9xicqrh4oYyrcF2",
   "summary": {
-    "total": 38,
-    "waiting_manual_publish": 38,
+    "total": 39,
+    "waiting_manual_publish": 39,
     "published_with_link": 0,
     "views": null,
     "likes": null,
@@ -1355,6 +1355,34 @@
       "drive_cover_download": "https://drive.google.com/uc?id=1Udl0ShhdVd651dmh6SI9j6EXF79WCC4K&export=download",
       "drive_publish_copy": "https://drive.google.com/file/d/1pnW-viIyIf5jUsG_CNO0hvluEgbt1xs9/view",
       "subfolder_name": "ISFP-r0002",
+      "local_release": ""
+    },
+    {
+      "label": "ENFJ",
+      "folder_title": "宝剑哥真的那么恋爱脑吗？答：确实。还会自己pua自己呢～",
+      "job_id": "job-1l0BjpY2k0HB5Jp9peAYNHVnONlr6YL",
+      "revision": "r0008",
+      "stage": "WAITING_MANUAL_PUBLISH",
+      "platform": "TikTok",
+      "publish_link": "",
+      "published_at": "",
+      "publish_copy": "# Thai title\nENFJ ดูรักง่าย แต่เจ็บแล้วก็ยังทุ่ม\n# Description\nอีเอ็นเอฟเจ ดูรักง่าย แต่เจ็บมาแล้วก็ยังทุ่มให้คนใหม่ บางทีก็ PUA ตัวเอง จนได้ชื่อนักรบรักแท้ ให้ความอบอุ่นกับทุกคน แต่มีเส้นชัด มีคนแล้วจะไม่นอกใจ อาวุธอย่างเดียวคือความจริงใจ รอบตัวคุณมีคนแบบนี้ไหม (MBTI เพื่อความบันเทิง ไม่ใช่การวินิจฉัย)\n# Tags\n#ENFJ #MBTI #รักง่าย #นักรบรักแท้ #ความจริงใจ #แอนิเมชัน\n# 中文回译\n标题：ENFJ 看着像恋爱脑，但受过伤了还是会继续付出。\n描述：ENFJ 看着像恋爱脑，但受过伤了还是会对下一个人全心付出。有时还会 PUA 自己，于是被叫作纯爱战士。对谁都温暖，但界线清楚；有了对象就不会出轨。出门在外，唯一的武器就是真心。你身边有这样的人吗？（MBTI 供娱乐，不是诊断。）\n标签：ENFJ / MBTI / 恋爱脑 / 纯爱战士 / 真心 / 动画\nnative_approved=false；仅发布文案草稿，不发布、不上传。\n# 注意\n口播、字幕与标题均未使用「宝剑哥」或源片标题问答体冒充原口播；片尾无求评 CTA。娱乐免责只放在描述括号内，不放开头。\n",
+      "stats": {
+        "views": null,
+        "likes": null,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "updated_at": "",
+        "source": ""
+      },
+      "drive_folder": "https://drive.google.com/drive/folders/1l0BjpY2k0HB5_Jp9peAYNHVnONlr6_YL",
+      "drive_video": "https://drive.google.com/file/d/1TnjynAxAbiXXWHnN34gVzmKZO4okcPbf/view",
+      "drive_video_download": "https://drive.google.com/uc?id=1TnjynAxAbiXXWHnN34gVzmKZO4okcPbf&export=download",
+      "drive_cover": "https://drive.google.com/file/d/1W6dXwj5qpY9OieDnOYNFxpPvjslp3KzB/view",
+      "drive_cover_download": "https://drive.google.com/uc?id=1W6dXwj5qpY9OieDnOYNFxpPvjslp3KzB&export=download",
+      "drive_publish_copy": "https://drive.google.com/file/d/1eDdUalaONJqvGJySRxAhJQ8yGp6wcml5/view",
+      "subfolder_name": "ENFJ-r0008",
       "local_release": ""
     }
   ],
