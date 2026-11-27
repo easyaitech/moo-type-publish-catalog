@@ -5,3 +5,6 @@ worker/.dev.vars
 __pycache__/
 *.pyc
 .DS_Store
+box-stats/.env
+box-stats/logs/
+box-stats/failed-html/
